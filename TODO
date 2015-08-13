@@ -1,7 +1,11 @@
 TO DO:
 - Finish cucumber tests (testing to do)
-- Documenation. Make sure to document future development process (CI steps).
+- Step definiton edit: Fill in field by label, change password edit steps
+- Use more capybara magic (https://gist.github.com/zhengjia/428105)
 - Check tests. Make sure everything is explictly unit tested (not tested as a by-product of other tests), and all features have cucumber tests.
+- Make sure locales are all used, no repitition
+- Documenation. Make sure to document future development process (CI steps).
+- Squash to V1.0
 - Work on future features
 
 KNOWN ISSUES:
@@ -25,7 +29,7 @@ POSSIBLE FUTURE FEATURES:
   - Translate to another language
 
 TESTING TO DO:
-  - Users cucumber
+  - Users advanced search cucumber
   - Roles cucumber
 
 DOCUMENTATION TO DO:

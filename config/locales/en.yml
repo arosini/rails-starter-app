@@ -123,6 +123,7 @@ en:
       my_profile: 'My Profile'
     password_modal:
       title: 'Change Password'
+      submit: 'Submit Password Change'
     placeholders:
       password_confirmation: 'Re-enter new password'
     show:

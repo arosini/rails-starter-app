@@ -25,6 +25,7 @@ Linux Installation Instructions!!
     cd rails-starter-app
     bundle install
     rake db:migrate
+    rake db:migrate RAILS_ENV=test
     rake db:seed
     ```
 
@@ -68,6 +69,7 @@ Windows Installation Instructions!!
 6. From the the project root, run the following to set up the database:
      ```ruby
      rake db:migrate
+     rake db:migrate RAILS_ENV=test
      rake db:seed
      ```
 Your are done! To view the app, run the following command from the project root:

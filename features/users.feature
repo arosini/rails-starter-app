@@ -1,5 +1,5 @@
 @javascript
-Feature: User
+Feature: Users
 
   Scenario: An admin creates a new user
     Given I have signed in as "admin1@admin.com"
@@ -23,7 +23,6 @@ Feature: User
 
   Scenario Outline: A user tries to view another user's profile
     Given I have signed in as "<user>"
-    And I have navigated to the "home" page
     Then I should see links to the profile pages for only "<profiles>"
     And I should be able to view the profile pages for only "<profiles>"
 
@@ -41,7 +40,7 @@ Feature: User
       | admin1@admin.com |
       | user1@user.com   |
 
-  Scenario Outline: A user searches for another user
+  Scenario Outline: A user searches for other users
     Given I have signed in as "<user>"
     And I have navigated to the "Users" page
     When I search with the following values:
@@ -60,17 +59,18 @@ Feature: User
       | admin1@admin.com | a      | admin1@admin.com, admin2@admin.com                                 | search results and suggestions |  
       | admin1@admin.com | admin2 | admin2@admin.com                                                   | search results and suggestions |
 
-  Scenario: A visitor tries to edit users
+  Scenario: A visitor tries to edit other users
     Given I have not signed in
     Then I should not be able to navigate to the edit user page for "user1@user.com"
     And I should not be able to navigate to the edit user page for "admin1@admin.com"
 
-  Scenario Outline: A user tries to edit themselves
+  Scenario Outline: A user edits their email
     Given I have signed in as "<user>"
     And I have navigated to the edit user page for "<user>"
-    And I enter "updated@updated.com" in the "Email" field
+    When I enter "updated@updated.com" in the "Email" field
     And I click on the "Submit" button
-    Then I should be able to sign in as "updated@updated.com" 
+    Then I should see an alert message saying "Successfully updated user."
+    And I should be able to sign in as "updated@updated.com" 
     And I should not be able to sign in as "<user>"
 
     Examples:
@@ -78,33 +78,69 @@ Feature: User
       | user1@user.com   |
       | admin1@admin.com |
 
-  Scenario: A user tries to edit other users
+  Scenario: A user edits their password
+    Given I have signed in as "user1@user.com"
+    And I have navigated to the edit user page for "user1@user.com"
+    When I click on the "Change Password" button
+    And I enter "asdqwe" in the "Current Password" field
+    And I enter "asdqwe1" in the "Password" field
+    And I enter "asdqwe1" in the "Password Confirmation" field
+    And I click on the "Submit Password Change" button
+    Then I should see an alert message saying "Successfully updated password!"
+    And I should not be able to sign in as "user1@user.com" using "asdwqe" as the password
+    And I should be able to sign in as "user1@user.com" using "asdwqe1" as the password
+
+  Scenario: A user tries to edit their roles
+    Given I have signed in as "user1@user.com"
+    And I have navigated to the edit user page for "user1@user.com"
+    Then I should not see "Role"
+
+  Scenario: A user tries to edit another user
     Given I have signed in as "user1@user.com"
     Then I should not be able to navigate to the edit user page for "user2@user.com"
     And I should not be able to navigate to the edit user page for "admin1@admin.com"
 
-  Scenario Outline: An admin edits other users
+  Scenario Outline: An admin edits a user's email
     Given I have signed in as "admin1@admin.com"
     And I have navigated to the edit user page for "<user>"
-    And I enter "updated@updated.com" in the "Email" field
-    And I click on the "Submit"
-    Then I should be able to sign in as "updated@updated.com"
+    When I enter "updated@updated.com" in the "Email" field
+    And I click on the "Submit" button
+    Then I should see an alert message saying "Successfully updated user."
     And I should not be able to sign in as "<user>"
+    And I should be able to sign in as "updated@updated.com"
 
     Examples:
       | user             |
       | user1@user.com   |
+      | admin1@admin.com |
       | admin2@admin.com |
 
+  Scenario Outline: An admin edits a user's password
+    Given I have signed in as "admin1@admin.com"
+    And I have navigated to the edit user page for "<user>"
+    When I click on the "Change Password" button
+    And I enter "asdqwe" in the "Current Password" field
+    And I enter "asdqwe1" in the "Password" field
+    And I enter "asdqwe1" in the "Password Confirmation" field
+    And I click on the "Submit Password Change" button
+    Then I should see an alert message saying "Successfully updated password!"
+    And I should not be able to sign in as "<user>" using "asdwqe" as the password
+    And I should be able to sign in as "<user>" using "asdwqe1" as the password
 
-  Scenario: A user cannot delete other users
+    Examples:
+      | user             |
+      | user1@user.com   |
+      | admin1@admin.com |
+      | admin2@admin.com |
+
+  Scenario: A user tries to delete other users
     Given I have signed in as "user1@user.com"
     And I have navigated to the "Users" page
     Then I should not see "Delete"
     When I navigate to the profile page for "user2@user.com"
     Then I should not see "Delete"
 
-  Scenario: A user deletes themselves
+  Scenario: A user deletes themself
     Given I have signed in as "user1@user.com"
     And I have navigated to the "My Profile" page
     When I click on the "Delete" button

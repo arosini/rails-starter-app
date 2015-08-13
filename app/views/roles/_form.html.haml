@@ -13,5 +13,5 @@
         = f.text_field :name, id: "name-field", class: "form-control", 'data-parsley-rolenameunique' => '',  'data-parsley-required' => '', 'data-parsley-trigger' => 'change', 'data-parsley-errors-container' => "#name-field-errors"
       #name-field-errors.parsley-errors-container
       %br
-      = f.submit ('form.submit'), id: "submit", class: "submit-button"
+      = f.submit t('form.submit'), id: "submit", class: "submit-button"
   = back_btn

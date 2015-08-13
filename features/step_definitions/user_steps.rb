@@ -8,6 +8,14 @@ Given(/^I have signed in as "(.*?)"$/) do |email|
   @current_user = User.find_by(email: email)
 end
 
+Given(/^I have signed in as "(.*?)" using "(.*?)" as the password$/) do |email, password|
+  step 'I have navigated to the "Sign In" page'
+  step "I have entered \"#{email}\" in the \"Email\" field"
+  step "I have entered \"#{password}\" in the \"Password\" field"
+  step 'I have clicked on the "Sign In" button'
+  @current_user = User.find_by(email: email)
+end
+
 Given(/^I have not signed in$/) do
   visit('/sign_out')
 end
@@ -59,6 +67,15 @@ Then(/^I should( not)? be able to sign in as "(.*?)"$/) do |negate, email|
   if negate
     @current_user = nil
     step "I should see an error message saying \"Could not find a user with that email address.\""
+  end
+end
+
+Then(/^I should( not)? be able to sign in as "(.*?)" using "(.*?)" as the password$/) do |negate, email, password|
+  step 'I have not signed in'
+  step "I have signed in as \"#{email}\" using \"#{password}\" as the password"
+  if negate
+    @current_user = nil
+    step "I should see an error message saying \"Incorrect password. \""
   end
 end
 
