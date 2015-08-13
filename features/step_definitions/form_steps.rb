@@ -30,11 +30,12 @@ end
 
 When(/^I select "(.*?)" in the "(.*?)" dropdown$/) do |options, dropdown|
   options_to_select = options.split(/, | and /)
-  dropdown = page.first(:css, 'label', text: dropdown).find(:xpath, '..')
+  dropdown = page.first(:css, '.input-group', text: dropdown)
   dropdown.find(:css, '.dropdown-toggle').click
   dropdown.all(:css, 'li').each do |option|
-    option.find('label').click if !option[:class].include?('active') && options_to_select.include?(option.text)
-    option.find('label').click if option[:class].include?('active') && !options_to_select.include?(option.text)
+    selected = option[:class].include?('active')
+    should_select = options_to_select.include?(option.text)
+    option.find('label').click if (!selected && should_select) || (selected && !should_select)
   end
 end
 

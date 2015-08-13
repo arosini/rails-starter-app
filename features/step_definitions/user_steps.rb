@@ -90,8 +90,8 @@ Then(/^I should( not)? be able to view the profile page for "(.*?)"$/) do |negat
   step "I should#{negate} see the page title as \"#{profile_page_title}\""
 end
 
-Then(/^I should be able to view the profile pages for only "(.*?)"$/) do |users|
-  email_list = users.split(', ')
+Then(/^I should be able to view the profile pages for only "(.*?)"$/) do |emails|
+  email_list = emails.split(/, | and /)
   User.all.each do |user|
     expect_ability = email_list.include?(user.email)
     step "I should#{expect_ability ? '' : ' not'} be able to view the profile page for \"#{user.email}\""
@@ -115,8 +115,8 @@ Then(/^I should( not)? see a link to "(.*?)'s?" profile page$/) do |negate, emai
   end
 end
 
-Then(/^I should see links to the profile pages for only "(.*?)"$/) do |users|
-  email_list = users.split(', ')
+Then(/^I should see links to the profile pages for only "(.*?)"$/) do |emails|
+  email_list = emails.split(/, | and /)
   User.all.each do |user|
     expect_link = email_list.include?(user.email)
     step "I should#{expect_link ? '' : ' not'} see a link to \"#{user.email}'s\" profile page"
@@ -134,7 +134,7 @@ Then(/^I should( not)? see the profile page for "(.*?)"$/) do |negate, email|
 end
 
 Then(/^I should see search results( and suggestions)? for only the following users: "(.*?)"$/) do |suggestions, users|
-  email_list = users.split(', ')
+  email_list = users.split(/, | and /)
   User.all.each do |user|
     expect_user = email_list.include?(user.email)
     expect_suggestion = expect_user && suggestions

@@ -1,10 +1,12 @@
 TO DO:
 - Finish cucumber tests (testing to do)
 - Step definiton edit: Fill in field by label, change password edit steps
+- Make custom user_path (my_profile_path if current_user, otherwise user_path(@user))
 - Use more capybara magic (https://gist.github.com/zhengjia/428105) / http://www.elabs.se/blog/51-simple-tricks-to-clean-up-your-capybara-tests
 - Check tests. Make sure everything is explictly unit tested (not tested as a by-product of other tests), and all features have cucumber tests.
 - Make sure locales are all used, no repitition
-- Documenation. Make sure to document future development process (CI steps).
+- Fix up rubycritic results
+- Documentation. Make sure to document future development process (CI steps).
 - Squash to V1.0
 - Work on future features
 
