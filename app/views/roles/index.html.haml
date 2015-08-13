@@ -1,0 +1,32 @@
+- content_for :head do
+  %title= t('.title')
+
+#grid-wrap.wide
+  .col-md-5.col-centered
+    %h2.page-title.well.center= t('.title')
+    #notice
+      = render "/layouts/alert"
+  .col-xs-12.no-padding
+    .right
+      - if can? :new, Role
+        = link_to t('roles.new.title'), new_role_path, class: "btn btn-success"
+  %br
+  %br
+  #search= render "search", search: @search
+  #search-content
+    = render "roles_table", roles: @roles, search: @search
+  #loading
+  #pagination.center
+    = paginate @roles, remote: true, theme: 'twitter-bootstrap-3'
+  .center
+    = back_btn
+
+:css
+  #loading {
+    padding-top: 278px;
+  }
+
+:javascript
+  $(document).ready(function() {
+    setUpLoadingSpinner('loading', 'search-content');
+  });

@@ -1,0 +1,12 @@
+- content_for :head do
+  %title= t('.title')
+
+#grid-wrap.center
+  %h2.page-title.well= t('.title')
+  .well.col-xs-12
+    = render "/layouts/alert"
+    %p= t('.content')
+    = link_to t('.sign_in'), sign_in_path, class: "btn btn-primary btn-lg col-centered col-xs-6", id: "sign-in"
+    %br
+    %br
+    = link_to t('.sign_up'), sign_up_path, class: "btn btn-success btn-lg col-centered col-xs-6", id: "sign-up"

@@ -1,0 +1,36 @@
+- title = @user == current_user ? t('users.show.self_title') : t('users.show.other_title', user_id: @user.id)
+
+- content_for :head do
+  %title= title
+
+#grid-wrap
+  %h2.page-title.well.center= title
+  = render "/layouts/alert"
+  %table#users-table.table.table-striped.table-bordered.table-condensed.col-xs-12
+    %tbody
+      %tr
+        %td.bold= t('fields.id')
+        %td #{@user.id}
+      %tr
+        %td.bold= t('users.fields.email')
+        %td #{@user.email}
+      %tr
+        %td.bold= t('users.fields.role')
+        %td #{print_roles_as_links(@user)}
+      %tr
+        %td.bold= t('fields.created_at')
+        %td #{@user.created_at.format_time}
+      %tr
+        %td.bold= t('users.fields.sign_in_count')
+        %td #{@user.sign_in_count}
+      %tr
+        %td.bold= t('users.fields.last_sign_in_at')
+        %td #{@user.current_sign_in_at.format_time}
+  .right
+    - if can? :edit, @user
+      = link_to t('actions.edit'), edit_user_path(@user), class: "btn btn-warning"
+    - if can? :delete, @user
+      - delete_user_confirm = @user == current_user ? t('users.alerts.delete_self') : t('users.alerts.delete_other')
+      = link_to t('actions.delete'), user_path(@user), method: :delete, data: { confirm: "#{ delete_user_confirm }" }, class: "btn btn-danger"
+  %br
+  = back_btn

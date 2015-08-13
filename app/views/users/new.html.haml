@@ -1,0 +1,7 @@
+- content_for :head do
+  %title= t('.title')
+
+#grid-wrap
+  %h2.page-title.well.center= t('.title')
+  = render "form", user: @user
+  = back_btn

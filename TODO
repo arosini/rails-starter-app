@@ -1,0 +1,34 @@
+TO DO:
+- Finish cucumber tests (testing to do)
+- Documenation. Make sure to document future development process (CI steps).
+- Check tests. Make sure everything is explictly unit tested (not tested as a by-product of other tests), and all features have cucumber tests.
+- Work on future features
+
+KNOWN ISSUES:
+ - Any 'TO_REMOVE' comments
+ - Users controller gets a B in rubycritic
+ - Tests (especially MiniTest) are amatuer hour -- attempt refactor, research, get help, do something.
+   - Make sure everything is explicltly tested
+   - Minimize assertions/time per test
+   - Make sure all major actions in the app are covered by cucumber tests.
+
+POSSIBLE FUTURE FEATURES:
+  - Date search for users index
+  - Add multiple users (See railscast on nested forms).
+  - Retain search/advanced-search form values on users index
+  - Btn group elipses (when too many are selected to fit in button width)
+  - Change routes to not display key/model information -- https://github.com/namick/obfuscate_id
+  - Javascript code analyzer
+  - Metrics on routes, sign ups, etc... find some gems
+  - Voice activated UI
+  - Translate to another language
+
+TESTING TO DO:
+  - Users cucumber
+  - Roles cucumber
+
+DOCUMENTATION TO DO:
+  - Design a documentation system
+  - Use rdoc?
+  - Start up the wiki
+  - Document everything!

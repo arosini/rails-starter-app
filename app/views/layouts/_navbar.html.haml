@@ -1,0 +1,23 @@
+%nav.navbar.navbar-default.navbar-fixed-top.navbar-inverse{ role: 'navigation' }
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle{ 'data-target' => '#navbar', 'data-toggle' => 'collapse', type: 'button' }
+        %span.sr-only= t('navbar.toggle_navigation')
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+    #navbar.collapse.navbar-collapse
+      %ul.nav.navbar-nav.pull-left
+        - if user_signed_in?
+          %li= link_to t('navbar.profile'), my_profile_path, id: 'navbar-my-profile-link'
+          %li= link_to t('navbar.users'), root_path, id: 'navbar-users-link'
+          - if can? :index, Role
+            %li= link_to t('navbar.roles'), roles_path, id: 'navbar-roles-link'
+        - else
+          %li= link_to t('navbar.welcome'), root_path, id: 'navbar-welcome-link'
+      %ul.nav.navbar-nav.pull-right
+        - if user_signed_in?
+          %li=link_to t('navbar.sign_out'), sign_out_path, method: :delete, id: 'navbar-sign-out-link'
+        - else
+          %li= link_to t('navbar.sign_in'), sign_in_path, id: 'navbar-sign-in-link'
+          %li= link_to t('navbar.sign_up'), sign_up_path, id: 'navbar-sign-up-link'

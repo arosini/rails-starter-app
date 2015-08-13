@@ -1,0 +1,30 @@
+%table#users-table.table.table-striped.table-bordered.table-condensed.center.col-xs-12
+  %thead
+    %tr
+      %th= sort_link search, :id, t('fields.id'), {}, { remote: true, method: :get }
+      %th= sort_link search, :email, t('users.fields.email'), {}, { remote: true, method: :get }
+      %th.desktop-only= sort_link search, :role, t('users.fields.roles'), {}, { remote: true, method: :get }
+      %th.desktop-only= sort_link search, :created_at, t('fields.created_at'), {}, { remote: true, method: :get }
+      %th.desktop-only= sort_link search, :sign_in_count, t('users.fields.sign_in_count'), {}, { remote: true, method: :get }
+      %th.desktop-only= sort_link search, :last_sign_in_at, t('users.fields.last_sign_in_at'), {}, { remote: true, method: :get }
+      %th.desktop-only Actions
+  %tbody#users-table-body
+    - users.each do |user|
+      %tr
+        %td= link_to user.id, user_path(user)
+        %td= link_to user.email, user_path(user)
+        %td.desktop-only #{print_roles_as_links(user)}
+        %td.desktop-only #{user.created_at.format_time}
+        %td.desktop-only #{user.sign_in_count}
+        %td.desktop-only #{user.current_sign_in_at.format_time}
+        - if user.id != current_user.id
+          %td.desktop-only
+            - if can? :show, user
+              = link_to t('actions.show'), user_path(user), class: "btn btn-default"
+            - if can? :edit, user
+              = link_to t('actions.edit'), edit_user_path(user), class: "btn btn-warning"
+            - if can? :delete, user
+              - delete_user_confirm = user == current_user ? t('users.alerts.delete_self') : t('users.alerts.delete_other')
+              = link_to t('actions.delete'), user_path(user), method: :delete, data: { confirm: "#{ delete_user_confirm }" }, class: "btn btn-danger", remote: true
+        - else
+          %td.desktop-only= link_to t('users.users_table.my_profile'), my_profile_path, class: "btn btn-primary"

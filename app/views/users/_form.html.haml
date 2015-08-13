@@ -1,0 +1,42 @@
+.well.col-xs-12
+  = render "/layouts/alert"
+  = form_for(user, html: {'data-parsley-validate' => ''}) do |f|
+    = user.form_errors
+    .input-group.col-xs-12
+      = f.label :email, t('users.fields.email'), id: "email-label", class: "input-group-addon", for: "email-field"
+      = f.email_field :email, autofocus: true, autocomplete: "off", id: "email-field", class: "form-control", 'data-parsley-trigger' => 'change', 'data-parsley-errors-container' => "#email-field-errors", 'data-parsley-emailunique' => '',  'data-parsley-required' => ''
+    #email-field-errors.parsley-errors-container
+    %br
+    - if edit? or update?
+      %a.btn.btn-primary.btn-sm{"data-toggle" => "modal", href: "#change-password-modal"}= t('users.form.change_password_button')
+      %br
+      %br
+    - if new? or create?
+      .input-group.col-xs-12
+        = f.label :password, t('users.fields.password'), id: "password-label", class: "input-group-addon", for: "password-field"
+        = f.password_field :password, id: "password-field", class: "form-control", 'data-parsley-trigger' => 'change', 'data-parsley-errors-container' => "#password-field-errors", 'data-parsley-required' => '', 'data-parsley-minlength' => "6", 'data-parsley-minlength-message' => "#{t('users.errors.password.min_length')}"
+      #password-field-errors.parsley-errors-container
+      %br
+      .input-group.col-xs-12
+        = f.label :password_confirmation, t('users.fields.password_confirmation'), id: "password-confirmation-label", class: "input-group-addon", for: "password-confirmation-field"
+        = f.password_field :password_confirmation, id: "password-confirmation-field", class: "form-control", 'data-parsley-trigger' => 'change', 'data-parsley-errors-container' => "#password-confirmation-field-errors", 'data-parsley-equalto' => "#password-field", 'data-parsley-equalto-message' => "#{t('users.errors.password_confirmation.match_password')}", 'data-parsley-validate-if-empty' => ''
+      #password-confirmation-field-errors.parsley-errors-container
+      %br
+    - if can? :edit, UserRoleAssignment
+      .input-group.col-xs-12
+        = f.label :roles, t('users.fields.roles'), id: "role-label", class: "input-group-addon", for: "role-field"
+        - selected_roles = new? ? [Role.find_by(name: 'User').id] : user.role_ids
+        = f.select(:role_ids, Role.all.map{|r| [r.name, r.id]},{selected: selected_roles},{ multiple: "multiple", id: "role-field", class: "form-control", 'data-parsley-required' => '', 'data-parsley-required-message' => "#{t('users.errors.roles.required')}", 'data-parsley-trigger' => 'change', 'data-parsley-errors-container' => "#roles-field-errors"})
+      #roles-field-errors.parsley-errors-container
+    %br
+    .center
+      = f.submit t('form.submit'), id: "submit-button", class: "submit-button"
+
+- if edit? or update?
+  = render 'change_password_modal', user_id: user.id
+
+:javascript
+  $(document).ready(function() {
+    $("#role-field").multiselect();
+    validatePasswordConfirmationOnPasswordValidate();
+  });

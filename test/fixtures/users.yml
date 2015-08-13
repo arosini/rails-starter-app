@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+admin1:
+  id: 1
+  email: admin1@admin.com
+  encrypted_password: <%= User.new.send(:password_digest, 'asdqwe') %>
+  roles: admin
+  
+admin2:
+  id: 2
+  email: admin2@admin.com
+  encrypted_password: <%= User.new.send(:password_digest, 'asdqwe') %>
+  roles: admin
+
+user1:
+  id: 3
+  email: user1@user.com
+  encrypted_password: <%= User.new.send(:password_digest, 'asdqwe') %>
+  roles: user
+  
+user2:
+  id: 4
+  email: user2@user.com
+  encrypted_password: <%= User.new.send(:password_digest, 'asdqwe') %>
+  roles: user

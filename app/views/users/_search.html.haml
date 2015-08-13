@@ -1,0 +1,170 @@
+= search_form_for search, url: search_users_path, method: :get, id: "user-search", remote: true  do |f|
+  .input-group.col-xs-12
+    = f.label :email, id: "email-search-label", class:"input-group-addon", for: "email-search-field"
+    #email-search-field
+      .col-xs-4.text-search
+        #email-eq-search.hide
+          = f.text_field :email_eq, id: "email-eq-search-field", class: "form-control typeahead input-timer"
+        #email-cont-search
+          = f.text_field :email_cont, id: "email-cont-search-field", class: "form-control typeahead input-timer"
+      .col-xs-2.checkbox-label
+        = check_box_tag :email_exact_match, "true"
+        = label_tag :email_exact_match, t('search.exact_match')
+  %br
+  #advanced-search
+    .input-group.col-xs-12
+      = f.label :id, id: "id-search-label", class:"input-group-addon", for: "id-search-field"
+      #id-search-field
+        #id-range-search
+          .col-xs-2.number-search
+            = f.search_field :id_gteq, id: "id-gteq-search-field", class: "form-control number-timer", type: "tel", min: "0", step: "1"
+          .col-xs-1.center.mid-number-label= t('search.to')
+          .col-xs-2.number-search
+            = f.search_field :id_lteq, id: "id-lteq-search-field", class: "form-control number-timer", type: "tel", min: "0", step: "1"
+        #id-single-search.col-xs-2.number-search.hide
+          = f.search_field :id_eq, id: "id-eq-search-field", class: "form-control number-timer", type: "tel", min: "0", step: "1"
+        .col-xs-2.checkbox-label
+          = check_box_tag :id_toggle_range, "true", true
+          = label_tag :id_toggle_range, t('search.use_range')
+    %br
+    .input-group.col-xs-12
+      = f.label :role, id: "role-search-label", class:"input-group-addon", for: "role-search-field"
+      #role-search-field
+        .col-xs-3.text-search
+          #role-eq-search.hide
+            = f.text_field :roles_name_eq, id: "role-eq-search-field", class: "form-control typeahead input-timer"
+          #role-cont-search
+            = f.text_field :roles_name_cont, id: "role-cont-search-field", class: "form-control typeahead input-timer"
+        .col-xs-2.checkbox-label
+          = check_box_tag :role_exact_match, "true"
+          = label_tag :role_exact_match, t('search.exact_match')
+    %br
+    .input-group.col-xs-12
+      = f.label :sign_in_count, id: "sign-in-count-search-label", class:"input-group-addon", for: "sign-in-count-search-field"
+      #sign-in-count-range-search
+        .col-xs-2.number-search
+          = f.search_field :sign_in_count_gteq, id: "sign-in-count-gteq-search-field", type: "tel", class: "form-control number-timer", min: "0", step: "1"
+        .col-xs-1.center.mid-number-label= t('search.to')
+        .col-xs-2.number-search
+          = f.search_field :sign_in_count_lteq, id: "sign-in-count-lteq-search-field", type: "tel", class: "form-control number-timer", min: "0", step: "1"
+      #sign-in-count-single-search.col-xs-2.number-search.hide
+        = f.search_field :sign_in_count_eq, id: "sign-in-count-eq-search-field", type: "tel", class: "form-control number-timer", min: "0", step: "1"
+      .col-xs-2.checkbox-label
+        = check_box_tag :sign_in_count_toggle_range, "true", true
+        = label_tag :sign_in_count_toggle_range, t('search.use_range')
+  %br
+  .actions.hide= f.submit t('search.submit'), id: "submit-search"
+
+:scss
+  .no-side-padding {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .fix-height {
+    height: 34px;
+    line-height: 34px;
+  }
+
+  .number-search {
+    width: 37.5%;
+    max-width: 130px;
+    @extend .no-side-padding;
+  }
+
+  .mid-number-label {
+    width: 25%;
+    max-width: 80px;
+    @extend .no-side-padding, .fix-height;
+  }
+
+  .text-search {
+    width: 100%;
+    max-width: 340px;
+    @extend .fix-height, .no-side-padding;
+  }
+
+  .checkbox-label {
+    width: auto;
+    @extend .fix-height;
+  }
+
+:javascript
+  $(document).ready(function() {
+    setUpTypingTimer('.input-timer, .number-timer', doneTyping, 200, startTyping);
+    setUpClearSearch();
+
+    setUpTypeAhead(#{User.all.select{|u| can? :read, u}.to_json}, 'email', '#email-eq-search-field, #email-cont-search-field', 'users');
+    setUpTypeAhead(#{Role.all.to_json}, 'name', '#role-eq-search-field, #role-cont-search-field', 'roles');
+    setUpTypeaheadSelectCallback('.typeahead', doneTyping);
+
+    setUpToggleRange("id");
+    setUpToggleRange("sign-in-count");
+
+    setUpToggleExactMatch("role");
+    setUpToggleExactMatch("email");
+  });
+
+  // Clears all search values
+  function setUpClearSearch() {
+    $("#clear-search").click(function() {
+      $("input").each(function() {
+        $(this).val("");
+      });
+      $("#submit-search").click();
+    });
+  }
+
+  function doneTyping() {
+    $("#submit-search").click();
+  }
+
+  function startTyping() {
+    $("#search-content").hide();
+    $("#loading").show();
+  }
+
+  // Displays range (gteq and lteq) or equal filter
+  function setUpToggleRange(id) {
+    $("#" + id.replace(/-/g , "_") + "_toggle_range").change(function() {
+      // Current state is before change
+      if($(this).is(":checked")) {
+        $("#" + id + "-single-search").addClass('hide');
+        $("#" + id + "-range-search").removeClass('hide');
+        // Clear single search
+        $("#" + id + "-eq-search-field").val("");
+      }
+      else {
+        $("#" + id + "-single-search").removeClass('hide');
+        $("#" + id + "-range-search").addClass('hide');
+        // Clear range search
+        $("#" + id + "-gteq-search-field, #" + id + "-lteq-search-field").val("");
+      }
+      // Research with new params
+      $("#submit-search").click();
+    });
+  }
+
+  // Displays contains or equal filter
+  function setUpToggleExactMatch(id) {
+    $("#" + id.replace(/-/g , "_") + "_exact_match").change(function() {
+      if(!$(this).is(":checked")) {
+        $("#" + id + "-cont-search-field").val( $("#" + id + "-eq-search-field").val() );
+        $("#" + id + "-eq-search-field").val("");
+
+        $("#" + id + "-eq-search").addClass('hide');
+        $("#" + id + "-cont-search").removeClass('hide');
+        // Do not search if value was blank
+        if( !($("#" + id + "-cont-search-field").val() == "") ) { $("#submit-search").click(); }
+      }
+      else {
+        $("#" + id + "-eq-search-field").val( $("#" + id + "-cont-search-field").val() );
+        $("#" + id + "-cont-search-field").val("");
+
+        $("#" + id + "-eq-search").removeClass('hide');
+        $("#" + id + "-cont-search").addClass('hide');
+        // Do not search if value was blank
+        if( !($("#" + id + "-eq-search-field").val() == "") ) { $("#submit-search").click(); }
+      }
+    });
+  }

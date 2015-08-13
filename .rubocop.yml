@@ -1,0 +1,25 @@
+AllCops:
+  Exclude:
+    - 'db/schema.rb'
+    - 'db/migrate/*.rb'
+    - 'config/initializers/*.rb'
+    - 'lib/tasks/cucumber.rake'
+    - 'script/cucumber'
+    - 'features/support/env.rb'
+Metrics/ClassLength:
+  Enabled: false
+
+HasAndBelongsToMany:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 25
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/AbcSize:
+  Max: 30
+
+Style/RescueModifier:
+ Enabled: false

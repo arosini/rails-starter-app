@@ -1,0 +1,14 @@
+!!!
+%html
+  %head
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
+    - if mobile_agent?
+      %meta{ content: "width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no", name: "viewport" }
+    = csrf_meta_tags
+    = content_for :head
+  %body
+    #page-wrap.container-fluid
+      = render '/layouts/navbar'
+      #content-wrap= yield
+      #page-load

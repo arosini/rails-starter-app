@@ -1,0 +1,2 @@
+$('#search-content').html('<%= escape_javascript(render "users_table", users: @users, search: @search) %>');
+$('#pagination').html('<%= escape_javascript(paginate @users, remote: true, theme: "twitter-bootstrap-3") %>');

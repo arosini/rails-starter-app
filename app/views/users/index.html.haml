@@ -1,0 +1,128 @@
+- content_for :head do
+  %title= t('.title')
+
+#grid-wrap.wide
+  .col-md-5.col-centered
+    %h2.page-title.well.center= t('.title')
+    #notice
+      = render "/layouts/alert"
+  .col-xs-5
+    .pull-left
+      %btn#toggle-advanced-search.btn.btn-warning= t('search.advanced')
+      %btn#toggle-search.btn.btn-primary= t('search.normal')
+      %btn#clear-search.btn.btn-warning= t('search.clear')
+  .col-xs-7
+    .pull-right
+      - if can? :create, User
+        = link_to t('.new_user'), new_user_path, class: "btn btn-success"
+  .col-xs-12
+    %br
+    #search
+      = render "search", search: @search
+    #search-content
+      = render "users_table", users: @users, search: @search
+    #loading
+    .center
+      #pagination
+        = paginate @users, remote: true, theme: 'twitter-bootstrap-3'
+
+:css
+  #loading {
+    padding-top: 278px;
+  }
+
+  /* RESPONSIVE */
+  @media only screen
+  and (max-width: 675px) {
+    #loading {
+      padding-top: 208px;
+    }
+
+    #toggle-search {
+      margin-bottom: 10px;
+    }
+
+    .desktop-only, .checkbox-label, th.desktop-only, td.desktop-only {
+      display: none;
+    }
+  }
+
+  /* LANDSCAPE */
+  @media only screen and (min-aspect-ratio: 13/9) {
+    .checkbox-label {
+      display: inline-block;
+    }
+  }
+
+:javascript
+  $(document).ready(function() {
+    recreateSearchView();
+    setUpSearchModeToggle();
+    setUpLoadingSpinner('loading', 'search-content');
+  });
+
+  function setUpSearchModeToggle() {
+    var values = getValues("#advanced-search input");
+
+    $("#toggle-search").click(function() {
+      // On page load, normal search will be shown
+      eraseCookie("advanced");
+
+      $("#advanced-search").slideUp( "slow", function() {
+        values = getValues("#advanced-search input");
+        clearValues("#advanced-search input");
+        $("#submit-search").click();
+      });
+
+      $("#toggle-search, #clear-search").slideUp( "medium", function() {
+        $("#toggle-advanced-search").slideDown("medium", function(){ });
+      });
+
+      $("#loading").show();
+      $("#search-content").hide();
+    });
+
+    $("#toggle-advanced-search").click(function() {
+      // Reload values for advanced search
+      restoreValues(values, "#advanced-search input");
+      // On page load, advanced search will be shown
+      createCookie("advanced", "true");
+      $("#advanced-search").slideDown("slow", function(){ });
+      $("#toggle-advanced-search").slideUp("medium", function() {
+        $("#toggle-search, #clear-search").slideDown("medium", function(){ });
+      });
+      $("#submit-search").click();
+    });
+  }
+
+  // Show advanced search if user was last viewing advanced search.
+  function recreateSearchView() {
+    if(readCookie("advanced")) {
+      $("#toggle-advanced-search").hide();
+      $("#toggle-search, #clear-search, #advanced-search").show();
+    }
+    else {
+      $("#toggle-advanced-search").show();
+      $("#toggle-search, #clear-search, #advanced-search").hide();
+    }
+  }
+
+  function getValues(selector) {
+    var values = [];
+    $(selector).each(function() {
+      values.push($(this).val());
+    });
+    return values;
+  }
+
+  function clearValues(selector) {
+    $(selector).each(function() {
+      $(this).val("");
+    });
+  }
+
+  function restoreValues(values, selector) {
+    $(selector).each(function(i) {
+     $(this).val(values[i]);
+    })
+  }

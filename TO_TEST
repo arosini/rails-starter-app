@@ -1,0 +1,61 @@
+CI Steps:
+  Static Code Analysis:
+    - rubocop (No errors)
+    - rails_best_practices (No errors)
+    - rubycritic app features (No smells, all classes green [A or B])
+
+  Security Analysis:
+    - brakeman (No errors/warnings)
+
+  Tests:
+    - rake test TESTOPTS='--profile' (No failures/errors, 100% code coverage, try to make tests as fast as possible)
+    - cucumber (No failures, no unused steps, try to make scenarios as short as possible)
+
+Every Page:
+  - Test on Desktop/Android Phone/iPhone/Android Tablet/iPad in Chrome/Firefox/Safari:
+    - Responsive
+    - Mobile
+    - Mobile landscape
+  - Javascript/css errors
+  - Page content
+  - Page styles
+  - Page actions
+
+Users/Index: Test each fields functionality through the following tests
+  - Search toggle buttons works (in both directions):
+    - Reloads search
+    - Email text is not cleared.
+    - Spam test
+  - Clear search button works
+    - Clears all search fields (not checkboxes).
+    - Reloads search
+    - Spam test
+  - Exact match checkboxes work
+    - Text is not cleared
+    - Search reloads except on blank input
+    - Check logic for checked and unchecked
+  - Use range checkboxes work
+    - Input is cleared
+    - Search reloads
+    - Check logic for checked and unchecked
+  - Test typeaheads
+    - Results appear
+    - Page reloads when they are clicked
+    - Proper height
+  - Test number inputs (in all browsers)
+    - Only allows digits (searches on only digit input)
+    - Doesn't delete input withen putting in a non-digit
+    - Shows number keyboard on mobile
+  - Test keyboard functions on all search fields:
+    - Copy/paste (reload on paste)
+    - Delete (reload unless blank)
+    - Enter (reloads)
+    - Tab (next field, no reload)
+  - Sorting links
+    - Reloads search
+    - Records are sorted properly
+  - Pagination
+    - Reloads search
+    - Loading icon shouldn't move pagination links with full page of users displayed.
+  - Search state (advanced or normal) is kept on page reload and navigation. Fields are cleared currently.
+  - Delete user AJAX

@@ -1,0 +1,16 @@
+#alert
+  - if notice
+    %p.alert.alert-dismissible.alert-success{role: "alert"}
+      %button.close{"data-dismiss" => "alert", type: "button"}
+        %span{"aria-hidden" => "true"} ×
+        %span.sr-only= t('close')
+      = notice
+      - flash[:notice] = nil
+
+  - if alert
+    %p.alert.alert-dismissible.alert-danger{role: "alert"}
+      %button.close{"data-dismiss" => "alert", type: "button"}
+        %span{"aria-hidden" => "true"} ×
+        %span.sr-only= t('close')
+      = alert
+      - flash[:alert] = nil

@@ -1,0 +1,20 @@
+%table#roles-table.table.table-striped.table-bordered.table-condensed.center.col-xs-12
+  %thead
+    %tr
+      %th= sort_link search, :id, t('roles.fields.id'), {}, { :remote => true, :method => :get }
+      %th= sort_link search, :name, t('roles.fields.name'), {}, { :remote => true, :method => :get }
+      %th= t('roles.fields.users')
+      %th= t('actions.column_title')
+  %tbody#role-table-body
+    - roles.each do |role|
+      %tr
+        %td= link_to role.id, role_path(role)
+        %td #{role.name}
+        %td #{role.print_users}
+        %td
+          - if can? :show, role
+            = link_to t('actions.show'), role_path(role), class: "btn btn-default"
+          - if can? :edit, role
+            = link_to t('actions.update'), edit_role_path(role), class: "btn btn-warning"
+          - if can? :delete, role
+            = link_to t('actions.delete'), role_path(role), method: :delete, data: { confirm: "#{t('roles.alerts.delete')}" }, class: "btn btn-danger", remote: true

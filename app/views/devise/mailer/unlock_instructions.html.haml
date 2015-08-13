@@ -1,0 +1,4 @@
+%p= t('devise.greeting.hello', email: @resource.email)
+%p= t('.body')
+%p= t('.instructions')
+%p= link_to t('.link'), unlock_url(@resource, unlock_token: @token)

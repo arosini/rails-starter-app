@@ -1,0 +1,31 @@
+- content_for :head do
+  %title= t('.page_title')
+
+#grid-wrap
+  %h2.page-title.well.center= t('.page_title')
+  .well.center
+    = render "/layouts/alert"
+    = devise_error_messages!
+    = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { id: 'sign_up', class: 'form', role: 'form', 'data-parsley-validate' => ''}) do |f|
+      .input-group.col-xs-12
+        = f.label :email, t('uses.fields.email'), id: "email-label", class: "input-group-addon", for: "email-field"
+        = f.email_field :email, autofocus: true,  id: "email-field", class: "form-control", 'data-parsley-emailunique' => '', 'data-parsley-required' => '', 'data-parsley-trigger' => 'change', 'data-parsley-errors-container' => "#email-field-errors"
+      #email-field-errors.parsley-errors-container
+      %br
+      .input-group.col-xs-12
+        = f.label :password, t('users.fields.password'), id: "password-label", class: "input-group-addon", for: "password-field"
+        = f.password_field :password, autocomplete: "off", id: "password-field", class: "form-control", 'data-parsley-minlength-message' => t('users.errors.password.min_length'), 'data-parsley-required' => '', 'data-parsley-minlength' => "6", 'data-parsley-trigger' => 'change', 'data-parsley-errors-container' => "#password-field-errors"
+      #password-field-errors.parsley-errors-container
+      %br
+      .input-group.col-xs-12
+        = f.label :password_confirmation, t('users.fields.password_confirmation'), id: "password-confirmation-label", class: "input-group-addon", for: "password-confirmation"
+        = f.password_field :password_confirmation, autocomplete: "off", id: "password-confirmation-field", class: "form-control", placeholder: "#{t('users.placeholders.password_confirmation') }", 'data-parsley-equalto' => "#password-field", 'data-parsley-trigger' => 'change', 'data-parsley-errors-container' => "#password-confirmation-field-errors", 'data-parsley-equalto-message' => "#{t('users.errors.password_confirmation.match_password')}"
+      #password-confirmation-field-errors.parsley-errors-container
+      %br
+      = f.submit t('.page_title'), id: "sign-up-button", class: "submit-button"
+  = render "devise/shared/links"
+
+:javascript
+  $(document).ready(function() {
+    validatePasswordConfirmationOnPasswordValidate();
+  });
