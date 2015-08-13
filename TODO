@@ -13,6 +13,7 @@ KNOWN ISSUES:
    - Make sure all major actions in the app are covered by cucumber tests.
 
 POSSIBLE FUTURE FEATURES:
+  - Add name of user updated/deleted to confirmation message
   - Date search for users index
   - Add multiple users (See railscast on nested forms).
   - Retain search/advanced-search form values on users index

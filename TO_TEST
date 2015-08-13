@@ -11,17 +11,19 @@ CI Steps:
     - rake test TESTOPTS='--profile' (No failures/errors, 100% code coverage, try to make tests as fast as possible)
     - cucumber (No failures, no unused steps, try to make scenarios as short as possible)
 
-Every Page:
-  - Test on Desktop/Android Phone/iPhone/Android Tablet/iPad in Chrome/Firefox/Safari:
-    - Responsive
-    - Mobile
-    - Mobile landscape
-  - Javascript/css errors
-  - Page content
-  - Page styles
-  - Page actions
+Manual tests for every page on Desktop/Android Phone/iPhone/Android Tablet/iPad in Chrome/Firefox/Safari/Opera:
+  - Ensure no JavaScript/CSS/other errors or warnings
+  - Ensure page content/styles are displaying approriately (responsive/landscape as well)
+  - Ensure page actions all work 
+    - Buttons are clickable / greyed out when necessary
+    - Input fields allow copy + paste (except passwords)
+    - Forms have front-end validation
+    - Forms have back-end validation (disable front-end in browser)
 
-Users/Index: Test each fields functionality through the following tests
+
+Cucumber tests to write:
+- Roles CRUD
+ - Users/Index: Test each fields functionality through the following tests
   - Search toggle buttons works (in both directions):
     - Reloads search
     - Email text is not cleared.

@@ -1,8 +1,5 @@
 @javascript
 Feature: Navbar
-  As a user
-  In order to quickly access different areas of the application
-  I want a navbar with links to the primary pages of the site
 
   Scenario: Unauthenticacted user sees specific links in the navbar
     Given I have not signed in
