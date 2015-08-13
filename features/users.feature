@@ -133,6 +133,25 @@ Feature: Users
       | admin1@admin.com |
       | admin2@admin.com |
 
+  Scenario Outline: An admin changes a user's roles
+    Given I have signed in as "admin1@admin.com"
+    And I have navigated to the edit user page for "<user>"
+    When I select "<roles>" in the "Roles" dropdown
+    And I click on the "Submit" button
+    Then I should see the profile page for "<user>"
+    And I should see an alert message saying "Successfully updated user."
+    And I should see "<roles>" in the "Role" row
+
+    Examples:
+      | user             | roles       |
+      | user1@user.com   | Admin       |
+      | user1@user.com   | User, Admin |
+      | admin1@admin.com | User        |
+      | admin1@admin.com | Admin, User |
+      | admin2@admin.com | User        |
+      | admin2@admin.com | Admin, User |
+
+
   Scenario: A user tries to delete other users
     Given I have signed in as "user1@user.com"
     And I have navigated to the "Users" page

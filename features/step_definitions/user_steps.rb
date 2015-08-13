@@ -123,6 +123,16 @@ Then(/^I should see links to the profile pages for only "(.*?)"$/) do |users|
   end
 end
 
+Then(/^I should( not)? see the profile page for "(.*?)"$/) do |negate, email|
+  user = User.find_by(email: email)
+  same_user = user == @current_user
+  path = same_user ? my_profile_path : user_path(user)
+  profile_page_title =
+    same_user ? I18n.t('users.show.self_title') : I18n.t('users.show.other_title', user_id: user.id)
+  step "the current path should#{negate} be \"#{path}\""
+  step "I should#{negate} see the page title as \"#{profile_page_title}\""
+end
+
 Then(/^I should see search results( and suggestions)? for only the following users: "(.*?)"$/) do |suggestions, users|
   email_list = users.split(', ')
   User.all.each do |user|

@@ -37,7 +37,7 @@ class UsersController < ApplicationController
   def update
     if @user.update_attributes(update_params)
       flash[:notice] = t('users.notices.update')
-      redirect_to @user
+      update_params[:email] == current_user.email ? redirect_to(my_profile_path) : redirect_to(@user)
     else
       render :edit
     end
@@ -87,7 +87,7 @@ class UsersController < ApplicationController
   end
 
   def update_params
-    if current_user.id.to_s == params[:id]
+    if current_user.id.to_s == params[:id] && !current_user.admin?
       required_params.permit(:email)
     elsif can?(:edit, @user)
       required_params.permit(:email, role_ids: [])

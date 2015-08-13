@@ -28,6 +28,16 @@ When(/^I search with the following values:$/) do |table|
   end
 end
 
+When(/^I select "(.*?)" in the "(.*?)" dropdown$/) do |options, dropdown|
+  options_to_select = options.split(/, | and /)
+  dropdown = page.first(:css, 'label', text: dropdown).find(:xpath, '..')
+  dropdown.find(:css, '.dropdown-toggle').click
+  dropdown.all(:css, 'li').each do |option|
+    option.find('label').click if !option[:class].include?('active') && options_to_select.include?(option.text)
+    option.find('label').click if option[:class].include?('active') && !options_to_select.include?(option.text)
+  end
+end
+
 # THEN
 Then(/^I should( not)? see an error message saying "(.*?)" near the "(.*?)" field$/) do |negate, msg, field_name|
   error_field = page.find('#' + field_name.downcase.tr(' ', '-') + '-field-errors') rescue ''

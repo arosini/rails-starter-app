@@ -22,8 +22,6 @@ Manual tests for every page on Desktop/Android Phone/iPhone/Android Tablet/iPad 
 
 
 Cucumber tests to write:
-- Users password edit
-- Users role edit
 - Roles CRUD
  - Users/Index: Test each fields functionality through the following tests
   - Search toggle buttons works (in both directions):

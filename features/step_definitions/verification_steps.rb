@@ -44,3 +44,8 @@ Then(/^I should( not)? be able to navigate to the "(.*?)" page$/) do |negate, pa
     step "I should see an error message saying \"#{msg}\"" if @current_user
   end
 end
+
+Then(/^I should( not)? see "(.*?)" in the "(.*?)" row$/) do |negate, value, row|
+  cell = page.find(:css, 'td', text: row).find(:xpath, '..').find(:css, 'td', text: value)
+  expect(cell).send(negate ? :to : :to_not, be_nil)
+end

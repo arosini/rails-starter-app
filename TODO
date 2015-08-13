@@ -1,7 +1,7 @@
 TO DO:
 - Finish cucumber tests (testing to do)
 - Step definiton edit: Fill in field by label, change password edit steps
-- Use more capybara magic (https://gist.github.com/zhengjia/428105)
+- Use more capybara magic (https://gist.github.com/zhengjia/428105) / http://www.elabs.se/blog/51-simple-tricks-to-clean-up-your-capybara-tests
 - Check tests. Make sure everything is explictly unit tested (not tested as a by-product of other tests), and all features have cucumber tests.
 - Make sure locales are all used, no repitition
 - Documenation. Make sure to document future development process (CI steps).
