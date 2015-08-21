@@ -29,6 +29,7 @@ POSSIBLE FUTURE FEATURES:
   - Metrics on routes, sign ups, etc... find some gems
   - Voice activated UI
   - Translate to another language
+  - Messaging
 
 TESTING TO DO:
   - Users advanced search cucumber

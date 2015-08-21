@@ -1,6 +1,15 @@
 @javascript
 Feature: Users
 
+  Scenario: A visitor tries to access the new user page
+    Given I have not signed in
+    When I navigate to the "new user" page
+    Then I should see an error message saying "You need to sign in or sign up before continuing."
+
+  Scenario: A user tries to access the new user page
+    Given I have signed in as "user1@user.com"
+    Then I should not be able to navigate to the "new user" page
+
   Scenario: An admin creates a new user
     Given I have signed in as "admin1@admin.com"
     When I navigate to the "new user" page
@@ -12,25 +21,6 @@ Feature: Users
     And I click on the "Submit" button
     Then I should be able to sign in as "test@test.com"
 
-  Scenario: A user tries to access the new user page
-    Given I have signed in as "user1@user.com"
-    Then I should not be able to navigate to the "new user" page
-
-  Scenario: A visitor tries to access the new user page
-    Given I have not signed in
-    When I navigate to the "new user" page
-    Then I should see an error message saying "You need to sign in or sign up before continuing."
-
-  Scenario Outline: A user tries to view another user's profile
-    Given I have signed in as "<user>"
-    Then I should see links to the profile pages for only "<profiles>"
-    And I should be able to view the profile pages for only "<profiles>"
-
-    Examples:
-    	| user 			       | profiles			                                                      |
-    	| user1@user.com   | user1@user.com, user2@user.com                                     |
-    	| admin1@admin.com | admin1@admin.com, admin2@admin.com, user1@user.com, user2@user.com |
-
   Scenario Outline: A visitor tries to view a user's profile
     Given I have not signed in
     Then I should not be able to view the profile page for "<email>"
@@ -39,6 +29,20 @@ Feature: Users
       | email            |
       | admin1@admin.com |
       | user1@user.com   |
+
+  Scenario: A user tries to view an admin's profile
+    Given I have signed in as "user1@user.com"
+    Then I should not be able to view the profile pages for "admin1@admin.com"
+
+  Scenario Outline: A user views another user's profile
+    Given I have signed in as "<user>"
+    Then I should see links to the profile pages for only "<profiles>"
+    And I should be able to view the profile pages for only "<profiles>"
+
+    Examples:
+    	| user 			       | profiles			                                                      |
+    	| user1@user.com   | user1@user.com, user2@user.com                                     |
+    	| admin1@admin.com | admin1@admin.com, admin2@admin.com, user1@user.com, user2@user.com |
 
   Scenario Outline: A user searches for other users
     Given I have signed in as "<user>"
