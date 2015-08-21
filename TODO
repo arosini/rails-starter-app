@@ -1,23 +1,22 @@
 TO DO:
 - Finish cucumber tests (testing to do)
-- Step definiton edit: Fill in field by label, change password edit steps
-- Make custom user_path (my_profile_path if current_user, otherwise user_path(@user))
-- Use more capybara magic (https://gist.github.com/zhengjia/428105) / http://www.elabs.se/blog/51-simple-tricks-to-clean-up-your-capybara-tests
-- Check tests. Make sure everything is explictly unit tested (not tested as a by-product of other tests), and all features have cucumber tests.
-- Make sure locales are all used, no repitition
-- Fix up rubycritic results
+- Step definiton edit: Fill in field by label (not ID), change form cucumbers (password edit, sign up, sign in, etc...)
+- Make custom user_path (my_profile_path if current_user, otherwise user_path(@user)). Remove logic that does this in users controller and views.
+- Audit locales for usage (no unused), repition (minimize this) and structure (be consistent!)
+- Fix up known issues
 - Documentation. Make sure to document future development process (CI steps).
-- Squash to V1.0
-- Deploy
+- Squash to V1.0 and deploy
 - Work on future features
 
 KNOWN ISSUES:
  - Any 'TO_REMOVE' comments
- - Users controller gets a B in rubycritic
+ - Rubycritic hates things
  - Tests (especially MiniTest) are amatuer hour -- attempt refactor, research, get help, do something.
    - Make sure everything is explicltly tested
    - Minimize assertions/time per test
    - Make sure all major actions in the app are covered by cucumber tests.
+   - Remove use of DOM in cucumber steps as much as possible.
+   - Use more capybara magic (https://gist.github.com/zhengjia/428105) / http://www.elabs.se/blog/51-simple-tricks-to-clean-up-your-capybara-tests
 
 POSSIBLE FUTURE FEATURES:
   - Add name of user updated/deleted to confirmation message
@@ -26,15 +25,11 @@ POSSIBLE FUTURE FEATURES:
   - Retain search/advanced-search form values on users index
   - Btn group elipses (when too many are selected to fit in button width)
   - Change routes to not display key/model information -- https://github.com/namick/obfuscate_id
-  - Javascript code analyzer
-  - Metrics on routes, sign ups, etc... find some gems
+  - Javascript code analyzer (maybe convert to coffescript?)
+  - Metrics on routes, sign ups, etc... find some gems and make a dashboard
   - Voice activated UI
   - Translate to another language
-  - Messaging
-
-TESTING TO DO:
-  - Users advanced search cucumber
-  - Roles cucumber
+  - Messaging (users can send messages)
 
 DOCUMENTATION TO DO:
   - Design a documentation system

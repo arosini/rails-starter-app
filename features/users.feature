@@ -36,32 +36,12 @@ Feature: Users
 
   Scenario Outline: A user views another user's profile
     Given I have signed in as "<user>"
-    Then I should see links to the profile pages for only "<profiles>"
-    And I should be able to view the profile pages for only "<profiles>"
+    Then I should be able to view the profile pages for only "<profiles>"
 
     Examples:
     	| user 			       | profiles			                                                      |
     	| user1@user.com   | user1@user.com, user2@user.com                                     |
     	| admin1@admin.com | admin1@admin.com, admin2@admin.com, user1@user.com, user2@user.com |
-
-  Scenario Outline: A user searches for other users
-    Given I have signed in as "<user>"
-    And I have navigated to the "Users" page
-    When I search with the following values:
-      | field | value    |
-      | Email | <search> |
-    Then I should see <results> for only the following users: "<users>"
-
-    Examples:
-      | user             | search | users                                                              | results                        |  
-      | user1@user.com   |        | user1@user.com, user2@user.com                                     | search results                 |  
-      | user1@user.com   | user2  | user2@user.com                                                     | search results and suggestions |  
-      | user1@user.com   | a      |                                                                    | search results and suggestions |  
-      | admin1@admin.com |        | admin1@admin.com, admin2@admin.com, user1@user.com, user2@user.com | search results                 |  
-      | admin1@admin.com | u      | user1@user.com, user2@user.com                                     | search results and suggestions |  
-      | admin1@admin.com | user2  | user2@user.com                                                     | search results and suggestions |  
-      | admin1@admin.com | a      | admin1@admin.com, admin2@admin.com                                 | search results and suggestions |  
-      | admin1@admin.com | admin2 | admin2@admin.com                                                   | search results and suggestions |
 
   Scenario: A visitor tries to edit other users
     Given I have not signed in
@@ -155,13 +135,10 @@ Feature: Users
       | admin2@admin.com | User        |
       | admin2@admin.com | Admin, User |
 
-
   Scenario: A user tries to delete other users
     Given I have signed in as "user1@user.com"
-    And I have navigated to the "Users" page
-    Then I should not see "Delete"
     When I navigate to the profile page for "user2@user.com"
-    Then I should not see "Delete"
+    Then I should not see a "Delete" button
 
   Scenario: A user deletes themself
     Given I have signed in as "user1@user.com"
@@ -169,15 +146,6 @@ Feature: Users
     When I click on the "Delete" button
     And I accept the popup alert
     Then I should be automatically signed out
-    And I should not be able to sign in as "user1@user.com"
-  
-  Scenario: An admin deletes a user from the users index
-    Given I have signed in as "admin1@admin.com"
-    And I have navigated to the "Users" page
-    When I click on the "Delete" button in the "user1@user.com" row
-    And I accept the popup alert
-    Then I should see an alert message saying "Successfully deleted user."
-    And I should see links to the profile pages for only "admin1@admin.com, admin2@admin.com, user2@user.com"
     And I should not be able to sign in as "user1@user.com"
 
   Scenario: An admin deletes a user from the user's profile
