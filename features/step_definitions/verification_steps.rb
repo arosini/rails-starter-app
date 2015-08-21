@@ -1,11 +1,15 @@
 # Put shared 'Then' steps here
 
-Then(/^I should( not)? see "(.*?)"$/) do |negate, content|
+Then(/^I should( not)? see "(.*?)" on the page$/) do |negate, content|
   expect(page).send(negate ? :to_not : :to, have_content(content))
 end
 
+Then(/^I should( not)? see a "(.*?)" button$/) do |negate, text|
+  expect(page).send(negate ? :to_not : :to, have_selector(:link_or_button, text))
+end
+
 Then(/^the current path should( not)? be "(.*?)"$/) do |negate, path|
-  negate ? expect(current_path).to_not(eq(path)) : expect(current_path).to(eq(path))
+  expect(current_path).send(negate ? :to_not : :to, eq(path))
 end
 
 Then(/^I should( not)? see the page title as "(.*?)"$/) do |negate, expected_title|

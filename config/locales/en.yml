@@ -60,7 +60,7 @@ en:
     back: 'Back'
     home: 'Home'
   roles:
-    alert:
+    alerts:
       delete: 'Are you sure you want to delete this role?'
     name: 'Role'
     notices:

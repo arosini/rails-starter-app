@@ -12,16 +12,6 @@ Feature: Auth
     And I click on the "Sign Up" button
     Then I should be automatically signed in
 
-  Scenario Outline: Visitor signs in successfully
-    Given I have not signed in
-    When I sign in as "<user>"
-    Then I should see the "home" page
-    
-    Examples:
-      | user             |
-      | admin1@admin.com |
-      | user1@user.com   |
-
   Scenario Outline: Vistor cannot sign up with invalid information
     Given I have not signed in
     When I navigate to the "Sign Up" page
@@ -40,6 +30,17 @@ Feature: Auth
       | Email                 | user1@user.com | Email has already been taken.       |
       | Password              | asdqw          | Must be at least 6 characters.      |
       | Password confirmation | asdqwee        | Must match password.                |
+
+
+  Scenario Outline: Visitor signs in successfully
+    Given I have not signed in
+    When I sign in as "<user>"
+    Then I should see the "home" page
+    
+    Examples:
+      | user             |
+      | admin1@admin.com |
+      | user1@user.com   |
 
   Scenario Outline: Visitor cannot sign in with invalid information
     Given I have not signed in
@@ -132,3 +133,18 @@ Feature: Auth
       | user             |
       | admin1@admin.com |
       | user1@user.com   |
+
+  Scenario Outline: The root path directs an athenticated user to the users index
+    Given I have signed in as "<user>"
+    When I navigate to the "home" page
+    Then I should see the "users" page
+
+    Examples:
+      | user             |
+      | admin1@admin.com |
+      | user1@user.com   |
+
+  Scenario: The root path directs an unathenticated visitor to the landing page
+    Given I have not signed in
+    When I navigate to the "home" page
+    Then I should see the "landing" page

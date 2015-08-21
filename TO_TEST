@@ -23,7 +23,8 @@ Manual tests for every page on Desktop/Android Phone/iPhone/Android Tablet/iPad 
 
 Cucumber tests to write:
 - Roles CRUD
- - Users/Index: Test each fields functionality through the following tests
+- Users/Index: Test each fields functionality through the following tests
+  - Links/buttons have expected behavior
   - Search toggle buttons works (in both directions):
     - Reloads search
     - Email text is not cleared.
@@ -60,4 +61,3 @@ Cucumber tests to write:
     - Reloads search
     - Loading icon shouldn't move pagination links with full page of users displayed.
   - Search state (advanced or normal) is kept on page reload and navigation. Fields are cleared currently.
-  - Delete user AJAX
