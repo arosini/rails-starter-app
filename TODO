@@ -7,6 +7,8 @@ TO DO:
 - Make sure locales are all used, no repitition
 - Fix up rubycritic results
 - Documentation. Make sure to document future development process (CI steps).
+- Change vendor assets to CDN
+- Add output to rake db:seed
 - Squash to V1.0
 - Work on future features
 
