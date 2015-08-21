@@ -8,6 +8,7 @@ TO DO:
 - Fix up rubycritic results
 - Documentation. Make sure to document future development process (CI steps).
 - Squash to V1.0
+- Deploy
 - Work on future features
 
 KNOWN ISSUES:

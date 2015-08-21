@@ -32,7 +32,7 @@ Feature: Users
 
   Scenario: A user tries to view an admin's profile
     Given I have signed in as "user1@user.com"
-    Then I should not be able to view the profile pages for "admin1@admin.com"
+    Then I should not be able to view the profile page for "admin1@admin.com"
 
   Scenario Outline: A user views another user's profile
     Given I have signed in as "<user>"
