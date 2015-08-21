@@ -5,7 +5,9 @@ Linux Installation Instructions!!
     sudo apt-get install git-core
     ```
 
-2. Add ssh using: https://help.github.com/articles/generating-ssh-keys/#platform-linux
+2. Install NodeJS (or another JavaScript runtime library)
+
+    ```sudo apt-get install nodejs```
 
 3. Install rvm/ruby 2.2.0/bundler
 
