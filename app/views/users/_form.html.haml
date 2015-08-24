@@ -7,7 +7,7 @@
       = f.email_field :email, autofocus: true, autocomplete: "off", id: "email-field", class: "form-control", 'data-parsley-trigger' => 'change', 'data-parsley-errors-container' => "#email-field-errors", 'data-parsley-emailunique' => '',  'data-parsley-required' => ''
     #email-field-errors.parsley-errors-container
     %br
-    - if edit? or update?
+    - if (edit? or update?) && (user == current_user)
       %a.btn.btn-primary.btn-sm{"data-toggle" => "modal", href: "#change-password-modal"}= t('users.form.change_password_button')
       %br
       %br
@@ -32,7 +32,7 @@
     .center
       = f.submit t('form.submit'), id: "submit-button", class: "submit-button"
 
-- if edit? or update?
+- if (edit? or update?) && (user == current_user)
   = render 'change_password_modal', user_id: user.id
 
 :javascript

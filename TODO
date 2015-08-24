@@ -1,7 +1,9 @@
 TO DO:
-- Finish cucumber tests (testing to do)
+- Finish cucumber tests (testing to do,fix up searching to have seperate labels for each type of input field)
 - Step definiton edit: Fill in field by label (not ID), change form cucumbers (password edit, sign up, sign in, etc...)
 - Make custom user_path (my_profile_path if current_user, otherwise user_path(@user)). Remove logic that does this in users controller and views.
+- Change error message for when password confirmation doesn't match password 
+- Translate error message
 - Audit locales for usage (no unused), repition (minimize this) and structure (be consistent!)
 - Fix up known issues
 - Documentation. Make sure to document future development process (CI steps).

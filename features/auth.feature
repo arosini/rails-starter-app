@@ -5,10 +5,10 @@ Feature: Auth
     Given I have not signed in
     When I have navigated to the "Sign Up" page
     And I fill out the "sign up" form with the following values:
-      | field                 | value             |
-      | Email                 | new-user@user.com |
-      | Password              | asdqwe            |
-      | Password Confirmation | asdqwe            |
+      | field    | value             |
+      | Email    | new-user@user.com |
+      | Password | asdqwe            |
+      | Confirm  | asdqwe            |
     And I click on the "Sign Up" button
     Then I should be automatically signed in
 
@@ -16,21 +16,20 @@ Feature: Auth
     Given I have not signed in
     When I navigate to the "Sign Up" page
     And I fill out the "sign up" form with the following values:
-      | field                 | value          |
-      | Email                 | user1@user.com |
-      | Password              | asdqwe         |
-      | Password Confirmation | asdqwe         |
-      | <field>               | <value>        | 
+      | field    | value          |
+      | Email    | user1@user.com |
+      | Password | asdqwe         |
+      | Confirm  | asdqwe         |
+      | <field>  | <value>        | 
     And I click on the "Sign Up" button
     Then I should see an error message saying "<message>" near the "<field>" field
 
     Examples:
-      | field                 | value          | message                             |
-      | Email                 | invalidemail   | This value should be a valid email. |
-      | Email                 | user1@user.com | Email has already been taken.       |
-      | Password              | asdqw          | Must be at least 6 characters.      |
-      | Password confirmation | asdqwee        | Must match password.                |
-
+      | field      | value          | message                             |
+      | Email      | invalidemail   | This value should be a valid email. |
+      | Email      | user1@user.com | Email has already been taken.       |
+      | Password   | asdqw          | Must be at least 6 characters.      |
+      | Confirm    | asdqwee        | Must match password.                |
 
   Scenario Outline: Visitor signs in successfully
     Given I have not signed in
@@ -58,16 +57,16 @@ Feature: Auth
   Scenario: A visitor successfully changes their password and signs in
     Given I have not signed in
     When I navigate to the "forgot your password" page
-    And I enter "user1@user.com" in the "email" field
+    And I enter "user1@user.com" in the "Email" field
     And I click on the "Submit" button
     Then I should be redirected to the "sign in" page
     And I should see an alert message saying "You will receive an email with instructions on how to change your password in a few minutes."
     And an email with a password change link should be sent to "user1@user.com"
     When I click on the link in the email
     And I fill out the "change your password" form with the following values:
-     | field                 | value  |
-     | Password              | asdqwe |
-     | Password Confirmation | asdqwe |
+     | field     | value  |
+     | Password  | asdqwe |
+     | Confirm   | asdqwe |
     And I click on the "Submit" button
     Then I should be automatically signed in
     And I should see an alert message saying "Your password was changed successfully. You are now signed in."
@@ -75,9 +74,9 @@ Feature: Auth
   Scenario Outline: A visitor submits the forgot password form with an invalid email
     Given I have not signed in
     When I navigate to the "forgot your password" page
-    And I enter "<email>" in the "email" field
+    And I enter "<email>" in the "Email" field
     And I click on the "Submit" button
-    Then I should see an error message saying "<message>" near the "email" field
+    Then I should see an error message saying "<message>" near the "Email" field
 
     Examples:
      | email               | message                                       |
@@ -86,23 +85,23 @@ Feature: Auth
 
   Scenario Outline: A visitor tries to changes their password to an invalid password
     When I navigate to the "forgot your password" page
-    And I enter "user1@user.com" in the "email" field
+    And I enter "user1@user.com" in the "Email" field
     And I click on the "Submit" button
     Then I should be redirected to the "sign in" page
     And I should see an alert message saying "You will receive an email with instructions on how to change your password in a few minutes."
     And an email with a password change link should be sent to "user1@user.com"
     When I click on the link in the email
     And I fill out the "change your password" form with the following values:
-     | field                 | value      |
-     | Password              | <password> |
-     | Password Confirmation | <confirm>  |
+     | field    | value      |
+     | Password | <password> |
+     | Confirm  | <confirm>  |
     And I click on the "Submit" button
     Then I should see an error message saying "<message>" near the "<field>" field
 
     Examples:
-      | password | confirm | field                 | message                       |
-      | asdqw    | asdqw   | Password              | Must be at least 6 characters |
-      | asdqwe   | asdqwee | Password Confirmation | Must match password           |
+      | password | confirm | field    | message                       |
+      | asdqw    | asdqw   | Password | Must be at least 6 characters |
+      | asdqwe   | asdqwee | Confirm  | Must match password           |
 
   Scenario Outline: An authenticated user cannot access the sign in page
     Given I have signed in as "<user>"

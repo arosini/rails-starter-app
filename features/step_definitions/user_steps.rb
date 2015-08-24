@@ -48,6 +48,10 @@ When(/^I navigate to the profile page for "(.*?)"$/) do |email|
   step "I have navigated to the profile page for \"#{email}\""
 end
 
+When(/^I navigate to the edit user page for "(.*?)"$/) do |email|
+  step "I have navigated to the edit user page for \"#{email}\""
+end
+
 When(/^I sign out$/) do
   step 'I have not signed in'
 end
@@ -120,6 +124,12 @@ Then(/^I should see links to the profile pages for only "(.*?)"$/) do |emails|
   User.all.each do |user|
     expect_link = email_list.include?(user.email)
     step "I should#{expect_link ? '' : ' not'} see a link to \"#{user.email}'s\" profile page"
+  end
+end
+
+Then(/^I should not see links to any profile pages$/) do
+  User.all.each do |user|
+    step "I should not see a link to \"#{user.email}'s\" profile page"
   end
 end
 

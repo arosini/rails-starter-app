@@ -1,6 +1,29 @@
 @javascript
 Feature: Users Index
 
+  Scenario: A visitor tries to access the new user page
+    Given I have not signed in
+    Then I should not be able to navigate to the "Users" page
+    And I should not see a "New User" button
+
+  Scenario: A user tries to access the new user page
+    Given I have signed in as "user1@user.com"
+    When I navigate to the "users" page
+    Then I should not see a "New User" button
+    And I should not be able to navigate to the "new user" page
+
+  Scenario: An admin creates a new user
+    Given I have signed in as "admin1@admin.com"
+    And I have navigated to the "users" page
+    When I click on the "New User" button
+    And I fill out the "new user" form with the following values:
+      | field                  | value         |
+      | Email                  | test@test.com |
+      | Password               | asdqwe        |
+      | Confirm                | asdqwe        |
+    And I click on the "Submit" button
+    Then I should be able to sign in as "test@test.com"
+
   Scenario Outline: A user searches for other users
     Given I have signed in as "<user>"
     And I have navigated to the "users" page

@@ -61,3 +61,4 @@ Cucumber tests to write:
     - Reloads search
     - Loading icon shouldn't move pagination links with full page of users displayed.
   - Search state (advanced or normal) is kept on page reload and navigation. Fields are cleared currently.
+- Back button

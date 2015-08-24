@@ -4,7 +4,7 @@ Then(/^I should( not)? see "(.*?)" on the page$/) do |negate, content|
   expect(page).send(negate ? :to_not : :to, have_content(content))
 end
 
-Then(/^I should( not)? see a "(.*?)" button$/) do |negate, text|
+Then(/^I should( not)? see a "(.*?)" (button|link)$/) do |negate, text, _type|
   expect(page).send(negate ? :to_not : :to, have_selector(:link_or_button, text))
 end
 
@@ -51,5 +51,10 @@ end
 
 Then(/^I should( not)? see "(.*?)" in the "(.*?)" row$/) do |negate, value, row|
   cell = page.find(:css, 'td', text: row).find(:xpath, '..').find(:css, 'td', text: value)
+  expect(cell).send(negate ? :to : :to_not, be_nil)
+end
+
+Then(/^I should see( not)? a row for "(.*?)" in the "(.*?)" table$/) do |negate, row, table|
+  cell = page.find(:css, 'table#' + table + '-table td', text: row)
   expect(cell).send(negate ? :to : :to_not, be_nil)
 end
