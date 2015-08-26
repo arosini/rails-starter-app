@@ -48,13 +48,13 @@ When(/^I navigate to the profile page for "(.*?)"$/) do |email|
   step "I have navigated to the profile page for \"#{email}\""
 end
 
-When(/^I navigate to the edit user page for "(.*?)"$/) do |email|
-  step "I have navigated to the edit user page for \"#{email}\""
-end
+# When(/^I navigate to the edit user page for "(.*?)"$/) do |email|
+#   step "I have navigated to the edit user page for \"#{email}\""
+# end
 
-When(/^I sign out$/) do
-  step 'I have not signed in'
-end
+# When(/^I sign out$/) do
+#   step 'I have not signed in'
+# end
 
 # THEN
 Then(/^I should be automatically signed in$/) do
@@ -127,11 +127,11 @@ Then(/^I should see links to the profile pages for only "(.*?)"$/) do |emails|
   end
 end
 
-Then(/^I should not see links to any profile pages$/) do
-  User.all.each do |user|
-    step "I should not see a link to \"#{user.email}'s\" profile page"
-  end
-end
+# Then(/^I should not see links to any profile pages$/) do
+#   User.all.each do |user|
+#     step "I should not see a link to \"#{user.email}'s\" profile page"
+#   end
+# end
 
 Then(/^I should( not)? see the profile page for "(.*?)"$/) do |negate, email|
   user = User.find_by(email: email)
@@ -151,4 +151,11 @@ Then(/^I should see search results( and suggestions)? for only the following use
     step "I should#{expect_user ? '' : ' not'} see a link to \"#{user.email}'s\" profile page"
     expect(page).send(expect_suggestion ? :to : :to_not, have_css('div.tt-suggestion > p', text: /\A#{user.email}\z/))
   end
+end
+
+Then(/^I should( not)? see the edit user page for "(.*?)"$/) do |negate, email|
+  user = User.find_by(email: email)
+  page_title = user == @current_user ? "Edit My Profile" : "Edit User #{user.id}"
+  step "the current path should#{negate} be \"#{edit_user_path(user.id)}\""
+  step "I should#{negate} see the page title as \"Edit User #{user.id}\""
 end

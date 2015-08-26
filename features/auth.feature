@@ -25,11 +25,14 @@ Feature: Auth
     Then I should see an error message saying "<message>" near the "<field>" field
 
     Examples:
-      | field      | value          | message                             |
-      | Email      | invalidemail   | This value should be a valid email. |
-      | Email      | user1@user.com | Email has already been taken.       |
-      | Password   | asdqw          | Must be at least 6 characters.      |
-      | Confirm    | asdqwee        | Must match password.                |
+      | field      | value          | message                            |
+      | Email      | invalidemail   | This value should be a valid email |
+      | Email      | user1@user.com | Email has already been taken       |
+      | Email      |                | Can't be blank                     |
+      | Password   | asdqw          | Must be at least 6 characters      |
+      | Password   |                | Can't be blank                     |
+      | Confirm    | asdqwee        | Must match password                |
+      | Confirm    |                | Can't be blank                     |
 
   Scenario Outline: Visitor signs in successfully
     Given I have not signed in
@@ -51,8 +54,8 @@ Feature: Auth
 
     Examples:
       | field       | value          | message                                        |
-      | Email       | wrong@user.com | Could not find a user with that email address. |
-      | Password    | wrong          | Incorrect password.                            |
+      | Email       | wrong@user.com | Could not find a user with that email address  |
+      | Password    | wrong          | Incorrect password                             |
 
   Scenario: A visitor successfully changes their password and signs in
     Given I have not signed in
@@ -101,7 +104,9 @@ Feature: Auth
     Examples:
       | password | confirm | field    | message                       |
       | asdqw    | asdqw   | Password | Must be at least 6 characters |
+      |          |         | Password | Can't be blank                |
       | asdqwe   | asdqwee | Confirm  | Must match password           |
+      |          |         | Confirm  | Can't be blank                |
 
   Scenario Outline: An authenticated user cannot access the sign in page
     Given I have signed in as "<user>"

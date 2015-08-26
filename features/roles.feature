@@ -3,11 +3,11 @@ Feature: Roles
 
   Scenario: A visitor tries to access the new role page
     Given I have not signed in
-    Then I should not be able to access the "new role" page
+    Then I should not be able to navigate to the "new role" page
 
   Scenario: A user tries to access the new role page
     Given I have signed in as "user1@user.com"
-    Then I should not be able to access the "new role" page
+    Then I should not be able to navigate to the "new role" page
 
   Scenario: An admin creates a new role
     Given I have signed in as "admin1@admin.com"

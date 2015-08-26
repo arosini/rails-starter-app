@@ -28,9 +28,9 @@ When(/^I search with the following values:$/) do |table|
   end
 end
 
-When(/^I select "(.*?)" in the "(.*?)" dropdown$/) do |options, dropdown|
+When(/^I select "(.*?)" in the "(.*?)" dropdown$/) do |options, label|
   options_to_select = options.split(/, | and /)
-  dropdown = page.first(:css, '.input-group', text: dropdown)
+  dropdown = page.find(:css, '.input-group', text: label)
   dropdown.find(:css, '.dropdown-toggle').click
   dropdown.all(:css, 'li').each do |option|
     selected = option[:class].include?('active')

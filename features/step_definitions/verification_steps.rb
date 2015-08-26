@@ -4,8 +4,15 @@ Then(/^I should( not)? see "(.*?)" on the page$/) do |negate, content|
   expect(page).send(negate ? :to_not : :to, have_content(content))
 end
 
-Then(/^I should( not)? see a "(.*?)" (button|link)$/) do |negate, text, _type|
+Then(/^I should( not)? see a(n)? "(.*?)" (button|link)$/) do |negate, _n, text, _type|
   expect(page).send(negate ? :to_not : :to, have_selector(:link_or_button, text))
+end
+
+Then(/^I should( not)? see the following buttons: "(.*?)"$/) do |negate, buttons|
+  button_list = buttons.split(/, | and /)
+  button_list.each do |button|
+    within_page_content { step "I should#{negate} see a \"#{button}\" button" }
+  end
 end
 
 Then(/^the current path should( not)? be "(.*?)"$/) do |negate, path|
