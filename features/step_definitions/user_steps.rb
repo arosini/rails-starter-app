@@ -48,21 +48,21 @@ When(/^I navigate to the profile page for "(.*?)"$/) do |email|
   step "I have navigated to the profile page for \"#{email}\""
 end
 
-# When(/^I navigate to the edit user page for "(.*?)"$/) do |email|
-#   step "I have navigated to the edit user page for \"#{email}\""
-# end
+When(/^I navigate to the edit user page for "(.*?)"$/) do |email|
+  step "I have navigated to the edit user page for \"#{email}\""
+end
 
 # When(/^I sign out$/) do
 #   step 'I have not signed in'
 # end
 
 # THEN
-Then(/^I should be automatically signed in$/) do
-  step 'I should see the "home" page'
+Then(/^I should( not)? be automatically signed in$/) do |negate|
+  step "I should#{negate} see the \"home\" page"
 end
 
-Then(/^I should be automatically signed out$/) do
-  step 'I should see the "landing" page'
+Then(/^I should( not)? be automatically signed out$/) do |negate|
+  step "I should#{negate} see the \"landing\" page"
 end
 
 Then(/^I should( not)? be able to sign in as "(.*?)"$/) do |negate, email|
@@ -157,5 +157,5 @@ Then(/^I should( not)? see the edit user page for "(.*?)"$/) do |negate, email|
   user = User.find_by(email: email)
   page_title = user == @current_user ? "Edit My Profile" : "Edit User #{user.id}"
   step "the current path should#{negate} be \"#{edit_user_path(user.id)}\""
-  step "I should#{negate} see the page title as \"Edit User #{user.id}\""
+  step "I should#{negate} see the page title as \"#{page_title}\""
 end

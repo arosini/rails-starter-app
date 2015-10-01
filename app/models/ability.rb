@@ -33,7 +33,7 @@ class Ability
     user ||= User.new # guest user (not logged in) if user not defined
 
     # Guest abilties
-    if user.guest? #
+    if user.guest?
       can :index, HomeController
 
     # Admin abilities

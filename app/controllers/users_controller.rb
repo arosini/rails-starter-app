@@ -89,8 +89,10 @@ class UsersController < ApplicationController
   def update_params
     if current_user.id.to_s == params[:id] && !current_user.admin?
       required_params.permit(:email)
-    elsif can?(:edit, @user)
+    elsif current_user.id.to_s == params[:id] && current_user.admin?
       required_params.permit(:email, role_ids: [])
+    elsif can?(:edit, @user)
+      required_params.permit(role_ids: [])
     end
   end
 

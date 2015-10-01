@@ -65,3 +65,7 @@ Then(/^I should see( not)? a row for "(.*?)" in the "(.*?)" table$/) do |negate,
   cell = page.find(:css, 'table#' + table + '-table td', text: row)
   expect(cell).send(negate ? :to : :to_not, be_nil)
 end
+
+Then(/^I should( not)? see a(n)? "(.*?)" field$/) do |negate, _n, field|
+  expect(page).send(negate ? :to_not : :to, have_field(field))
+end

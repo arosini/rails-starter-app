@@ -55,6 +55,19 @@ Feature: User Profile
       | user1@user.com   |
       | admin1@admin.com |
 
+  Scenario Outline: A user accidentally clicks the Delete button in their profile
+    Given I have signed in as "<user>"
+    And I have navigated to the "My Profile" page
+    When I click on the "Delete" button
+    And I dismiss the popup alert
+    Then I should not be automatically signed out
+    And I should be able to sign in as "<user>"
+
+    Examples:
+      | user             |
+      | user1@user.com   |
+      | admin1@admin.com |
+
   Scenario Outline: An admin clicks the Delete button in a user's profile
     Given I have signed in as "admin1@admin.com"
     And I have navigated to the profile page for "<user>"
@@ -72,8 +85,8 @@ Feature: User Profile
 
   Scenario Outline: A user clicks the Home button in a profile
     Given I have signed in as "<user>"
-    When I navigate to the profile page for "<profile>"
-    And I click on the "Home" button
+    And I have navigated to the profile page for "<profile>"
+    When I click on the "Home" button
     Then I should see the "home" page
 
     Examples:

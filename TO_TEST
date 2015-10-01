@@ -9,7 +9,7 @@ CI Steps:
 
   Tests:
     - rake test TESTOPTS='--profile' (No failures/errors, 100% code coverage, try to make tests as fast as possible)
-    - cucumber (No failures, no unused steps, try to make scenarios as short as possible)
+    - cucumber --format usage (No failures, no unused steps, try to make scenarios as short as possible)
 
 Manual tests for every page on Desktop/Android Phone/iPhone/Android Tablet/iPad in Chrome/Firefox/Safari/Opera:
   - Ensure no JavaScript/CSS/other errors or warnings
