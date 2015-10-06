@@ -22,6 +22,7 @@ Manual tests for every page on Desktop/Android Phone/iPhone/Android Tablet/iPad 
 
 
 Cucumber tests to write:
+- Remember me (sign in)
 - Roles CRUD
 - Users/Index: Test each fields functionality through the following tests
   - Links/buttons have expected behavior

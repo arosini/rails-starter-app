@@ -52,8 +52,13 @@ When(/^I navigate to the edit user page for "(.*?)"$/) do |email|
   step "I have navigated to the edit user page for \"#{email}\""
 end
 
-# When(/^I sign out$/) do
-#   step 'I have not signed in'
+When(/^I sign out$/) do
+  step 'I have not signed in'
+end
+
+# When(/^I close and reopen the browser$/) do
+#   page.driver.browser.close
+#   page.driver.browser.open
 # end
 
 # THEN
@@ -83,6 +88,16 @@ Then(/^I should( not)? be able to sign in as "(.*?)" using "(.*?)" as the passwo
   end
 end
 
+Then(/^I should( not)? see the profile page for "(.*?)"$/) do |negate, email|
+  user = User.find_by(email: email)
+  same_user = user == @current_user
+  path = same_user ? my_profile_path : user_path(user)
+  profile_page_title =
+    same_user ? I18n.t('users.show.self_title') : I18n.t('users.show.other_title', user_id: user.id)
+  step "the current path should#{negate} be \"#{path}\""
+  step "I should#{negate} see the page title as \"#{profile_page_title}\""
+end
+
 Then(/^I should( not)? be able to view the profile page for "(.*?)"$/) do |negate, email|
   user = User.find_by(email: email)
   same_user = user == @current_user
@@ -107,6 +122,13 @@ Then(/^I should not be able to navigate to the edit user page for "(.*?)"$/) do 
   step "I should not be able to navigate to the \"#{path}\" page"
 end
 
+Then(/^I should( not)? see the edit user page for "(.*?)"$/) do |negate, email|
+  user = User.find_by(email: email)
+  page_title = user == @current_user ? "Edit My Profile" : "Edit User #{user.id}"
+  step "the current path should#{negate} be \"#{edit_user_path(user.id)}\""
+  step "I should#{negate} see the page title as \"#{page_title}\""
+end
+
 Then(/^I should( not)? see a link to "(.*?)'s?" profile page$/) do |negate, email|
   profile_user = User.find_by(email: email)
   same_user = profile_user == @current_user
@@ -127,22 +149,6 @@ Then(/^I should see links to the profile pages for only "(.*?)"$/) do |emails|
   end
 end
 
-# Then(/^I should not see links to any profile pages$/) do
-#   User.all.each do |user|
-#     step "I should not see a link to \"#{user.email}'s\" profile page"
-#   end
-# end
-
-Then(/^I should( not)? see the profile page for "(.*?)"$/) do |negate, email|
-  user = User.find_by(email: email)
-  same_user = user == @current_user
-  path = same_user ? my_profile_path : user_path(user)
-  profile_page_title =
-    same_user ? I18n.t('users.show.self_title') : I18n.t('users.show.other_title', user_id: user.id)
-  step "the current path should#{negate} be \"#{path}\""
-  step "I should#{negate} see the page title as \"#{profile_page_title}\""
-end
-
 Then(/^I should see search results( and suggestions)? for only the following users: "(.*?)"$/) do |suggestions, users|
   email_list = users.split(/, | and /)
   User.all.each do |user|
@@ -153,9 +159,9 @@ Then(/^I should see search results( and suggestions)? for only the following use
   end
 end
 
-Then(/^I should( not)? see the edit user page for "(.*?)"$/) do |negate, email|
-  user = User.find_by(email: email)
-  page_title = user == @current_user ? "Edit My Profile" : "Edit User #{user.id}"
-  step "the current path should#{negate} be \"#{edit_user_path(user.id)}\""
-  step "I should#{negate} see the page title as \"#{page_title}\""
+Then(/^I should see search suggestions for only the following users: "(.*?)"$/) do |users|
+  User.all.each do |user|
+    expect_suggestion = users.include?(user.email)
+    expect(page).send(expect_suggestion ? :to : :to_not, have_css('div.tt-suggestion > p', text: /\A#{user.email}\z/))
+  end
 end

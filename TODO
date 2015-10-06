@@ -1,15 +1,16 @@
 TO DO:
-- Finish cucumber tests (testing to do, fix up searching to have seperate labels for each type of input field)\
-- Password confirmation front-end validation on sign up form
+- Finish cucumber tests (testing to do, fix up searching to have seperate labels for each type of input field)
 - Make custom user_path (my_profile_path if current_user, otherwise user_path(@user)). Remove logic that does this in users controller and views.
 - Change error message for when password confirmation doesn't match password 
 - Translate error message
 - Audit locales for usage (no unused), repition (minimize this) and structure (be consistent!)
+- Audit step definitions (use general steps where possible!)
 - Fix up known issues
 - Documentation. Make sure to document future development process (CI steps).
 - Change vendor assets to CDN
 - Add output to rake db:seed
-- Squash to V1.0 and deploy
+- Squash to V1.0
+- Deploy to heroku
 - Work on future features
 
 KNOWN ISSUES:
@@ -22,8 +23,9 @@ KNOWN ISSUES:
    - Remove use of DOM in cucumber steps as much as possible.
    - Use more capybara magic (https://gist.github.com/zhengjia/428105) / http://www.elabs.se/blog/51-simple-tricks-to-clean-up-your-capybara-tests
   - Move code for form fields into helpers (so parsely validators don't need to be repeated)
-  - Capitalize page names in tests (research what best practice is for referring to pages...probably doesn't matter)
+  - Remember me test (sign_in.feature)
   - Alphabetize roles list in user profile/index
+
 
 POSSIBLE FUTURE FEATURES:
   - Add name of user updated/deleted to confirmation message

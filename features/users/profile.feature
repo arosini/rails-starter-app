@@ -83,7 +83,7 @@ Feature: User Profile
       | user1@user.com   | admin1@admin.com, admin2@admin.com, user2@user.com |
       | admin2@admin.com | admin1@admin.com, user1@user.com, user2@user.com   |
 
-  Scenario Outline: A user clicks the Home button in a profile
+  Scenario Outline: A user clicks the Home button in a user's profile
     Given I have signed in as "<user>"
     And I have navigated to the profile page for "<profile>"
     When I click on the "Home" button

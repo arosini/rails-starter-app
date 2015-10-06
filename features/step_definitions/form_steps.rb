@@ -13,6 +13,10 @@ Given(/^I have filled out the "(.*?)" form with the following values:$/) do |for
   end
 end
 
+Given(/^I have checked the "(.*?)" checkbox$/) do |checkbox|
+  check checkbox.downcase.tr(' ', '_')
+end
+
 # WHEN
 When(/^I enter "(.*?)" in the "(.*?)" field$/) do |value, field|
   step "I have entered \"#{value}\" in the \"#{field}\" field"
@@ -22,10 +26,15 @@ When(/^I fill out the "(.*?)" form with the following values:$/) do |form, table
   step "I have filled out the \"#{form}\" form with the following values:", table
 end
 
-When(/^I search with the following values:$/) do |table|
-  table.hashes.each do |row|
-    step "I have entered \"#{row[:value]}\" in the \"#{row[:field]}\" field"
+When(/^I enter "(.*?)" in the "(.*?)" (contains|equals|less than or equal to|greater than or equal to) search field$/) do |value, field, type|
+  type = case type
+    when "contains" then "cont"
+    when "equals" then "eq"
+    when "less than or equal to" then "lteq"
+    when "greater than or equal to" then "gteq"
   end
+  search_field_id = field.downcase.tr(' ', '-') + "-" + type + "-search-field"
+  fill_in search_field_id, with: value
 end
 
 When(/^I select "(.*?)" in the "(.*?)" dropdown$/) do |options, label|
@@ -37,6 +46,10 @@ When(/^I select "(.*?)" in the "(.*?)" dropdown$/) do |options, label|
     should_select = options_to_select.include?(option.text)
     option.find('label').click if (!selected && should_select) || (selected && !should_select)
   end
+end
+
+When(/^I check the "(.*?)" checkbox$/) do |checkbox|
+  step "I have checked the \"#{checkbox}\" checkbox"
 end
 
 # THEN

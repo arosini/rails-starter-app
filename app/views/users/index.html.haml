@@ -8,9 +8,9 @@
       = render "/layouts/alert"
   .col-xs-5
     .pull-left
-      %btn#toggle-advanced-search.btn.btn-warning= t('search.advanced')
-      %btn#toggle-search.btn.btn-primary= t('search.normal')
-      %btn#clear-search.btn.btn-warning= t('search.clear')
+      %button#toggle-advanced-search.btn.btn-warning= t('search.advanced')
+      %button#toggle-search.btn.btn-primary= t('search.normal')
+      %button#clear-search.btn.btn-warning= t('search.clear')
   .col-xs-7
     .pull-right
       - if can? :create, User

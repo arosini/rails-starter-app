@@ -14,10 +14,11 @@ UNAUTHENTICATED_ROOT_ALIASES = %w(landing welcome)
 
 # Converts the name of a page into a path. Modify this method as needed when page names are more complex.
 def pathify(page_name_or_path)
+  page_name_or_path = page_name_or_path.downcase
   return root_path if AUTHENTICATED_ROOT_ALIASES.include?(page_name_or_path) ||
                       UNAUTHENTICATED_ROOT_ALIASES.include?(page_name_or_path)
   return new_user_password_path if page_name_or_path == 'forgot your password'
-  path = page_name_or_path.downcase.tr(' ', '_')
+  path = page_name_or_path.tr(' ', '_')
   Rails.application.routes.url_helpers.send(path + '_path') rescue path
 end
 

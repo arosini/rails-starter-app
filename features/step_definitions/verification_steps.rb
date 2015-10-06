@@ -69,3 +69,14 @@ end
 Then(/^I should( not)? see a(n)? "(.*?)" field$/) do |negate, _n, field|
   expect(page).send(negate ? :to_not : :to, have_field(field))
 end
+
+Then(/^I should( not)? see the following actions in the "(.*?)" row: "(.*?)"$/) do |negate, row_text, actions|
+  row = page.find(:css, 'tr', text: row_text)
+  actions.split(/, | and /).each do |action|
+    expect(row).send(negate ? :to_not : :to, have_selector(:link_or_button, action))
+  end
+end
+
+# Then(/^I should( not)? see the "(.*?)" field prepopulated with a value of "(.*?)"$/) do |negate, field, value|
+#   expect(page).send(negate ? :to_not : :to, have_field(field, with: value))
+# end
