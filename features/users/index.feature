@@ -126,6 +126,7 @@ Feature: Users Index
       | user             | role  | results                                                            | suggestions |
       | user1@user.com   |       | user1@user.com, user2@user.com                                     |             |
       | user1@user.com   | a     |                                                                    | Admin       |
+      | user1@user.com   | Admin |                                                                    | Admin       |
       | user1@user.com   | u     | user1@user.com, user2@user.com                                     | User        |
       | user1@user.com   | User  | user1@user.com, user2@user.com                                     | User        |
       | user1@user.com   | x     |                                                                    |             |
@@ -136,23 +137,77 @@ Feature: Users Index
       | admin1@admin.com | User  | user1@user.com, user2@user.com                                     | User        |
       | admin1@admin.com | x     |                                                                    |             |
 
-  # Role equals
+  Scenario Outline: A user/admin searches for other users using the Role equals search field
+    Given I have signed in as "<user>"
+    And I have navigated to the "Users" page
+    And I have clicked on the "Advanced Search" button
+    And I have checked the "Role exact match" checkbox
+    When I enter "<role>" in the "Role" equals search field
+    Then I should see search results for only the following users: "<results>"
+    And I should see search suggestions for only the following roles: "<suggestions>"
 
-  # Sign in count lteq/gteq
+     Examples:
+      | user             | role  | results                                                            | suggestions |
+      | user1@user.com   |       | user1@user.com, user2@user.com                                     |             |
+      | user1@user.com   | a     |                                                                    | Admin       |
+      | user1@user.com   | Admin |                                                                    | Admin       |
+      | user1@user.com   | u     |                                                                    | User        |
+      | user1@user.com   | User  | user1@user.com, user2@user.com                                     | User        |
+      | user1@user.com   | x     |                                                                    |             |
+      | admin1@admin.com |       | admin1@admin.com, admin2@admin.com, user1@user.com, user2@user.com |             |
+      | admin1@admin.com | a     |                                                                    | Admin       |
+      | admin1@admin.com | Admin | admin1@admin.com, admin2@admin.com                                 | Admin       |
+      | admin1@admin.com | u     |                                                                    | User        |
+      | admin1@admin.com | User  | user1@user.com, user2@user.com                                     | User        |
+      | admin1@admin.com | x     |                                                                    |             |
 
-  # Sign in count eq
+  Scenario Outline: A user/admin searches for other users using the Sign In Count range search field
+    Given I have signed in as "<user>"
+    And I have navigated to the "Users" page
+    And I have clicked on the "Advanced Search" button
+    When I enter "<gteq>" in the "Sign In Count" greater than or equals search field
+    And I enter "<lteq>" in the "Sign In Count" less than or equals search field
+    Then I should see search results for only the following users: "<results>"
 
-  # ID column
+     Examples:
+       | user             | gteq | lteq  | results                                                            |
+       | user1@user.com   |      |       | user1@user.com, user2@user.com                                     |
+       | user1@user.com   | 0    |       | user1@user.com, user2@user.com                                     |
+       | user1@user.com   | 1    |       | user1@user.com                                                     |
+       | user1@user.com   | 2    |       |                                                                    |
+       | user1@user.com   |      | 1     | user1@user.com, user2@user.com                                     |
+       | user1@user.com   |      | 0     | user2@user.com                                                     |
+       | user1@user.com   | 0    | 1     | user1@user.com, user2@user.com                                     |
+       | user1@user.com   | 0    | 0     | user2@user.com                                                     |
+       | user1@user.com   | 1    | 1     | user1@user.com                                                     |
+       | admin1@admin.com |      |       | admin1@admin.com, admin2@admin.com, user1@user.com, user2@user.com |
+       | admin1@admin.com | 0    |       | admin1@admin.com, admin2@admin.com, user1@user.com, user2@user.com |
+       | admin1@admin.com | 1    |       | admin1@admin.com                                                   |
+       | admin1@admin.com | 2    |       |                                                                    |
+       | admin1@admin.com |      | 1     | admin1@admin.com, admin2@admin.com, user1@user.com, user2@user.com |
+       | admin1@admin.com |      | 0     | admin2@admin.com, user1@user.com, user2@user.com                   |
+       | admin1@admin.com | 0    | 1     | admin1@admin.com, admin2@admin.com, user1@user.com, user2@user.com |
+       | admin1@admin.com | 0    | 0     | admin2@admin.com, user1@user.com, user2@user.com                   |
+       | admin1@admin.com | 1    | 1     | admin1@admin.com                                                   |
 
-  # EMAIL column
+  Scenario Outline: A user/admin searches for other users using the Sign In Count equals search field
+    Given I have signed in as "<user>"
+    And I have navigated to the "Users" page
+    And I have clicked on the "Advanced Search" button
+    And I have unchecked the "Sign In Count toggle range" checkbox
+    When I enter "<count>" in the "Sign In Count" equals search field
+    Then I should see search results for only the following users: "<results>"
 
-  # ROLES column
-
-  # CREATED AT column
-
-  # SIGN IN COUNT column
-
-  # LAST SIGN IN column
+    Examples:
+      | user             | count | results                                                            |
+      | user1@user.com   |       | user1@user.com, user2@user.com                                     |
+      | user1@user.com   | 0     | user2@user.com                                                     |
+      | user1@user.com   | 1     | user1@user.com                                                     |
+      | user1@user.com   | 2     |                                                                    |
+      | admin1@admin.com |       | admin1@admin.com, admin2@admin.com, user1@user.com, user2@user.com |
+      | admin1@admin.com | 0     | admin2@admin.com, user1@user.com, user2@user.com                   |
+      | admin1@admin.com | 1     | admin1@admin.com                                                   |
+      | admin1@admin.com | 2     |                                                                    |
 
   Scenario Outline: A user/admin sees specific actions for each user
     Given I have signed in as "<user>"

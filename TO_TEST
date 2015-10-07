@@ -20,46 +20,39 @@ Manual tests for every page on Desktop/Android Phone/iPhone/Android Tablet/iPad 
     - Forms have front-end validation
     - Forms have back-end validation (disable front-end in browser)
 
-
 Cucumber tests to write:
-- Remember me (sign in)
 - Roles CRUD
-- Users/Index: Test each fields functionality through the following tests
-  - Links/buttons have expected behavior
-  - Search toggle buttons works (in both directions):
+- Back button
+- Remember me test (sign_in.feature)
+- Add tags to scenarios (ie: @long)
+- Users Index
+  - Table values
+    - id
+    - email
+    - roles
+    - created at
+    - sign in count
+    - last sign in
+  - Advanced search button works (in both directions):
     - Reloads search
     - Email text is not cleared.
-    - Spam test
   - Clear search button works
     - Clears all search fields (not checkboxes).
     - Reloads search
-    - Spam test
   - Exact match checkboxes work
     - Text is not cleared
     - Search reloads except on blank input
-    - Check logic for checked and unchecked
   - Use range checkboxes work
     - Input is cleared
     - Search reloads
-    - Check logic for checked and unchecked
   - Test typeaheads
-    - Results appear
-    - Page reloads when they are clicked
-    - Proper height
-  - Test number inputs (in all browsers)
+    - Search reloads when they are clicked
+  - Test number inputs
     - Only allows digits (searches on only digit input)
     - Doesn't delete input withen putting in a non-digit
-    - Shows number keyboard on mobile
-  - Test keyboard functions on all search fields:
-    - Copy/paste (reload on paste)
-    - Delete (reload unless blank)
-    - Enter (reloads)
-    - Tab (next field, no reload)
   - Sorting links
     - Reloads search
     - Records are sorted properly
   - Pagination
     - Reloads search
-    - Loading icon shouldn't move pagination links with full page of users displayed.
-  - Search state (advanced or normal) is kept on page reload and navigation. Fields are cleared currently.
-- Back button
+  - Search state (advanced or normal) is kept on page reload and navigation. Fields are cleared.
