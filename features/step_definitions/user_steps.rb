@@ -160,8 +160,9 @@ Then(/^I should see search results( and suggestions)? for only the following use
 end
 
 Then(/^I should see search suggestions for only the following users: "(.*?)"$/) do |users|
+  email_list = users.split(/, | and /)
   User.all.each do |user|
-    expect_suggestion = users.include?(user.email)
+    expect_suggestion = email_list.include?(user.email)
     expect(page).send(expect_suggestion ? :to : :to_not, have_css('div.tt-suggestion > p', text: /\A#{user.email}\z/))
   end
 end

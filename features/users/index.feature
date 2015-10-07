@@ -38,7 +38,7 @@ Feature: Users Index
     And I have checked the "Email exact match" checkbox
     When I enter "<search>" in the "Email" equals search field
     Then I should see search results for only the following users: "<results>"
-    Then I should see search suggestions for only the following users: "<suggestions>"
+    And I should see search suggestions for only the following users: "<suggestions>"
 
     Examples:
       | user             | search           | results                                                            | suggestions                        |
@@ -62,11 +62,79 @@ Feature: Users Index
       | admin1@admin.com | admin1           |                                                                    | admin1@admin.com                   |
       | admin1@admin.com | admin1@admin.com | admin1@admin.com                                                   | admin1@admin.com                   |
 
-  # ID lteq/gteq
+  Scenario Outline: A user/admin searches for other users using the ID range search field
+    Given I have signed in as "<user>"
+    And I have navigated to the "Users" page
+    And I have clicked on the "Advanced Search" button
+    When I enter "<gteq>" in the "ID" greater than or equals search field
+    And I enter "<lteq>" in the "ID" less than or equals search field
+    Then I should see search results for only the following users: "<results>"
 
-  # ID equals
+     Examples:
+       | user             | gteq | lteq  | results                                                            |
+       | user1@user.com   |      |       | user1@user.com, user2@user.com                                     |
+       | user1@user.com   | 3    |       | user1@user.com, user2@user.com                                     |
+       | user1@user.com   | 4    |       | user2@user.com                                                     |
+       | user1@user.com   | 5    |       |                                                                    |
+       | user1@user.com   |      | 4     | user1@user.com, user2@user.com                                     |
+       | user1@user.com   |      | 3     | user1@user.com                                                     |
+       | user1@user.com   |      | 2     |                                                                    |
+       | user1@user.com   | 3    | 4     | user1@user.com, user2@user.com                                     |
+       | user1@user.com   | 3    | 3     | user1@user.com                                                     |
+       | user1@user.com   | 4    | 4     | user2@user.com                                                     |
+       | admin1@admin.com |      |       | admin1@admin.com, admin2@admin.com, user1@user.com, user2@user.com |
+       | admin1@admin.com | 0    |       | admin1@admin.com, admin2@admin.com, user1@user.com, user2@user.com |
+       | admin1@admin.com | 4    |       | user2@user.com                                                     |
+       | admin1@admin.com | 5    |       |                                                                    |
+       | admin1@admin.com |      | 4     | admin1@admin.com, admin2@admin.com, user1@user.com, user2@user.com |
+       | admin1@admin.com |      | 1     | admin1@admin.com                                                   |
+       | admin1@admin.com |      | 0     |                                                                    |
+       | admin1@admin.com | 1    | 4     | admin1@admin.com, admin2@admin.com, user1@user.com, user2@user.com |
+       | admin1@admin.com | 2    | 3     | admin2@admin.com, user1@user.com                                   |
+       | admin1@admin.com | 4    | 4     | user2@user.com                                                     |
 
-  # Role contains
+  Scenario Outline: A user/admin searches for other users using the ID equals search field
+    Given I have signed in as "<user>"
+    And I have navigated to the "Users" page
+    And I have clicked on the "Advanced Search" button
+    And I have unchecked the "ID toggle range" checkbox
+    When I enter "<id>" in the "ID" equals search field
+    Then I should see search results for only the following users: "<results>"
+
+    Examples:
+      | user             | id | results                                                            |
+      | user1@user.com   |    | user1@user.com, user2@user.com                                     |
+      | user1@user.com   | 1  |                                                                    |
+      | user1@user.com   | 3  | user1@user.com                                                     |
+      | user1@user.com   | 4  | user2@user.com                                                     |
+      | admin1@admin.com |    | admin1@admin.com, admin2@admin.com, user1@user.com, user2@user.com |
+      | admin1@admin.com | 1  | admin1@admin.com                                                   |
+      | admin1@admin.com | 2  | admin2@admin.com                                                   |
+      | admin1@admin.com | 3  | user1@user.com                                                     |
+      | admin1@admin.com | 4  | user2@user.com                                                     |
+      | admin1@admin.com | 5  |                                                                    |
+
+  Scenario Outline: A user/admin searches for other users using the Role contains search field
+    Given I have signed in as "<user>"
+    And I have navigated to the "Users" page
+    And I have clicked on the "Advanced Search" button
+    When I enter "<role>" in the "Role" contains search field
+    Then I should see search results for only the following users: "<results>"
+    And I should see search suggestions for only the following roles: "<suggestions>"
+
+    Examples:
+      | user             | role  | results                                                            | suggestions |
+      | user1@user.com   |       | user1@user.com, user2@user.com                                     |             |
+      | user1@user.com   | a     |                                                                    | Admin       |
+      | user1@user.com   | u     | user1@user.com, user2@user.com                                     | User        |
+      | user1@user.com   | User  | user1@user.com, user2@user.com                                     | User        |
+      | user1@user.com   | x     |                                                                    |             |
+      | admin1@admin.com |       | admin1@admin.com, admin2@admin.com, user1@user.com, user2@user.com |             |
+      | admin1@admin.com | a     | admin1@admin.com, admin2@admin.com                                 | Admin       |
+      | admin1@admin.com | Admin | admin1@admin.com, admin2@admin.com                                 | Admin       |
+      | admin1@admin.com | u     | user1@user.com, user2@user.com                                     | User        |
+      | admin1@admin.com | User  | user1@user.com, user2@user.com                                     | User        |
+      | admin1@admin.com | x     |                                                                    |             |
 
   # Role equals
 
@@ -74,17 +142,17 @@ Feature: Users Index
 
   # Sign in count eq
 
-  # ID
+  # ID column
 
-  # EMAIL
+  # EMAIL column
 
-  # ROLES
+  # ROLES column
 
-  # CREATED AT
+  # CREATED AT column
 
-  # SIGN IN COUNT
+  # SIGN IN COUNT column
 
-  # LAST SIGN IN
+  # LAST SIGN IN column
 
   Scenario Outline: A user/admin sees specific actions for each user
     Given I have signed in as "<user>"

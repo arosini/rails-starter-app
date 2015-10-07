@@ -13,8 +13,8 @@ Given(/^I have filled out the "(.*?)" form with the following values:$/) do |for
   end
 end
 
-Given(/^I have checked the "(.*?)" checkbox$/) do |checkbox|
-  check checkbox.downcase.tr(' ', '_')
+Given(/^I have (un)?checked the "(.*?)" checkbox$/) do |un, checkbox|
+  page.send(un ? :uncheck : :check, checkbox.downcase.tr(' ', '_'))
 end
 
 # WHEN
@@ -26,12 +26,12 @@ When(/^I fill out the "(.*?)" form with the following values:$/) do |form, table
   step "I have filled out the \"#{form}\" form with the following values:", table
 end
 
-When(/^I enter "(.*?)" in the "(.*?)" (contains|equals|less than or equal to|greater than or equal to) search field$/) do |value, field, type|
+When(/^I enter "(.*?)" in the "(.*?)" (contains|equals|less than or equals|greater than or equals) search field$/) do |value, field, type|
   type = case type
     when "contains" then "cont"
     when "equals" then "eq"
-    when "less than or equal to" then "lteq"
-    when "greater than or equal to" then "gteq"
+    when "less than or equals" then "lteq"
+    when "greater than or equals" then "gteq"
   end
   search_field_id = field.downcase.tr(' ', '-') + "-" + type + "-search-field"
   fill_in search_field_id, with: value
@@ -48,8 +48,8 @@ When(/^I select "(.*?)" in the "(.*?)" dropdown$/) do |options, label|
   end
 end
 
-When(/^I check the "(.*?)" checkbox$/) do |checkbox|
-  step "I have checked the \"#{checkbox}\" checkbox"
+When(/^I (un)?check the "(.*?)" checkbox$/) do |un, checkbox|
+  step "I have #{un}checked the \"#{checkbox}\" checkbox"
 end
 
 # THEN
