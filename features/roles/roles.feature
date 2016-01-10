@@ -16,11 +16,11 @@ Feature: Roles
       | field                  | value |
       | Name                   | test  |
     And I click on the "Submit" button
-    Then I should be redirected to the "role" page
+    Then I should be redirected to the "test" role page
     And I should see "test" in the "Name" row
     When I navigate to the edit user page for "user1@user.com"
     And I select "test" in the "Roles" dropdown
     And I click on the "Submit" button
-    Then I should see the profile page for "user"
+    Then I should see the profile page for "user1@user.com"
     And I should see an alert message saying "Successfully updated user."
     And I should see "test" in the "Role" row

@@ -124,7 +124,7 @@ end
 
 Then(/^I should( not)? see the edit user page for "(.*?)"$/) do |negate, email|
   user = User.find_by(email: email)
-  page_title = user == @current_user ? "Edit My Profile" : "Edit User #{user.id}"
+  page_title = user == @current_user ? 'Edit My Profile' : "Edit User #{user.id}"
   step "the current path should#{negate} be \"#{edit_user_path(user.id)}\""
   step "I should#{negate} see the page title as \"#{page_title}\""
 end
@@ -149,13 +149,11 @@ Then(/^I should see links to the profile pages for only "(.*?)"$/) do |emails|
   end
 end
 
-Then(/^I should see search results( and suggestions)? for only the following users: "(.*?)"$/) do |suggestions, users|
+Then(/^I should see search results for only the following users: "(.*?)"$/) do |users|
   email_list = users.split(/, | and /)
   User.all.each do |user|
     expect_user = email_list.include?(user.email)
-    expect_suggestion = expect_user && suggestions
     step "I should#{expect_user ? '' : ' not'} see a link to \"#{user.email}'s\" profile page"
-    expect(page).send(expect_suggestion ? :to : :to_not, have_css('div.tt-suggestion > p', text: /\A#{user.email}\z/))
   end
 end
 

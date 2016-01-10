@@ -5,7 +5,7 @@ class UsersControllerTest < ActionController::TestCase
   # Not found test
   test '404 served on not found exception' do
     sign_in @user
-    get :show, id: 1337
+    get :show, id: 0
     assert_404_response
   end
 
@@ -355,12 +355,12 @@ class UsersControllerTest < ActionController::TestCase
   test 'email invalid message on update' do
     sign_in @admin
     put :update,
-        id: @user.id,
+        id: @admin.id,
         user: {
           email: 'test',
           password: 'asdqwe',
           password_confirmation: 'asdqwe',
-          role_ids: [Role.find_by(name: 'User').id]
+          role_ids: [Role.find_by(name: 'Admin').id]
         }
     assert_failed_update_user(:email, 'is invalid')
   end
@@ -368,12 +368,12 @@ class UsersControllerTest < ActionController::TestCase
   test 'email is already taken message on update' do
     sign_in @admin
     put :update,
-        id: @user.id,
+        id: @admin.id,
         user: {
-          email: @admin.email,
+          email: @user.email,
           password: 'asdqwe',
           password_confirmation: 'asdqwe',
-          role_ids: [Role.find_by(name: 'User').id]
+          role_ids: [Role.find_by(name: 'Admin').id]
         }
     assert_failed_update_user(:email, 'has already been taken')
   end

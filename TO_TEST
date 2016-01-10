@@ -3,8 +3,6 @@ CI Steps:
     - rubocop (No errors)
     - rails_best_practices (No errors)
     - rubycritic app features (No smells, all classes green [A or B])
-
-  Security Analysis:
     - brakeman (No errors/warnings)
 
   Tests:
@@ -50,9 +48,26 @@ Cucumber tests to write:
   - Test number inputs
     - Only allows digits (searches on only digit input)
     - Doesn't delete input withen putting in a non-digit
-  - Sorting links
+  - Sorting links 
     - Reloads search
     - Records are sorted properly
   - Pagination
     - Reloads search
   - Search state (advanced or normal) is kept on page reload and navigation. Fields are cleared.
+
+
+  Failing Scenarios:
+cucumber features/roles/roles.feature:12 # Scenario: An admin creates a new role
+cucumber features/users/index.feature:35 # Scenario: A user/admin searches for other users using the Email equals search field
+cucumber features/users/index.feature:35 # Scenario: A user/admin searches for other users using the Email equals search field
+cucumber features/users/index.feature:35 # Scenario: A user/admin searches for other users using the Email equals search field
+cucumber features/users/index.feature:35 # Scenario: A user/admin searches for other users using the Email equals search field
+cucumber features/users/index.feature:35 # Scenario: A user/admin searches for other users using the Email equals search field
+cucumber features/users/index.feature:35 # Scenario: A user/admin searches for other users using the Email equals search field
+cucumber features/users/index.feature:35 # Scenario: A user/admin searches for other users using the Email equals search field
+cucumber features/users/index.feature:35 # Scenario: A user/admin searches for other users using the Email equals search field
+cucumber features/users/index.feature:35 # Scenario: A user/admin searches for other users using the Email equals search field
+cucumber features/users/index.feature:35 # Scenario: A user/admin searches for other users using the Email equals search field
+cucumber features/users/index.feature:35 # Scenario: A user/admin searches for other users using the Email equals search field
+cucumber features/users/index.feature:35 # Scenario: A user/admin searches for other users using the Email equals search field
+cucumber features/users/index.feature:35 # Scenario: A user/admin searches for other users using the Email equals search field
