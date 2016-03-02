@@ -1,5 +1,5 @@
 # Rails Starter Application
-Used as a starting point for new application, or just as a sandbox to play around with.  
+Used as a starting point for developing new Rails applications, or just as a sandbox to play around with.
 
 An example deployment can be found here: https://rails-starter-application.herokuapp.com/
 If you would like the "Admin role within the application, let me know and I will give them to you. 
