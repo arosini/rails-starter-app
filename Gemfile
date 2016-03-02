@@ -2,8 +2,8 @@ source 'https://rubygems.org'
 
 gem 'rails' # , github: 'rails/rails'
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+# Use postgres as the database for Active Record
+gem 'pg'
 
 # Use SCSS for stylesheets
 gem 'sass-rails'
@@ -96,3 +96,8 @@ gem 'ransack' # , github: 'activerecord-hackery/ransack'
 
 # Front-end validation
 gem 'parsley-rails'
+
+# Enables features such as static asset serving and logging on Heroku
+gem 'rails_12factor', group: :production
+
+ruby "2.2.0"
