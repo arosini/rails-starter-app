@@ -1,17 +1,19 @@
-Linux Installation Instructions
-=================================
+# Installation Instructions
+
 1. Install Git
-    ```ruby
+    ```bash
     sudo apt-get install git-core
     ```
 
 2. Install NodeJS (or another JavaScript runtime library)
 
-    ```sudo apt-get install nodejs```
+    ```bash
+    sudo apt-get install nodejs
+    ```
 
-3. Install rvm/ruby 2.2.0/bundler
+3. Install RVM, Ruby 2.2.0 and Bundler
 
-    ```ruby
+    ```bash
     gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
     curl -sSL https://get.rvm.io | bash -s stable
     source /home/USERNAME/.rvm/scripts/rvm
@@ -22,7 +24,7 @@ Linux Installation Instructions
 
 4. Clone repo, install gems and setup database:
 
-    ```ruby
+    ```bash
     git clone https://github.com/arosini/rails-starter-app.git
     cd rails-starter-app
     bundle install
@@ -31,16 +33,35 @@ Linux Installation Instructions
     rake db:seed
     ```
 
-Your are done! To view the app, run the following command from the project root:
+5. Install Heroku and login
 
-     rails s
+    ```bash
+    wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+    heroku login
+    ```
 
-Once you see something like 'INFO WEBrick::HTTPServer#start: pid=168 port=3000', this means the server is ready. Navigate to 'localhost:3000' in a browser and you should see the application. You can login to an admin account with the username 'admin@admin.com' and password 'asdqwe'.
+# Starting the Server
+```bash
+rails s
+```
 
-Run the unit tests with:
+You can login to an admin account with the username 'admin@admin.com' and password 'asdqwe'.
 
-    rake test TESTOPTS='--profile'
+# Unit Tests
+```bash
+rake test TESTOPTS='--profile'
+```
     
-Run the acceptance tests with:
+# Integration Tests
+```bash
+cucumber
+```
 
-    cucumber
+# Deploying
+
+```
+git push heroku master
+heroku run rake db:migrate
+```
+
+Reference: https://devcenter.heroku.com/articles/getting-started-with-rails4
