@@ -21,9 +21,9 @@ Feature: Sign In
     Then I should see an error message saying "<message>"
 
     Examples:
-      | field       | value          | message                                        |
-      | Email       | wrong@user.com | Could not find a user with that email address  |
-      | Password    | wrong          | Incorrect password                             |
+      | field    | value          | message                                        |
+      | Email    | wrong@user.com | Could not find a user with that email address. |
+      | Password | wrong          | Incorrect password.                            |
 
   # Scenario: A visitor checks the Remember Me checkbox on the Sign In form
   #   Given I have not signed in
@@ -42,7 +42,7 @@ Feature: Sign In
     Then I should see the "<page>" page
 
     Examples:
-      | action                | page                 | 
+      | action                | page                 |
       | Sign Up               | Sign Up              |
       | Forgot your password? | Forgot Your Password |
 

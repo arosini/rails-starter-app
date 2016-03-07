@@ -57,8 +57,8 @@ Then(/^I should( not)? be able to navigate to the "(.*?)" page$/) do |negate, pa
 end
 
 Then(/^I should( not)? see "(.*?)" in the "(.*?)" row$/) do |negate, value, row|
-  cell = page.find(:css, 'td', text: row).find(:xpath, '..').find(:css, 'td', text: value)
-  expect(cell).send(negate ? :to : :to_not, be_nil)
+  table = page.find(:css, 'td', text: row).find(:xpath, '..')
+  expect(table).send(negate ? :to_not : :to, have_selector('td', text: value))
 end
 
 Then(/^I should see( not)? a row for "(.*?)" in the "(.*?)" table$/) do |negate, row, table|
@@ -71,7 +71,7 @@ Then(/^I should( not)? see a(n)? "(.*?)" field$/) do |negate, _n, field|
 end
 
 Then(/^I should( not)? see the following actions in the "(.*?)" row: "(.*?)"$/) do |negate, row_text, actions|
-  row = page.find(:css, 'tr', text: row_text)
+  row = page.all(:css, 'tr', text: row_text).last
   actions.split(/, | and /).each do |action|
     expect(row).send(negate ? :to_not : :to, have_selector(:link_or_button, action))
   end

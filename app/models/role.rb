@@ -5,6 +5,6 @@ class Role < ActiveRecord::Base
 
   # String of User emails (seperated by commas)
   def print_users
-    users.map(&:email).join(', ')
+    users.map(&:email).sort.join(', ')
   end
 end

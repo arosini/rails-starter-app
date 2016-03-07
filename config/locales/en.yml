@@ -93,11 +93,11 @@ en:
       other_title: "Edit User %{user_id}"
     errors:
       password: 
-        min_length: 'Must be at least 6 characters.'
+        min_length: 'Must be at least 6 characters'
       password_confirmation:
-        match_password: 'Must match password.'
+        match_password: 'Must match password'
       roles:
-        required: 'At least one role must be selected.'
+        required: 'At least one role must be selected'
     fields:
      current_password: 'Current'
      email: 'Email'

@@ -17,7 +17,7 @@ Feature: Edit User
     And I enter "updated@updated.com" in the "Email" field
     And I click on the "Submit" button
     Then I should see an alert message saying "Successfully updated user."
-    And I should be able to sign in as "updated@updated.com" 
+    And I should be able to sign in as "updated@updated.com"
     And I should not be able to sign in as "<user>"
 
     Examples:
@@ -33,11 +33,11 @@ Feature: Edit User
     Then I should see an error message saying "<message>" near the "Email" field
 
     Examples:
-      | user             | email           | message                             |
-      | user1@user.com   | user1           | This value should be a valid email. |
-      | user1@user.com   | user2@user.com  | Email has already been taken.       |
-      | admin1@admin.com | user1           | This value should be a valid email. |
-      | admin1@admin.com | user2@user.com  | Email has already been taken.       |
+      | user             | email          | message                             |
+      | user1@user.com   | user1          | This value should be a valid email. |
+      | user1@user.com   | user2@user.com | Email has already been taken.       |
+      | admin1@admin.com | user1          | This value should be a valid email. |
+      | admin1@admin.com | user2@user.com | Email has already been taken.       |
 
   Scenario Outline: An admin tries to change somebody else's email
     Given I have signed in as "admin1@admin.com"
@@ -77,19 +77,19 @@ Feature: Edit User
     Then I should see an error message saying "<message>" near the "<field>" field
 
     Examples:
-      | user             | current | new    | confirm | field   | message                       |
-      | user1@user.com   | asdqw   | asdqwe | asdqwe  | Current | Incorrect current password    |
-      | user1@user.com   |         | asdqwe | asdqwe  | Current | Can't be blank                |
-      | user1@user.com   | asdqwe  | asdqw  | asdqwe  | New     | Must be at least 6 characters |
-      | user1@user.com   | asdqwe  |        |         | New     | Can't be blank                |
-      | user1@user.com   | asdqwe  | asdqwe | asdqwee | Confirm | Must match password           |
-      | user1@user.com   | asdqwe  |        |         | Confirm | Can't be blank                |
-      | admin1@admin.com | asdqw   | asdqwe | asdqwe  | Current | Incorrect current password    |
-      | admin1@admin.com |         | asdqwe | asdqwe  | Current | Can't be blank                |
-      | admin1@admin.com | asdqwe  | asdqw  | asdqwe  | New     | Must be at least 6 characters |
-      | admin1@admin.com | asdqwe  |        |         | New     | Can't be blank                |
-      | admin1@admin.com | asdqwe  | asdqwe | asdqwee | Confirm | Must match password           |
-      | admin1@admin.com | asdqwe  |        |         | Confirm | Can't be blank                |
+      | user             | current | new    | confirm | field   | message                        |
+      | user1@user.com   | asdqw   | asdqwe | asdqwe  | Current | Incorrect current password.    |
+      | user1@user.com   |         | asdqwe | asdqwe  | Current | Can't be blank.                |
+      | user1@user.com   | asdqwe  | asdqw  | asdqwe  | New     | Must be at least 6 characters. |
+      | user1@user.com   | asdqwe  |        |         | New     | Can't be blank.                |
+      | user1@user.com   | asdqwe  | asdqwe | asdqwee | Confirm | Must match password.           |
+      | user1@user.com   | asdqwe  |        |         | Confirm | Can't be blank.                |
+      | admin1@admin.com | asdqw   | asdqwe | asdqwe  | Current | Incorrect current password.    |
+      | admin1@admin.com |         | asdqwe | asdqwe  | Current | Can't be blank.                |
+      | admin1@admin.com | asdqwe  | asdqw  | asdqwe  | New     | Must be at least 6 characters. |
+      | admin1@admin.com | asdqwe  |        |         | New     | Can't be blank.                |
+      | admin1@admin.com | asdqwe  | asdqwe | asdqwee | Confirm | Must match password.           |
+      | admin1@admin.com | asdqwe  |        |         | Confirm | Can't be blank.                |
 
   Scenario Outline: An admin tries to change somebody else's password
     Given I have signed in as "admin1@admin.com"

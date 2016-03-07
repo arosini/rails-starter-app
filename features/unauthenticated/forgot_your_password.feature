@@ -11,9 +11,9 @@ Feature: Forgot Your Password
     And an email with a password change link should be sent to "user1@user.com"
     When I click on the link in the email
     And I fill out the "Change Your Password" form with the following values:
-     | field     | value  |
-     | Password  | asdqwe |
-     | Confirm   | asdqwe |
+     | field    | value  |
+     | Password | asdqwe |
+     | Confirm  | asdqwe |
     And I click on the "Submit" button
     Then I should be automatically signed in
     And I should see an alert message saying "Your password was changed successfully. You are now signed in."
@@ -26,9 +26,9 @@ Feature: Forgot Your Password
     Then I should see an error message saying "<message>" near the "Email" field
 
     Examples:
-     | email               | message                                       |
-     | idontexist@user.com | Could not find a user with that email address |
-     | bad-email           | This value should be a valid email            |
+     | email               | message                                        |
+     | idontexist@user.com | Could not find a user with that email address. |
+     | bad-email           | This value should be a valid email.            |
 
   Scenario Outline: A visitor tries to changes their password to an invalid password
     When I navigate to the "forgot your password" page
@@ -46,11 +46,11 @@ Feature: Forgot Your Password
     Then I should see an error message saying "<message>" near the "<field>" field
 
     Examples:
-      | password | confirm | field    | message                       |
-      | asdqw    | asdqw   | Password | Must be at least 6 characters |
-      |          |         | Password | Can't be blank                |
-      | asdqwe   | asdqwee | Confirm  | Must match password           |
-      |          |         | Confirm  | Can't be blank                |
+      | password | confirm | field    | message                        |
+      | asdqw    | asdqw   | Password | Must be at least 6 characters. |
+      |          |         | Password | Can't be blank.                |
+      | asdqwe   | asdqwee | Confirm  | Must match password.           |
+      |          |         | Confirm  | Can't be blank.                |
 
   Scenario Outline: A visitor clicks a link on the Forgot Your Password page
     Given I have not signed in
@@ -59,7 +59,7 @@ Feature: Forgot Your Password
     Then I should see the "<page>" page
 
     Examples:
-      | action  | page    | 
+      | action  | page    |
       | Sign In | Sign In |
       | Sign Up | Sign Up |
 

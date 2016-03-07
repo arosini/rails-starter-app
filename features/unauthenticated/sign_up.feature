@@ -20,21 +20,21 @@ Feature: Sign Up
       | Email    | user1@user.com |
       | Password | asdqwe         |
       | Confirm  | asdqwe         |
-      | <field>  | <value>        | 
+      | <field>  | <value>        |
     And I click on the "Sign Up" button
     Then I should see an error message saying "<message>" near the "<field>" field
 
     Examples:
-      | field      | value          | message                            |
-      | Email      | invalidemail   | This value should be a valid email |
-      | Email      | user1@user.com | Email has already been taken       |
-      | Email      |                | Can't be blank                     |
-      | Password   | asdqw          | Must be at least 6 characters      |
-      | Password   |                | Can't be blank                     |
-      | Confirm    | asdqwee        | Must match password                |
-      | Confirm    |                | Can't be blank                     |
+      | field    | value          | message                             |
+      | Email    | invalidemail   | This value should be a valid email. |
+      | Email    | user1@user.com | Email has already been taken.       |
+      | Email    |                | Can't be blank.                     |
+      | Password | asdqw          | Must be at least 6 characters.      |
+      | Password |                | Can't be blank.                     |
+      | Confirm  | asdqwee        | Must match password.                |
+      | Confirm  |                | Can't be blank.                     |
 
-  Scenario: Visitor clicks the Sign In link on the Sign Up page
+  Scenario: Visitor clicks the sign in link on the sign up page
     Given I have not signed in
     And I have navigated to the "Sign Up" page
     When I click on the "Sign In" link
