@@ -46,6 +46,7 @@ When(/^I select "(.*?)" in the "(.*?)" dropdown$/) do |options, label|
     should_select = options_to_select.include?(option.text)
     option.find('label').click if (!selected && should_select) || (selected && !should_select)
   end
+  dropdown.find(:css, '.dropdown-toggle').click
 end
 
 When(/^I (un)?check the "(.*?)" checkbox$/) do |un, checkbox|

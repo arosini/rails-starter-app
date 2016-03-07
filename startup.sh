@@ -19,7 +19,7 @@
 #################################################################################################################
  
 ############################################## TERMINALS ########################################################
-gnome-terminal --working-directory="projects/rails-starter-app" --title "Rails Starter App" --geometry=138x36+155+0 \
+gnome-terminal --working-directory="~/projects/rails-starter-app" --title "Rails Starter App" --geometry=138x36+155+0 \
 --tab -e 'bash -c "export WORKING_BRANCH=\"$(git name-rev --name-only HEAD)\"; export BASH_POST_RC=\"git checkout master; git fetch -p; git pull; git checkout ${WORKING_BRANCH}; git pull origin ${WORKING_BRANCH}; git status\"; exec bash"' \
 --tab \
 --tab -e 'bash -c "export BASH_POST_RC=\"rails c;\"; exec bash"' \

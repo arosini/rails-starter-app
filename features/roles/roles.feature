@@ -24,3 +24,16 @@ Feature: Roles
     Then I should see the profile page for "user1@user.com"
     And I should see an alert message saying "Successfully updated user."
     And I should see "test" in the "Role" row
+
+  Scenario: A visitor tries to access the roles index
+    Given I have not signed in
+    Then I should not be able to navigate to the "roles" page
+
+  Scenario: A user tries to access the roles index
+    Given I have signed in as "user1@user.com"
+    Then I should not be able to navigate to the "roles" page
+
+  Scenario: An admin views the roles index
+    Given I have signed in as "admin1@admin.com"
+    When I naviagate to the "roles" page
+    Then I should see some stuff

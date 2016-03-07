@@ -164,3 +164,9 @@ Then(/^I should see search suggestions for only the following users: "(.*?)"$/) 
     expect(page).send(expect_suggestion ? :to : :to_not, have_css('div.tt-suggestion > p', text: /\A#{user.email}\z/))
   end
 end
+
+Then(/^I should see search results and suggestions for only the following users: "(.*?)"$/) do |users|
+  step "I should see search results for only the following users: \"#{users}\""
+  step "I should see search suggestions for only the following users: \"#{users}\""
+end
+

@@ -2,6 +2,9 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
+# TO_REMOVE The following warning is produced without this line: tilt autoloading 'tilt/sass' in a non thread-safe way; explicit require 'tilt/sass' suggested.
+require 'tilt/sass'
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)

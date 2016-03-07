@@ -63,7 +63,7 @@ scenario_times = {}
 Around() do |scenario, block|
   start = Time.now
   block.call
-  scenario = scenario.scenario_outline if scenario.is_a? Cucumber::Ast::OutlineTable::ExampleRow
+  scenario = scenario.scenario_outline if scenario.is_a? Cucumber::Core::Ast::ExamplesTable::Row
   scenario_times["#{scenario.feature.location} #{scenario.name}"] = Time.now - start
 end
  

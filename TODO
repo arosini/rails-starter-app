@@ -20,10 +20,9 @@ KNOWN ISSUES:
   - Move code for form fields into helpers (so parsely validators don't need to be repeated)
   - Alphabetize roles list in user profile/index
   - Change error message for when password confirmation doesn't match password 
-  - Translate error message
+  - Localize error messages
   - Make custom user_path (my_profile_path if current_user, otherwise user_path(@user)). Remove logic that does this in users controller and views.
   - Change vendor assets to CDN
-  - Add output to rake db:seed
 
 POSSIBLE FUTURE FEATURES:
   - Add name of user updated/deleted to confirmation message

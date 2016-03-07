@@ -17,18 +17,32 @@ If you would like the "Admin role within the application, let me know and I will
     $ sudo apt-get install nodejs
     ```
 
-3. Install RVM, Ruby 2.2.0 and Bundler
+3. Install RVM
 
     ```bash
     $ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
     $ curl -sSL https://get.rvm.io | bash -s stable
-    $ source /home/USERNAME/.rvm/scripts/rvm
-    $ rvm install ruby-2.2.0
-    $ rvm use 2.2.0
-    $ rvm 2.2.0 do gem install bundler
+    $ source /home/$(whoami)/.rvm/scripts/rvm
     ```
 
-4. Clone repo, install gems and setup database:
+4. Install Ruby 2.2.1
+    ```
+    $ rvm install ruby-2.2.1
+    $ rvm use 2.2.1
+    $ rvm 2.2.1 do gem install bundler
+    ```
+
+5. Install and setup Postgres
+    ```
+    $ sudo apt-get install libpq-dev postgresql-9.3
+    $ sudo -u postgres psql
+    $ create user "rails_starter_app" password 'rails_starter_app_pass';
+    $ create database "rails_starter_app_dev" owner "rails_starter_app";
+    $ create database "rails_starter_app_tst" owner "rails_starter_app";
+    $ \q
+    ```
+
+6. Clone the repository, install gems and setup database:
 
     ```bash
     $ git clone https://github.com/arosini/rails-starter-app.git
@@ -39,7 +53,7 @@ If you would like the "Admin role within the application, let me know and I will
     $ rake db:seed
     ```
 
-5. Install and setup Heroku
+7. Install and setup Heroku
 
     ```bash
     $ wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
@@ -52,7 +66,7 @@ If you would like the "Admin role within the application, let me know and I will
 $ rails s
 ```
 
-You can login to an admin account with the username 'admin@admin.com' and password 'asdqwe'.
+You can sign in to an admin account with the username 'admin@admin.com' and password 'asdqwe'.
 
 ## Unit Tests
 ```bash
@@ -61,11 +75,18 @@ $ rake test TESTOPTS='--profile'
     
 ## Integration Tests
 ```bash
-$ cucumber
+$ cucumber [--format usage]
+```
+
+## Reports
+```
+$ rubocop
+$ rails_best_practices
+$ rubycritic app features
+$ brakeman
 ```
 
 ## Deploying
-
 ```
 $ git push heroku master
 $ heroku run rake db:migrate

@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails' # , github: 'rails/rails'
 
-# Use postgres as the database for Active Record
+# Use Postgres as the database for Active Record
 gem 'pg'
 
 # Use SCSS for stylesheets
@@ -100,4 +100,4 @@ gem 'parsley-rails'
 # Enables features such as static asset serving and logging on Heroku
 gem 'rails_12factor', group: :production
 
-ruby "2.2.0"
+ruby "2.2.1"
