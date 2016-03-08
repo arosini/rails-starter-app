@@ -1,15 +1,15 @@
 = search_form_for search, url: search_roles_path, method: :get, remote: true  do |f|
   .input-group.col-xs-12
-    = f.label :name_cont, t('roles.fields.name'), id: "name-search-label", class:"input-group-addon", for: "name-search-field"
-    = f.search_field :name_cont, id: "name-search-field", class: "form-control typeahead"
+    = f.label :name_cont, t('roles.fields.name'), id: "name-search-label", class:"input-group-addon", for: "name-cont-search-field"
+    = f.search_field :name_cont, id: "name-cont-search-field", class: "form-control typeahead"
   %br
   .actions.hide
     = f.submit t('search.submit'), id: "submit-search", class: "btn btn-default"
 
 :javascript
   $(document).ready(function() {
-    setUpTypingTimer('#name-search-field', doneTyping, 200, startTyping);
-    setUpTypeAhead(#{Role.all.to_json}, 'name', '#name-search-field', 'roles');
+    setUpTypingTimer('#name-cont-search-field', doneTyping, 200, startTyping);
+    setUpTypeAhead(#{Role.all.to_json}, 'name', '#name-cont-search-field', 'roles');
   });
 
   function doneTyping() {

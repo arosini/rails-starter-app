@@ -61,9 +61,9 @@ Then(/^I should( not)? see "(.*?)" in the "(.*?)" row$/) do |negate, value, row|
   expect(table).send(negate ? :to_not : :to, have_selector('td', text: value))
 end
 
-Then(/^I should see( not)? a row for "(.*?)" in the "(.*?)" table$/) do |negate, row, table|
-  cell = page.find(:css, 'table#' + table + '-table td', text: row)
-  expect(cell).send(negate ? :to : :to_not, be_nil)
+Then(/^I should( not)? see a row for "(.*?)" in the "(.*?)" table$/) do |negate, value, table|
+  table = page.find(:css, 'table#' + table + '-table')
+  expect(table).send(negate ? :to_not : :to, have_selector('td', text: value))
 end
 
 Then(/^I should( not)? see a(n)? "(.*?)" field$/) do |negate, _n, field|
@@ -71,7 +71,7 @@ Then(/^I should( not)? see a(n)? "(.*?)" field$/) do |negate, _n, field|
 end
 
 Then(/^I should( not)? see the following actions in the "(.*?)" row: "(.*?)"$/) do |negate, row_text, actions|
-  row = page.all(:css, 'tr', text: row_text).last
+  row = page.find(:css, 'tbody:nth-child(n+1)', text: row_text)
   actions.split(/, | and /).each do |action|
     expect(row).send(negate ? :to_not : :to, have_selector(:link_or_button, action))
   end

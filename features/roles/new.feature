@@ -1,5 +1,5 @@
 @javascript
-Feature: Roles
+Feature: New Role
 
   Scenario: A visitor tries to access the new role page
     Given I have not signed in
@@ -38,24 +38,3 @@ Feature: Roles
     | name  | message                      |
     | Admin | Role name is already in use. |
     |       | Can't be blank.              |
-    
-  Scenario: A visitor tries to access the roles index
-    Given I have not signed in
-    Then I should not be able to navigate to the "roles" page
-
-  Scenario: A user tries to access the roles index
-    Given I have signed in as "user1@user.com"
-    Then I should not be able to navigate to the "roles" page
-
-  Scenario Outline: An admin views a role in the role index
-    Given I have signed in as "admin1@admin.com"
-    When I navigate to the "roles" page
-    Then I should see a row for "<role>" in the "roles" table
-    And I should see "<users>" in the "<role>" row
-    And I should not see "<missing>" in the "<role>" row
-    And I should see the following actions in the "<role>" row: "Show, Update, Delete"
-
-    Examples:
-    | role  | users                              | missing                            |
-    | Admin | admin1@admin.com, admin2@admin.com | user1@user.com, user2@user.com     |
-    | User  | user1@user.com, user2@user.com     | admin1@admin.com, admin2@admin.com |

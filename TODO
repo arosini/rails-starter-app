@@ -1,5 +1,6 @@
 TO DO:
 - TO_TEST
+- What happens when you go to a 404 when not signed in?
 - Audit locales for usage (no unused), repition (minimize this) and structure (be consistent!)
 - Audit step definitions (use general steps where possible!)
 - KNOWN ISSUES

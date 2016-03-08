@@ -62,11 +62,8 @@ en:
   roles:
     alerts:
       delete: 'Are you sure you want to delete this role?'
-    name: 'Role'
-    notices:
-      create: 'Successfully created role.'
-      delete: 'Successfully destroyed role.'
-      update: 'Successfully updated role.'
+    edit:
+      title: "Edit Role %{role_id}"
     fields:
       name: 'Name'
       users: 'Users'
@@ -74,6 +71,10 @@ en:
       title: 'Roles Index'
     new:
       title: 'New Role'
+    notices:
+      create: 'Successfully created role.'
+      delete: 'Successfully destroyed role.'
+      update: 'Successfully updated role.'
     show:
       title: "Role %{role_id}"
   search:
@@ -93,11 +94,11 @@ en:
       other_title: "Edit User %{user_id}"
     errors:
       password: 
-        min_length: 'Must be at least 6 characters'
+        min_length: 'Must be at least 6 characters.'
       password_confirmation:
-        match_password: 'Must match password'
+        match_password: 'Must match password.'
       roles:
-        required: 'At least one role must be selected'
+        required: 'At least one role must be selected.'
     fields:
      current_password: 'Current'
      email: 'Email'
