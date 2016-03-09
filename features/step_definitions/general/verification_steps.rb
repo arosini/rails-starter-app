@@ -4,21 +4,6 @@ Then(/^I should( not)? see "(.*?)" on the page$/) do |negate, content|
   expect(page).send(negate ? :to_not : :to, have_content(content))
 end
 
-Then(/^I should( not)? see a(n)? "(.*?)" (button|link)$/) do |negate, _n, text, _type|
-  expect(page).send(negate ? :to_not : :to, have_selector(:link_or_button, text))
-end
-
-Then(/^I should( not)? see the following buttons: "(.*?)"$/) do |negate, buttons|
-  button_list = buttons.split(/, | and /)
-  button_list.each do |button|
-    within_page_content { step "I should#{negate} see a \"#{button}\" button" }
-  end
-end
-
-Then(/^the current path should( not)? be "(.*?)"$/) do |negate, path|
-  expect(current_path).send(negate ? :to_not : :to, eq(path))
-end
-
 Then(/^I should( not)? see the page title as "(.*?)"$/) do |negate, expected_title|
   title = find('.page-title') rescue nil
   expect(title).send(negate ? :to_not : :to, have_content(expected_title))
@@ -34,6 +19,11 @@ Then(/^I should( not)? see a link to "(.*?)" that says "(.*?)"$/) do |negate, li
     link = find('a', text: link_text, visible: true) rescue nil
     negate ? expect(link).to(be_nil) : expect(URI.parse(link['href']).path).to(eq(link_path))
   end
+end
+
+# Navigation
+Then(/^the current path should( not)? be "(.*?)"$/) do |negate, path|
+  expect(current_path).send(negate ? :to_not : :to, eq(path))
 end
 
 Then(/^I should( not)? see the "(.*?)" page$/) do |negate, page_name_or_path|
@@ -56,24 +46,37 @@ Then(/^I should( not)? be able to navigate to the "(.*?)" page$/) do |negate, pa
   end
 end
 
-Then(/^I should( not)? see "(.*?)" in the "(.*?)" row$/) do |negate, value, row|
-  table = page.find(:css, 'td', text: row).find(:xpath, '..')
-  expect(table).send(negate ? :to_not : :to, have_selector('td', text: value))
+# Tables 
+Then(/^I should( not)? see "(.*?)" in the "(.*?)" table's "(.*?)" row$/) do |negate, row_text, table_name, row_identifier|
+  row = page.find(:css, 'table#' + table + '-table td', text: row_identifier)
+  expect(row).send(negate ? :to_not : :to, have_content(row_text))
 end
 
-Then(/^I should( not)? see a row for "(.*?)" in the "(.*?)" table$/) do |negate, value, table|
+Then(/^I should( not)? see a row for "(.*?)" in the "(.*?)" table$/) do |negate, row_text, table_name|
   table = page.find(:css, 'table#' + table + '-table')
   expect(table).send(negate ? :to_not : :to, have_selector('td', text: value))
 end
 
+Then(/^I should( not)? see the following actions in the "(.*?)" table's "(.*?)" row: "(.*?)"$/) do |negate, row_text, actions|
+  row = page.find(:css, 'tbody:nth-child(n+1)', text: row_text)
+  actions.split(/, | and /).each do |action|
+    expect(row).send(negate ? :to_not : :to, have_selector(:link_or_button, action))
+  end
+end
+
+# Fields
 Then(/^I should( not)? see a(n)? "(.*?)" field$/) do |negate, _n, field|
   expect(page).send(negate ? :to_not : :to, have_field(field))
 end
 
-Then(/^I should( not)? see the following actions in the "(.*?)" row: "(.*?)"$/) do |negate, row_text, actions|
-  row = page.find(:css, 'tbody:nth-child(n+1)', text: row_text)
-  actions.split(/, | and /).each do |action|
-    expect(row).send(negate ? :to_not : :to, have_selector(:link_or_button, action))
+Then(/^I should( not)? see a(n)? "(.*?)" (button|link)$/) do |negate, _n, text, _type|
+  expect(page).send(negate ? :to_not : :to, have_selector(:link_or_button, text))
+end
+
+Then(/^I should( not)? see the following buttons: "(.*?)"$/) do |negate, buttons|
+  button_list = buttons.split(/, | and /)
+  button_list.each do |button|
+    within_page_content { step "I should#{negate} see a \"#{button}\" button" }
   end
 end
 
