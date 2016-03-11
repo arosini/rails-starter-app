@@ -84,7 +84,7 @@ Then(/^I should( not)? be able to sign in as "(.*?)" using "(.*?)" as the passwo
   step "I have signed in as \"#{email}\" using \"#{password}\" as the password"
   if negate
     @current_user = nil
-    step "I should see an error message saying \"Incorrect password. \""
+    step "I should see an error message saying \"Incorrect password.\""
   end
 end
 

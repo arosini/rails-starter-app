@@ -113,7 +113,7 @@ Feature: Edit User
     And I click on the "Submit" button
     Then I should see the profile page for "<user>"
     And I should see an alert message saying "Successfully updated user."
-    And I should see "<roles>" in the "Role" row
+    And I should see "<roles>" in the "user" table's "Role" row
 
     Examples:
       | user             | roles       |

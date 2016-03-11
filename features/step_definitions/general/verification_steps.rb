@@ -1,17 +1,28 @@
 # Put shared 'Then' steps here
 
+# Content
 Then(/^I should( not)? see "(.*?)" on the page$/) do |negate, content|
   expect(page).send(negate ? :to_not : :to, have_content(content))
 end
 
-Then(/^I should( not)? see the page title as "(.*?)"$/) do |negate, expected_title|
-  title = find('.page-title') rescue nil
-  expect(title).send(negate ? :to_not : :to, have_content(expected_title))
+Then(/^I should( not)? see the page title as "(.*?)"$/) do |negate, title|
+  expect(page).send(negate ? :to_not : :to, have_selector('.page-title', text: title))
 end
 
 Then(/^I should( not)? see an alert message saying "(.*?)"$/) do |negate, msg|
-  msg_text = find('.alert').text
-  expect(msg_text).send(negate ? :to_not : :to, include(msg))
+  expect(page).send(negate ? :to_not : :to, have_selector('.alert', text: msg))
+end
+
+# Buttons / Links
+Then(/^I should( not)? see a(n)? "(.*?)" (button|link)$/) do |negate, _n, text, _type|
+  expect(page).send(negate ? :to_not : :to, have_selector(:link_or_button, text))
+end
+
+Then(/^I should( not)? see the following buttons: "(.*?)"$/) do |negate, buttons|
+  button_list = buttons.split(/, | and /)
+  button_list.each do |button|
+    within_page_content { step "I should#{negate} see a \"#{button}\" button" }
+  end
 end
 
 Then(/^I should( not)? see a link to "(.*?)" that says "(.*?)"$/) do |negate, link_path, link_text|
@@ -47,18 +58,18 @@ Then(/^I should( not)? be able to navigate to the "(.*?)" page$/) do |negate, pa
 end
 
 # Tables 
-Then(/^I should( not)? see "(.*?)" in the "(.*?)" table's "(.*?)" row$/) do |negate, row_text, table_name, row_identifier|
-  row = page.find(:css, 'table#' + table + '-table td', text: row_identifier)
+Then(/^I should( not)? see "(.*?)" in the "(.*?)" table's "(.*?)" row$/) do |negate, row_text, table_name, row_name|
+  row = page.find(:css, 'table#' + table_name + '-table tbody:nth-child(n+1)', text: row_name)
   expect(row).send(negate ? :to_not : :to, have_content(row_text))
 end
 
-Then(/^I should( not)? see a row for "(.*?)" in the "(.*?)" table$/) do |negate, row_text, table_name|
-  table = page.find(:css, 'table#' + table + '-table')
-  expect(table).send(negate ? :to_not : :to, have_selector('td', text: value))
+Then(/^I should( not)? see a "(.*?)" row in the "(.*?)" table$/) do |negate, row_name, table_name|
+  table = page.find(:css, 'table#' + table_name + '-table')
+  expect(table).send(negate ? :to_not : :to, have_selector('tbody:nth-child(n+1)', text: row_name))
 end
 
-Then(/^I should( not)? see the following actions in the "(.*?)" table's "(.*?)" row: "(.*?)"$/) do |negate, row_text, actions|
-  row = page.find(:css, 'tbody:nth-child(n+1)', text: row_text)
+Then(/^I should( not)? see the following actions in the "(.*?)" table's "(.*?)" row: "(.*?)"$/) do |negate, table_name, row_name, actions|
+  row = page.find(:css, 'table#' + table_name + '-table tbody:nth-child(n+1)', text: row_name)
   actions.split(/, | and /).each do |action|
     expect(row).send(negate ? :to_not : :to, have_selector(:link_or_button, action))
   end
@@ -67,17 +78,6 @@ end
 # Fields
 Then(/^I should( not)? see a(n)? "(.*?)" field$/) do |negate, _n, field|
   expect(page).send(negate ? :to_not : :to, have_field(field))
-end
-
-Then(/^I should( not)? see a(n)? "(.*?)" (button|link)$/) do |negate, _n, text, _type|
-  expect(page).send(negate ? :to_not : :to, have_selector(:link_or_button, text))
-end
-
-Then(/^I should( not)? see the following buttons: "(.*?)"$/) do |negate, buttons|
-  button_list = buttons.split(/, | and /)
-  button_list.each do |button|
-    within_page_content { step "I should#{negate} see a \"#{button}\" button" }
-  end
 end
 
 # Then(/^I should( not)? see the "(.*?)" field prepopulated with a value of "(.*?)"$/) do |negate, field, value|

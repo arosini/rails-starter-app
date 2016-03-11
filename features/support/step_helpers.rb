@@ -31,19 +31,3 @@ end
 def within_navbar(&_block)
   within(:css, 'nav.navbar') { yield }
 end
-
-# Gets the id for a navbar link
-def navbar_link_selector(link_text)
-  NavbarLink.new(link_text).selector
-end
-
-# Represents a link in the navbar.
-class NavbarLink
-  def initialize(text)
-    @text = text
-  end
-
-  def selector
-    '#navbar-' + @text.downcase.tr(' ', '-') + '-link'
-  end
-end

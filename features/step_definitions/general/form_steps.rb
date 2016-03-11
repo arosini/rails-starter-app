@@ -60,6 +60,5 @@ Then(/^I should( not)? see an error message saying "(.*?)" near the "(.*?)" fiel
 end
 
 Then(/^I should( not)? see an error message saying "(.*?)"$/) do |negate, text|
-  error_field = page.find('p.alert-danger') rescue ''
-  expect(error_field).send(negate ? :to_not : :to, have_content(text))
+  expect(page).send(negate ? :to_not : :to, have_selector('p.alert-danger', text: text))
 end
