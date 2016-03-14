@@ -1,11 +1,13 @@
 @javascript
 Feature: User Profile
 
+  @authentication @failure
   Scenario: A visitor tries to view a user's profile
     Given I have not signed in
     Then I should not be able to view the profile page for "user1@user.com"
     And I should not be able to view the profile page for "admin1@admin.com"
 
+  @authorization @read
   Scenario Outline: A user can only view certain profiles
     Given I have signed in as "<user>"
     Then I should be able to view the profile pages for only "<profiles>"
@@ -15,6 +17,7 @@ Feature: User Profile
     	| user1@user.com   | user1@user.com, user2@user.com                                     |
     	| admin1@admin.com | admin1@admin.com, admin2@admin.com, user1@user.com, user2@user.com |
 
+  @authorization @read
   Scenario Outline: A user sees certain actions on a profile
     Given I have signed in as "<user>"
     When I navigate to the profile page for "<profile>"
@@ -29,6 +32,7 @@ Feature: User Profile
       | admin1@admin.com | admin1@admin.com | Edit, Delete, Home |              |
       | admin1@admin.com | admin2@admin.com | Edit, Delete, Home |              |
 
+  @navigation
   Scenario Outline: A user clicks the Edit button in a profile
     Given I have signed in as "<user>"
     When I navigate to the profile page for "<profile>"
@@ -42,6 +46,7 @@ Feature: User Profile
       | admin1@admin.com | admin1@admin.com |
       | admin1@admin.com | admin2@admin.com |
 
+  @delete
   Scenario Outline: A user clicks the Delete button in their profile
     Given I have signed in as "<user>"
     And I have navigated to the "My Profile" page
@@ -55,6 +60,7 @@ Feature: User Profile
       | user1@user.com   |
       | admin1@admin.com |
 
+  @delete @failure
   Scenario Outline: A user accidentally clicks the Delete button in their profile
     Given I have signed in as "<user>"
     And I have navigated to the "My Profile" page
@@ -68,6 +74,7 @@ Feature: User Profile
       | user1@user.com   |
       | admin1@admin.com |
 
+  @delete
   Scenario Outline: An admin clicks the Delete button in a user's profile
     Given I have signed in as "admin1@admin.com"
     And I have navigated to the profile page for "<user>"
@@ -82,17 +89,4 @@ Feature: User Profile
       | user             | remaining                                          |
       | user1@user.com   | admin1@admin.com, admin2@admin.com, user2@user.com |
       | admin2@admin.com | admin1@admin.com, user1@user.com, user2@user.com   |
-
-  Scenario Outline: A user clicks the Home button in a user's profile
-    Given I have signed in as "<user>"
-    And I have navigated to the profile page for "<profile>"
-    When I click on the "Home" button
-    Then I should see the "home" page
-
-    Examples:
-      | user             | profile          |
-      | user1@user.com   | user1@user.com   |
-      | user1@user.com   | user2@user.com   |
-      | admin1@admin.com | user1@user.com   |
-      | admin1@admin.com | admin1@admin.com |
-      | admin1@admin.com | admin2@admin.com |
+      

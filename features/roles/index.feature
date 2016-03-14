@@ -1,15 +1,17 @@
 @javascript
 Feature: Roles Index
-    
-  Scenario Outline: A non-admin tries to access the roles index
-    Given I have <status>
+  
+  @authentication @failure
+  Scenario: A visitor tries to access the roles index
+    Given I have not signed in
     Then I should not be able to navigate to the "roles" page
 
-    Examples:
-    | status                        |
-    | not signed in                 |
-    | signed in as "user1@user.com" |
+  @authorization @failure
+  Scenario: A user tries to access the roles index
+    Given I have signed in as "user1@user.com"
+    Then I should not be able to navigate to the "roles" page
 
+  @read
   Scenario Outline: An admin views a role in the role index
     Given I have signed in as "admin1@admin.com"
     When I navigate to the "roles" page
@@ -23,6 +25,7 @@ Feature: Roles Index
     | Admin | admin1@admin.com, admin2@admin.com | user1@user.com, user2@user.com     |
     | User  | user1@user.com, user2@user.com     | admin1@admin.com, admin2@admin.com |
 
+  @read @search
   Scenario Outline: An admin searches for roles in the role index
     Given I have signed in as "admin1@admin.com"
     When I navigate to the "roles" page
@@ -39,12 +42,14 @@ Feature: Roles Index
     | User   | User        | User        |
     | x      |             |             |
 
+  @navigation
   Scenario: An admin clicks the new button in the roles index
     Given I have signed in as "admin1@admin.com"
     When I navigate to the "roles" page
     And I click on the "New Role" button
     Then I should see the "New Role" page
 
+  @navigation
   Scenario Outline: An admin clicks an action for a role in the role index
     Given I have signed in as "admin1@admin.com"
     When I navigate to the "roles" page

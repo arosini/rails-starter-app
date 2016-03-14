@@ -78,6 +78,19 @@ $ rake test TESTOPTS='--profile'
 $ cucumber [--format usage]
 ```
 
+The following [tags](https://github.com/cucumber/cucumber/wiki/Tags) are available:
+  - @create
+  - @read
+  - @search
+  - @update
+  - @delete
+  - @slow
+  - @navigation
+  - @authentication
+  - @authorization
+  - @failure
+  - @email
+
 ## Reports
 ```
 $ rubocop

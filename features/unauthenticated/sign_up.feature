@@ -1,6 +1,7 @@
 @javascript
 Feature: Sign Up
 
+  @authentication
   Scenario: Visitor signs up successfully
     Given I have not signed in
     And I have navigated to the "Sign Up" page
@@ -12,6 +13,7 @@ Feature: Sign Up
     And I click on the "Sign Up" button
     Then I should be automatically signed in
 
+  @authentication  @failure
   Scenario Outline: Vistor cannot sign up with invalid information
     Given I have not signed in
     And I have navigated to the "Sign Up" page
@@ -34,12 +36,14 @@ Feature: Sign Up
       | Confirm  | asdqwee        | Must match password.                |
       | Confirm  |                | Can't be blank.                     |
 
+  @navigation
   Scenario: Visitor clicks the sign in link on the sign up page
     Given I have not signed in
     And I have navigated to the "Sign Up" page
     When I click on the "Sign In" link
     Then I should see the "Sign In" page
 
+  @authorization @failure
   Scenario Outline: An authenticated user cannot access the sign up page
     Given I have signed in as "<user>"
     When I navigate to the "Sign Up" page

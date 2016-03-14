@@ -1,6 +1,7 @@
 @javascript
 Feature: Landing Page
 
+  @navigation
   Scenario Outline: A visitor clicks a button on the Landing page
     Given I have not signed in
     And I have navigated to the "Landing" page
@@ -12,6 +13,7 @@ Feature: Landing Page
       | Sign In | Sign In |
       | Sign Up | Sign Up |
 
+  @authorization @failure
   Scenario Outline: A user/admin cannot access the Landing page
     Given I have signed in as "<user>"
     When I navigate to the "Landing" page

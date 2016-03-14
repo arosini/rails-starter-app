@@ -1,6 +1,7 @@
 @javascript
 Feature: Navbar
 
+  @authorization
   Scenario Outline: There are specific links in the navbar for a vistor/user/admin
     Given I have <status>
     Then I should see the "<links>" links in the navbar
@@ -12,6 +13,7 @@ Feature: Navbar
       | signed in as "user1@user.com"   | My Profile, Users and Sign Out        | Welcome, Sign In Sign Up and Roles    |
       | not signed in                   | Welcome, Sign In and Sign Up          | My Profile, Users, Roles and Sign Out |
 
+  @navigation
   Scenario Outline: Navbar linked is clicked on by a vistor/user/admin
     Given I have <status>
     When I click on the "<link>" link in the navbar
@@ -29,7 +31,7 @@ Feature: Navbar
       | Sign In    | Sign In    | not signed in                   |
       | Sign Up    | Sign Up    | not signed in                   |
 
-
+  @authentication @navigation
   Scenario Outline: Sign out button is clicked on by an user/admin
     Given I have signed in as "<user>"
     When I click on the "Sign Out" link in the navbar

@@ -1,16 +1,19 @@
 @javascript
 Feature: Edit User
 
+  @authentication @failure
   Scenario: A visitor tries to edit a user
     Given I have not signed in
     Then I should not be able to navigate to the edit user page for "user1@user.com"
     And I should not be able to navigate to the edit user page for "admin1@admin.com"
 
+  @authorization @failure
   Scenario: A user tries to edit another user
     Given I have signed in as "user1@user.com"
     Then I should not be able to navigate to the edit user page for "user2@user.com"
     And I should not be able to navigate to the edit user page for "admin1@admin.com"
 
+  @edit
   Scenario Outline: A user/admin changes their email
     Given I have signed in as "<user>"
     When I navigate to the edit user page for "<user>"
@@ -25,6 +28,7 @@ Feature: Edit User
       | user1@user.com   |
       | admin1@admin.com |
 
+  @edit @failure
   Scenario Outline: A user/admin tries to change their email to an invalid value
     Given I have signed in as "<user>"
     And I have navigated to the edit user page for "<user>"
@@ -39,6 +43,7 @@ Feature: Edit User
       | admin1@admin.com | user1          | This value should be a valid email. |
       | admin1@admin.com | user2@user.com | Email has already been taken.       |
 
+  @authroization @failure
   Scenario Outline: An admin tries to change somebody else's email
     Given I have signed in as "admin1@admin.com"
     When I navigate to the edit user page for "<user>"
@@ -49,6 +54,7 @@ Feature: Edit User
       | user1@user.com   |
       | admin2@admin.com |
 
+  @edit
   Scenario Outline: A user changes their password
     Given I have signed in as "<user>"
     And I have navigated to the edit user page for "<user>"
@@ -66,6 +72,7 @@ Feature: Edit User
       | user1@user.com   |
       | admin1@admin.com |
 
+  @edit @failure
   Scenario Outline: A user/admin tries to change their password to an invalid value
     Given I have signed in as "<user>"
     And I have navigated to the edit user page for "<user>"
@@ -91,6 +98,7 @@ Feature: Edit User
       | admin1@admin.com | asdqwe  | asdqwe | asdqwee | Confirm | Must match password.           |
       | admin1@admin.com | asdqwe  |        |         | Confirm | Can't be blank.                |
 
+  @authorization @failure
   Scenario Outline: An admin tries to change somebody else's password
     Given I have signed in as "admin1@admin.com"
     When I navigate to the edit user page for "<user>"
@@ -101,11 +109,13 @@ Feature: Edit User
       | user1@user.com   |
       | admin2@admin.com |
  
+  @authorization @failure
   Scenario: A user tries to change their roles
     Given I have signed in as "user1@user.com"
     When I navigate to the edit user page for "user1@user.com"
     Then I should not see "Role" on the page
 
+  @edit
   Scenario Outline: An admin changes somebody's roles
     Given I have signed in as "admin1@admin.com"
     And I have navigated to the edit user page for "<user>"

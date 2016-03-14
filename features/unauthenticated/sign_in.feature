@@ -1,6 +1,7 @@
 @javascript
 Feature: Sign In
 
+  @authentication
   Scenario Outline: A visitor signs in successfully
     Given I have not signed in
     When I sign in as "<user>"
@@ -12,6 +13,7 @@ Feature: Sign In
       | admin1@admin.com |
       | user1@user.com   |
 
+  @authentication @failure
   Scenario Outline: A visitor cannot sign in with invalid information
     Given I have not signed in
     And I have navigated to the "Sign In" page
@@ -35,6 +37,7 @@ Feature: Sign In
   #   And I navigate to the "Sign In" page
   #   Then I should be automatically signed in
 
+  @navigation
   Scenario Outline: A visitor clicks a link on the Sign In page
     Given I have not signed in
     And I have navigated to the "Sign In" page
@@ -46,6 +49,7 @@ Feature: Sign In
       | Sign Up               | Sign Up              |
       | Forgot your password? | Forgot Your Password |
 
+  @authorization @failure
   Scenario Outline: A user/admin cannot access the sign in page
     Given I have signed in as "<user>"
     When I navigate to the "Sign In" page

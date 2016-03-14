@@ -26,13 +26,13 @@ Given(/^I have entered the sign in information for "(.*?)"$/) do |email|
 end
 
 Given(/^I have navigated to the edit user page for "(.*?)"$/) do |email|
-  user = User.find_by(email: email)
-  visit(edit_user_path(user.id))
+  user_id = User.find_by(email: email).id
+  visit(edit_user_path(user_id))
 end
 
 Given(/^I have navigated to the profile page for "(.*?)"$/) do |email|
-  user = User.find_by(email: email)
-  visit(user_path(user.id))
+  user_id = User.find_by(email: email).id
+  visit(user_path(user_id))
 end
 
 # WHEN

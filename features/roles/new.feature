@@ -1,15 +1,18 @@
 @javascript
 Feature: New Role
 
+  @authentication @failure
   Scenario: A visitor tries to access the new role page
     Given I have not signed in
     Then I should not be able to navigate to the "new role" page
 
+  @authorization @failure
   Scenario: A user tries to access the new role page
     Given I have signed in as "user1@user.com"
     Then I should not be able to navigate to the "new role" page
 
-  Scenario: An admin creates a new role
+  @create
+  Scenario: An admin creates a new role and assigns it to a user
     Given I have signed in as "admin1@admin.com"
     When I navigate to the "new role" page
     And I fill out the "new role" form with the following values:
@@ -26,6 +29,7 @@ Feature: New Role
     And I should see an alert message saying "Successfully updated user."
     And I should see "test" in the "user" table's "Role" row
 
+  @create @failure
   Scenario Outline: An admin tries to create an invalid role
     Given I have signed in as "admin1@admin.com"
     When I navigate to the "new role" page

@@ -15,17 +15,13 @@ class ApplicationController < ActionController::Base
 
   # Catch when a user tries to access a record that doesn't exist.
   rescue_from ActiveRecord::RecordNotFound do
-    render_not_found
+    render 'errors/_404', status: :not_found
   end
 
   private
 
   # Ensures the type of request is JSON.
   def check_json_format
-    render_not_found if request.format != Mime::JSON
-  end
-
-  def render_not_found
-    render 'errors/_404', status: :not_found
+    render 'errors/_406', status: :not_acceptable if request.format != Mime::JSON
   end
 end

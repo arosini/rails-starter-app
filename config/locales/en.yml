@@ -73,7 +73,7 @@ en:
       title: 'New Role'
     notices:
       create: 'Successfully created role.'
-      delete: 'Successfully destroyed role.'
+      delete: 'Successfully deleted role.'
       update: 'Successfully updated role.'
     show:
       title: "Role %{role_id}"

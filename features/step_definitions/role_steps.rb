@@ -1,5 +1,25 @@
 # Put steps related to Roles here
 
+# GIVEN
+Given(/^I have navigated to the "(.*?)" role page$/) do |role_name|
+  role_id = Role.find_by(name: role_name).id
+  visit(role_path(role_id))
+end
+
+Given(/^I have navigated to the edit page for the "(.*?)" role$/) do |role_name|
+  role_id = Role.find_by(name: role_name).id
+  visit(edit_role_path(role_id))
+end
+
+# WHEN
+When(/^I navigate to the "(.*?)" role page$/) do |role_name|
+  step "I have navigated to the \"#{role_name}\" role page"
+end
+
+When(/^I navigate to the edit page for the "(.*?)" role$/) do |role_name|
+  step "I have navigated to the edit page for the \"#{role_name}\" role"
+end
+
 # THEN
 Then(/^I should( not)? be redirected to the "(.*?)" role page$/) do |negate, role_name|
   step "the current path should#{negate} be \"/roles/#{Role.where(name: role_name).first.id}\""

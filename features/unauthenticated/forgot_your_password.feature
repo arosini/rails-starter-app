@@ -1,6 +1,7 @@
 @javascript
 Feature: Forgot Your Password
 
+  @email
   Scenario: A visitor successfully changes their password through the Forgot Your Password form and signs in
     Given I have not signed in
     When I navigate to the "Forgot Your Password" page
@@ -18,6 +19,7 @@ Feature: Forgot Your Password
     Then I should be automatically signed in
     And I should see an alert message saying "Your password was changed successfully. You are now signed in."
 
+  @failure
   Scenario Outline: A visitor submits the Forgot Your Password form with an invalid email
     Given I have not signed in
     When I navigate to the "Forgot Your Password" page
@@ -30,6 +32,7 @@ Feature: Forgot Your Password
      | idontexist@user.com | Could not find a user with that email address. |
      | bad-email           | This value should be a valid email.            |
 
+  @email @failure
   Scenario Outline: A visitor tries to changes their password to an invalid password
     When I navigate to the "forgot your password" page
     And I enter "user1@user.com" in the "Email" field
@@ -52,6 +55,7 @@ Feature: Forgot Your Password
       | asdqwe   | asdqwee | Confirm  | Must match password.           |
       |          |         | Confirm  | Can't be blank.                |
 
+  @navigation
   Scenario Outline: A visitor clicks a link on the Forgot Your Password page
     Given I have not signed in
     And I have navigated to the "Forgot Your Password" page
@@ -63,6 +67,7 @@ Feature: Forgot Your Password
       | Sign In | Sign In |
       | Sign Up | Sign Up |
 
+  @authorization @failure
   Scenario Outline: A user/admin cannot access the Forgot Your Password page
     Given I have signed in as "<user>"
     When I navigate to the "Forgot Your Password" page

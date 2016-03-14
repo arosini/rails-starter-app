@@ -19,17 +19,8 @@ Manual tests for every page on Desktop/Android Phone/iPhone/Android Tablet/iPad 
     - Forms have back-end validation (disable front-end in browser)
 
 Cucumber tests to write:
-- Roles CRUD
-- Tag Scenarios
-  - @Search
-  - @CRUD
-  - @Slow
-  - @Examples
-  - @ManyExamples
-  - @Unauthenticated
-- Back button
+- Back / Home button
 - Remember me test (sign_in.feature)
-- Add tags to scenarios (ie: @long)
 - Users Index
   - Table values
     - id
@@ -61,4 +52,3 @@ Cucumber tests to write:
   - Pagination
     - Reloads search
   - Search state (advanced or normal) is kept on page reload and navigation. Fields are cleared.
-  
