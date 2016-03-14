@@ -24,7 +24,7 @@ Feature: Sign Up
       | Confirm  | asdqwe         |
       | <field>  | <value>        |
     And I click on the "Sign Up" button
-    Then I should see an error message saying "<message>" near the "<field>" field
+    Then I should see an error message that says "<message>" near the "<field>" field
 
     Examples:
       | field    | value          | message                             |
@@ -47,7 +47,7 @@ Feature: Sign Up
   Scenario Outline: An authenticated user cannot access the sign up page
     Given I have signed in as "<user>"
     When I navigate to the "Sign Up" page
-    Then I should see an error message saying "You are already signed in."
+    Then I should see an error message that says "You are already signed in."
 
     Examples:
       | user             |

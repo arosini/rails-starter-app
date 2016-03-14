@@ -19,7 +19,7 @@ Feature: Edit User
     When I navigate to the edit user page for "<user>"
     And I enter "updated@updated.com" in the "Email" field
     And I click on the "Submit" button
-    Then I should see an alert message saying "Successfully updated user."
+    Then I should see a success alert message that says "Successfully updated user."
     And I should be able to sign in as "updated@updated.com"
     And I should not be able to sign in as "<user>"
 
@@ -34,7 +34,7 @@ Feature: Edit User
     And I have navigated to the edit user page for "<user>"
     When I enter "<email>" in the "Email" field
     And I click on the "Submit" button
-    Then I should see an error message saying "<message>" near the "Email" field
+    Then I should see an error message that says "<message>" near the "Email" field
 
     Examples:
       | user             | email          | message                             |
@@ -63,7 +63,7 @@ Feature: Edit User
     And I enter "asdqwe1" in the "New" field
     And I enter "asdqwe1" in the "Confirm" field
     And I click on the "Submit Password Change" button
-    Then I should see an alert message saying "Successfully updated password!"
+    Then I should see a success alert message that says "Successfully updated password!"
     And I should not be able to sign in as "<user>" using "asdwqe" as the password
     And I should be able to sign in as "<user>" using "asdwqe1" as the password
 
@@ -81,7 +81,7 @@ Feature: Edit User
     And I enter "<new>" in the "New" field
     And I enter "<confirm>" in the "Confirm" field
     And I click on the "Submit Password Change" button
-    Then I should see an error message saying "<message>" near the "<field>" field
+    Then I should see an error message that says "<message>" near the "<field>" field
 
     Examples:
       | user             | current | new    | confirm | field   | message                        |
@@ -122,7 +122,7 @@ Feature: Edit User
     When I select "<roles>" in the "Roles" dropdown
     And I click on the "Submit" button
     Then I should see the profile page for "<user>"
-    And I should see an alert message saying "Successfully updated user."
+    And I should see a success alert message that says "Successfully updated user."
     And I should see "<roles>" in the "user" table's "Role" row
 
     Examples:

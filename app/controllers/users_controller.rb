@@ -56,8 +56,8 @@ class UsersController < ApplicationController
   def check_email_unique
     # TO REMOVE: This DOM coupling. Perhaps an existing_email param which would be null for guests?
     action, _controller, user_id = params[:form_id].split('_')
-    email = params[:email].downcase
-    same_email = true if action == 'edit' && email.downcase == User.find(user_id).email.downcase
+    email = params[:email]
+    same_email = true if action == 'edit' && email.casecmp(User.find(user_id).email) == 0
 
     respond_to do |format|
       format.json { render json: same_email ? same_email : User.where('LOWER(email) = ?', email).empty? }

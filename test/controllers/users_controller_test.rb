@@ -400,7 +400,7 @@ class UsersControllerTest < ActionController::TestCase
   test 'admin check if email is unique with html on new form' do
     sign_in @admin
     get :check_email_unique, format: :html, form_id: '', email: 'newemail@new.com'
-    assert_404_response
+    assert_406_response
   end
 
   # check_email_unique tests (admin self edit form)
@@ -429,7 +429,7 @@ class UsersControllerTest < ActionController::TestCase
     sign_in @admin
     form_id = 'edit_user_' + @admin.id.to_s
     get :check_email_unique, format: :html, form_id: form_id, email: 'newemail@new.com'
-    assert_404_response
+    assert_406_response
   end
 
   # check_email_unique tests (admin other edit form)
@@ -458,7 +458,7 @@ class UsersControllerTest < ActionController::TestCase
     sign_in @admin
     form_id = 'edit_user_' + @user.id.to_s
     get :check_email_unique, format: :html, form_id: form_id, email: 'newemail@new.com'
-    assert_404_response
+    assert_406_response
   end
 
   # check_email_unique tests (user self edit form)
@@ -485,7 +485,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'user check if email is unique with html' do
     get :check_email_unique, format: :html, email: 'newemail@new.com', form_id: ''
-    assert_404_response
+    assert_406_response
   end
 
   # check_email_unique tests (guest new form)
@@ -506,7 +506,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'guest check if email is unique with html' do
     get :check_email_unique, format: :html, email: 'newemail@new.com', form_id: ''
-    assert_404_response
+    assert_406_response
   end
 
   # Admin check_password_match tests
@@ -537,7 +537,7 @@ class UsersControllerTest < ActionController::TestCase
   test 'admin check if password matches with html' do
     sign_in @admin
     get :check_password_match, format: :html, id: @admin.id, password: 'asdqwe'
-    assert_404_response
+    assert_406_response
   end
 
   # User check_password_match tests
@@ -562,7 +562,7 @@ class UsersControllerTest < ActionController::TestCase
   test 'user check if password matches with html' do
     sign_in @user
     get :check_password_match, format: :html, id: @user.id, password: 'asdqwe'
-    assert_404_response
+    assert_406_response
   end
 
   # Guest check_password_match tests

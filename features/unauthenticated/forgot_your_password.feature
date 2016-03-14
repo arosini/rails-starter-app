@@ -8,7 +8,7 @@ Feature: Forgot Your Password
     And I enter "user1@user.com" in the "Email" field
     And I click on the "Submit" button
     Then I should be redirected to the "Sign In" page
-    And I should see an alert message saying "You will receive an email with instructions on how to change your password in a few minutes."
+    And I should see a success alert message that says "You will receive an email with instructions on how to change your password in a few minutes."
     And an email with a password change link should be sent to "user1@user.com"
     When I click on the link in the email
     And I fill out the "Change Your Password" form with the following values:
@@ -17,7 +17,7 @@ Feature: Forgot Your Password
      | Confirm  | asdqwe |
     And I click on the "Submit" button
     Then I should be automatically signed in
-    And I should see an alert message saying "Your password was changed successfully. You are now signed in."
+    And I should see a success alert message that says "Your password was changed successfully. You are now signed in."
 
   @failure
   Scenario Outline: A visitor submits the Forgot Your Password form with an invalid email
@@ -25,7 +25,7 @@ Feature: Forgot Your Password
     When I navigate to the "Forgot Your Password" page
     And I enter "<email>" in the "Email" field
     And I click on the "Submit" button
-    Then I should see an error message saying "<message>" near the "Email" field
+    Then I should see an error message that says "<message>" near the "Email" field
 
     Examples:
      | email               | message                                        |
@@ -38,7 +38,7 @@ Feature: Forgot Your Password
     And I enter "user1@user.com" in the "Email" field
     And I click on the "Submit" button
     Then I should be redirected to the "Sign In" page
-    And I should see an alert message saying "You will receive an email with instructions on how to change your password in a few minutes."
+    And I should see a success alert message that says "You will receive an email with instructions on how to change your password in a few minutes."
     And an email with a password change link should be sent to "user1@user.com"
     When I click on the link in the email
     And I fill out the "Change Your Password" form with the following values:
@@ -46,7 +46,7 @@ Feature: Forgot Your Password
      | Password | <password> |
      | Confirm  | <confirm>  |
     And I click on the "Submit" button
-    Then I should see an error message saying "<message>" near the "<field>" field
+    Then I should see an error message that says "<message>" near the "<field>" field
 
     Examples:
       | password | confirm | field    | message                        |
@@ -71,7 +71,7 @@ Feature: Forgot Your Password
   Scenario Outline: A user/admin cannot access the Forgot Your Password page
     Given I have signed in as "<user>"
     When I navigate to the "Forgot Your Password" page
-    Then I should see an error message saying "You are already signed in."
+    Then I should see an error message that says "You are already signed in."
 
     Examples:
       | user             |

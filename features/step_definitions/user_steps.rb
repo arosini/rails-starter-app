@@ -22,7 +22,7 @@ end
 
 Given(/^I have entered the sign in information for "(.*?)"$/) do |email|
   step "I have entered \"#{email}\" in the \"Email\" field"
-  step "I have entered \"asdqwe\" in the \"Password\" field"
+  step 'I have entered "asdqwe" in the "Password" field'
 end
 
 Given(/^I have navigated to the edit user page for "(.*?)"$/) do |email|
@@ -75,7 +75,7 @@ Then(/^I should( not)? be able to sign in as "(.*?)"$/) do |negate, email|
   step "I have signed in as \"#{email}\""
   if negate
     @current_user = nil
-    step "I should see an error message saying \"Could not find a user with that email address.\""
+    step 'I should see an error message that says "Could not find a user with that email address."'
   end
 end
 
@@ -84,7 +84,7 @@ Then(/^I should( not)? be able to sign in as "(.*?)" using "(.*?)" as the passwo
   step "I have signed in as \"#{email}\" using \"#{password}\" as the password"
   if negate
     @current_user = nil
-    step "I should see an error message saying \"Incorrect password.\""
+    step 'I should see an error message that says "Incorrect password."'
   end
 end
 
@@ -169,4 +169,3 @@ Then(/^I should see search results and suggestions for only the following users:
   step "I should see search results for only the following users: \"#{users}\""
   step "I should see search suggestions for only the following users: \"#{users}\""
 end
-

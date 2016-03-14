@@ -45,6 +45,7 @@ class Ability
     # User abilities
     elsif user.user?
       user_id = user.id
+
       # Can read any other User (not Admins)
       can :read, User, roles: { name: 'User' }
       can :index, User

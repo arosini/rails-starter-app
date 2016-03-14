@@ -5,8 +5,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authenticate_user!
   check_authorization unless: :devise_controller?
-  skip_authorization_check only: :routing_error
-  skip_before_action :authenticate_user!, only: :routing_error
 
   # Catch when a user tries to access a page they cannot.
   rescue_from CanCan::AccessDenied do
@@ -15,13 +13,17 @@ class ApplicationController < ActionController::Base
 
   # Catch when a user tries to access a record that doesn't exist.
   rescue_from ActiveRecord::RecordNotFound do
-    render 'errors/_404', status: :not_found
+    render_not_found
   end
 
   private
 
   # Ensures the type of request is JSON.
   def check_json_format
-    render 'errors/_406', status: :not_acceptable if request.format != Mime::JSON
+    head :not_acceptable if request.format != Mime::JSON
+  end
+
+  def render_not_found
+    render 'errors/_404', status: :not_found
   end
 end

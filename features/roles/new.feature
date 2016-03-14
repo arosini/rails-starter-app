@@ -20,13 +20,13 @@ Feature: New Role
       | Name  | test  |
     And I click on the "Submit" button
     Then I should be redirected to the "test" role page
-    And I should see an alert message saying "Successfully created role."
+    And I should see a success alert message that says "Successfully created role."
     And I should see "test" in the "role" table's "Name" row
     When I navigate to the edit user page for "user1@user.com"
     And I select "test" in the "Roles" dropdown
     And I click on the "Submit" button
     Then I should see the profile page for "user1@user.com"
-    And I should see an alert message saying "Successfully updated user."
+    And I should see a success alert message that says "Successfully updated user."
     And I should see "test" in the "user" table's "Role" row
 
   @create @failure
@@ -37,7 +37,7 @@ Feature: New Role
       | field | value |
       | Name  | <name> |
     And I click on the "Submit" button
-    Then I should see an error message saying "<message>" near the "Name" field
+    Then I should see an error message that says "<message>" near the "Name" field
 
     Examples:
     | name  | message                      |

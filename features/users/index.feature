@@ -1,17 +1,20 @@
 @javascript
 Feature: Users Index
 
+  @authorization
   Scenario: A user does not see the New User button
     Given I have signed in as "user1@admin.com"
     When I navigate to the "Users" page
     Then I should not see a "New User" button
 
+  @navigation
   Scenario: An admin clicks the New User button
     Given I have signed in as "admin1@admin.com"
     And I have navigated to the "Users" page
     When I click on the "New User" button
     Then I should see the "New User" page
 
+  @authorization @read @search @slow
   Scenario Outline: A user/admin searches for other users using the Email contains search field
     Given I have signed in as "<user>"
     And I have navigated to the "Users" page
@@ -32,6 +35,7 @@ Feature: Users Index
       | admin1@admin.com | admin1 | admin1@admin.com                                                   | search results and suggestions |
       | admin1@admin.com | admin2 | admin2@admin.com                                                   | search results and suggestions |
 
+  @authorization @read @search @slow
   Scenario Outline: A user/admin searches for other users using the Email equals search field
     Given I have signed in as "<user>"
     And I have navigated to the "Users" page
@@ -62,6 +66,7 @@ Feature: Users Index
       | admin1@admin.com | admin1           |                                                                    | admin1@admin.com                   |
       | admin1@admin.com | admin1@admin.com | admin1@admin.com                                                   | admin1@admin.com                   |
 
+  @authorization @read @search @slow
   Scenario Outline: A user/admin searches for other users using the ID range search field
     Given I have signed in as "<user>"
     And I have navigated to the "Users" page
@@ -93,6 +98,7 @@ Feature: Users Index
        | admin1@admin.com | 2    | 3     | admin2@admin.com, user1@user.com                                   |
        | admin1@admin.com | 4    | 4     | user2@user.com                                                     |
 
+  @authorization @read @search @slow
   Scenario Outline: A user/admin searches for other users using the ID equals search field
     Given I have signed in as "<user>"
     And I have navigated to the "Users" page
@@ -114,6 +120,7 @@ Feature: Users Index
       | admin1@admin.com | 4  | user2@user.com                                                     |
       | admin1@admin.com | 5  |                                                                    |
 
+  @authorization @read @search @slow
   Scenario Outline: A user/admin searches for other users using the Role contains search field
     Given I have signed in as "<user>"
     And I have navigated to the "Users" page
@@ -137,6 +144,7 @@ Feature: Users Index
       | admin1@admin.com | User  | user1@user.com, user2@user.com                                     | User        |
       | admin1@admin.com | x     |                                                                    |             |
 
+  @authorization @read @search @slow
   Scenario Outline: A user/admin searches for other users using the Role equals search field
     Given I have signed in as "<user>"
     And I have navigated to the "Users" page
@@ -161,6 +169,7 @@ Feature: Users Index
       | admin1@admin.com | User  | user1@user.com, user2@user.com                                     | User        |
       | admin1@admin.com | x     |                                                                    |             |
 
+  @authorization @read @search @slow
   Scenario Outline: A user/admin searches for other users using the Sign In Count range search field
     Given I have signed in as "<user>"
     And I have navigated to the "Users" page
@@ -190,6 +199,7 @@ Feature: Users Index
        | admin1@admin.com | 0    | 0     | admin2@admin.com, user1@user.com, user2@user.com                   |
        | admin1@admin.com | 1    | 1     | admin1@admin.com                                                   |
 
+  @authorization @read @search @slow
   Scenario Outline: A user/admin searches for other users using the Sign In Count equals search field
     Given I have signed in as "<user>"
     And I have navigated to the "Users" page
@@ -209,6 +219,7 @@ Feature: Users Index
       | admin1@admin.com | 1     | admin1@admin.com                                                   |
       | admin1@admin.com | 2     |                                                                    |
 
+  @authorization @read @slow
   Scenario Outline: A user/admin sees specific actions for each user
     Given I have signed in as "<user>"
     When I navigate to the "Users" page
@@ -223,6 +234,8 @@ Feature: Users Index
      | admin1@admin.com | admin1@admin.com | My Profile         | Show, Edit, Delete       |
      | admin1@admin.com | admin2@admin.com | Show, Edit, Delete | My Profile               |
 
+
+  @navigation @read
   Scenario Outline: An user/admin clicks the My Profile button
     Given I have signed in as "<user>"
     And I have navigated to the "Users" page
@@ -235,6 +248,7 @@ Feature: Users Index
       | user1@user.com   |
       | admin2@admin.com |
 
+  @navigation @read
   Scenario Outline: A user/admin clicks the Show button for a user/admin
     Given I have signed in as "<user>"
     And I have navigated to the "Users" page
@@ -247,6 +261,7 @@ Feature: Users Index
       | admin1@admin.com | user1@user.com   |
       | admin1@admin.com | admin2@admin.com |
 
+  @navigation
   Scenario Outline: An admin clicks the Edit button for a user/admin
     Given I have signed in as "admin1@admin.com"
     And I have navigated to the "Users" page
@@ -258,12 +273,13 @@ Feature: Users Index
       | user1@user.com   |
       | admin2@admin.com |
 
-  Scenario Outline: An admin clicks the Delete button for a user/admin
+  @delete @slow
+  Scenario Outline: An admin clicks the Delete button for a user/admin in the user's index
     Given I have signed in as "admin1@admin.com"
     And I have navigated to the "Users" page
     When I click on the "Delete" button in the "users" table's "<user>" row
     And I accept the popup alert
-    Then I should see an alert message saying "Successfully deleted user."
+    Then I should see a success alert message that says "Successfully deleted user."
     And I should see links to the profile pages for only "<remaining>"
     And I should not be able to sign in as "<user>"
 
@@ -271,3 +287,18 @@ Feature: Users Index
       | user             | remaining                                          |
       | user1@user.com   | admin1@admin.com, admin2@admin.com, user2@user.com |
       | admin2@admin.com | admin1@admin.com, user1@user.com, user2@user.com   |
+
+  @delete @failure @slow
+  Scenario Outline: An admin accidentally clicks the Delete button for a user/admin in the user's index
+    Given I have signed in as "admin1@admin.com"
+    And I have navigated to the "Users" page
+    When I click on the "Delete" button in the "users" table's "<user>" row
+    And I dismiss the popup alert
+    Then I should not see a success alert message that says "Successfully deleted user."
+    And I should see a "<user>" row in the "users" table
+    And I should be able to sign in as "<user>"
+
+    Examples:
+      | user             |
+      | user1@user.com   |
+      | admin2@admin.com |

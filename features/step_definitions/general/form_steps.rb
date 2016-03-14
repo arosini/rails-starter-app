@@ -32,7 +32,7 @@ When(/^I enter "(.*?)" in the "(.*?)" (contains|equals|less than or equals|great
          when 'equals' then 'eq'
          when 'less than or equals' then 'lteq'
          when 'greater than or equals' then 'gteq'
-  end
+         end
   search_field_id = field.downcase.tr(' ', '-') + '-' + type + '-search-field'
   fill_in search_field_id, with: value
 end
@@ -54,11 +54,11 @@ When(/^I (un)?check the "(.*?)" checkbox$/) do |un, checkbox|
 end
 
 # THEN
-Then(/^I should( not)? see an error message saying "(.*?)" near the "(.*?)" field$/) do |negate, text, field|
+Then(/^I should( not)? see an error message that says "(.*?)" near the "(.*?)" field$/) do |negate, text, field|
   error_field = find_field(field).first(:xpath, '../following-sibling::div')
   expect(error_field).send(negate ? :to_not : :to, have_content(text))
 end
 
-Then(/^I should( not)? see an error message saying "(.*?)"$/) do |negate, text|
+Then(/^I should( not)? see an error message that says "(.*?)"$/) do |negate, text|
   expect(page).send(negate ? :to_not : :to, have_selector('p.alert-danger', text: text))
 end

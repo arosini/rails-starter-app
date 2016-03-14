@@ -81,7 +81,7 @@ Feature: User Profile
     When I click on the "Delete" button
     And I accept the popup alert
     Then I should be redirected to the "home" page
-    And I should see an alert message saying "Successfully deleted user."
+    And I should see a success alert message that says "Successfully deleted user."
     And I should see links to the profile pages for only "<remaining>"
     And I should not be able to sign in as "<user>"
 

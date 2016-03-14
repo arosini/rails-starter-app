@@ -134,7 +134,7 @@ class RolesControllerTest < ActionController::TestCase
     sign_in @admin
     delete :destroy, id: @user_role.id
     assert_redirected_to roles_path
-    assert_equal 'Successfully destroyed role.', flash[:notice]
+    assert_equal 'Successfully deleted role.', flash[:notice]
   end
 
   test 'user request destroy role' do
@@ -193,7 +193,7 @@ class RolesControllerTest < ActionController::TestCase
   test 'admin request role name unique with html' do
     sign_in @admin
     get :check_name_unique, format: :html, name: 'Quite Unique'
-    assert_404_response
+    assert_406_response
   end
 
   # Form error tests

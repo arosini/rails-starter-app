@@ -9,8 +9,8 @@ end
 World(Helpers)
 
 # The different names for the page seen by going to the root path
-AUTHENTICATED_ROOT_ALIASES   = %w(home users)
-UNAUTHENTICATED_ROOT_ALIASES = %w(landing welcome)
+AUTHENTICATED_ROOT_ALIASES   = %w(home users).freeze
+UNAUTHENTICATED_ROOT_ALIASES = %w(landing welcome).freeze
 
 # Converts the name of a page into a path. Modify this method as needed when page names are more complex.
 def pathify(page_name_or_path)

@@ -20,7 +20,7 @@ Feature: Sign In
     When I enter the sign in information for "user1@user.com"
     And I enter "<value>" in the "<field>" field
     And I click on the "Sign In" button
-    Then I should see an error message saying "<message>"
+    Then I should see an error message that says "<message>"
 
     Examples:
       | field    | value          | message                                        |
@@ -53,7 +53,7 @@ Feature: Sign In
   Scenario Outline: A user/admin cannot access the sign in page
     Given I have signed in as "<user>"
     When I navigate to the "Sign In" page
-    Then I should see an error message saying "You are already signed in."
+    Then I should see an error message that says "You are already signed in."
 
     Examples:
       | user             |

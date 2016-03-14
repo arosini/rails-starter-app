@@ -34,7 +34,7 @@ Feature: New User
       | Confirm  | asdqwe        |
     And I enter "<value>" in the "<field>" field
     And I click on the "Submit" button
-    Then I should see an error message saying "<message>" near the "<field>" field
+    Then I should see an error message that says "<message>" near the "<field>" field
 
     Examples:
       | field    | value          | message                             |

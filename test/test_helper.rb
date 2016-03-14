@@ -79,5 +79,10 @@ module ActiveSupport
       assert_template partial: 'errors/_404'
       assert_template layout: 'layouts/application', partial: '_navbar'
     end
+
+    def assert_406_response
+      assert_response :not_acceptable
+      assert_template partial: false
+    end
   end
 end

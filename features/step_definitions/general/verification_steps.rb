@@ -9,12 +9,13 @@ Then(/^I should( not)? see the page title as "(.*?)"$/) do |negate, title|
   expect(page).send(negate ? :to_not : :to, have_selector('.page-title', text: title))
 end
 
-Then(/^I should( not)? see an alert message saying "(.*?)"$/) do |negate, msg|
-  expect(page).send(negate ? :to_not : :to, have_selector('.alert', text: msg))
+Then(/^I should( not)? see an? (error|success) alert message that says "(.*?)"$/) do |negate, type, msg|
+  alert_class = type == 'error' ? 'alert-danger' : 'alert-success'
+  expect(page).send(negate ? :to_not : :to, have_selector('.alert.' + alert_class, text: msg))
 end
 
 # Buttons / Links
-Then(/^I should( not)? see a(n)? "(.*?)" (button|link)$/) do |negate, _n, text, _type|
+Then(/^I should( not)? see an? "(.*?)" (button|link)$/) do |negate, text, _type|
   expect(page).send(negate ? :to_not : :to, have_selector(:link_or_button, text))
 end
 
@@ -53,11 +54,11 @@ Then(/^I should( not)? be able to navigate to the "(.*?)" page$/) do |negate, pa
     if @current_user.nil?
       msg = 'You need to sign in or sign up before continuing.'
     end
-    step "I should see an error message saying \"#{msg}\"" if @current_user
+    step "I should see an error message that says \"#{msg}\"" if @current_user
   end
 end
 
-# Tables 
+# Tables
 Then(/^I should( not)? see "(.*?)" in the "(.*?)" table's "(.*?)" row$/) do |negate, row_text, table_name, row_name|
   row = page.find(:css, 'table#' + table_name + '-table tbody tr', text: row_name)
   expect(row).send(negate ? :to_not : :to, have_content(row_text))

@@ -1,6 +1,14 @@
 TO DO:
 - TO_TEST
-- What happens when you go to a 404 when not signed in?
+- Set up 406 page
+- Obfuscate sign in errors (hackers)
+- Move code for form fields into helpers (so parsely validators don't need to be repeated)
+- Alphabetize roles list in user profile/index
+- Change error message for when password confirmation doesn't match password 
+- Localize error messages (forms.js.erb)
+- Make custom user_path (my_profile_path if current_user, otherwise user_path(@user)). Remove logic that does this in users controller and views.
+- Change vendor assets to CDN
+- Remember Me? Checkbox test (sign_in.feature)
 - Audit locales for usage (no unused), repition (minimize this) and structure (be consistent!)
 - Audit step definitions (use general steps where possible!)
 - KNOWN ISSUES
@@ -12,22 +20,12 @@ TO DO:
 KNOWN ISSUES:
  - Any 'TO_REMOVE' comments
  - Rubycritic hates things
- - Tests (especially MiniTest) are amatuer hour -- attempt refactor, research, get help, do something.
-   - Make sure everything is explicltly tested
-   - Minimize assertions/time per test
-   - Make sure all major actions in the app are covered by cucumber tests.
-   - Remove use of DOM in cucumber steps as much as possible.
+ - Tests
+   - Audit step defs and gherkin for maximum clarity
    - Use more capybara magic (https://gist.github.com/zhengjia/428105) / http://www.elabs.se/blog/51-simple-tricks-to-clean-up-your-capybara-tests
-  - Move code for form fields into helpers (so parsely validators don't need to be repeated)
-  - Alphabetize roles list in user profile/index
-  - Change error message for when password confirmation doesn't match password 
-  - Localize error messages (forms.js.erb)
-  - Make custom user_path (my_profile_path if current_user, otherwise user_path(@user)). Remove logic that does this in users controller and views.
-  - Change vendor assets to CDN
-  - Remember Me? Checkbox test (sign_in.feature)
 
 POSSIBLE FUTURE FEATURES:
-  - Add name of user updated/deleted to confirmation message
+  - Add name of object/user updated/deleted to confirmation message
   - Date search for users index
   - Add multiple users (See railscast on nested forms).
   - Retain search/advanced-search form values on users index
