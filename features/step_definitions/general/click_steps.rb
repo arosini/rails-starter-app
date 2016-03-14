@@ -21,8 +21,8 @@ When(/^I click on the link in the email$/) do
 end
 
 When(/^I click on the "(.*?)" (button|link) in the "(.*?)" table's "(.*?)" row$/) do |action, _type, table_name, row_name|
-  row = page.find(:css, 'table#' + table_name + '-table tbody:nth-child(n+1)', text: row_name)
-  within(page.find('tr', text: row_identifier)) { click_on(action) }
+  row = page.find(:css, 'table#' + table_name + '-table tbody tr', text: row_name)
+  within(row) { click_on(action) }
 end
 
 When(/^I (accept|dismiss) the popup alert$/) do |action|

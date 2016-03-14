@@ -9,7 +9,7 @@ Then(/^I should see search results for only the following roles: "(.*?)"$/) do |
   name_list = roles.split(/, | and /)
   Role.all.each do |role|
     expect_role = name_list.include?(role.name)
-    step "I should#{expect_role ? '' : ' not'} see a row for \"#{role.name}\" in the \"roles\" table"
+    step "I should#{expect_role ? '' : ' not'} see a \"#{role.name}\" row in the \"roles\" table"
   end
 end
 

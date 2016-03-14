@@ -59,17 +59,17 @@ end
 
 # Tables 
 Then(/^I should( not)? see "(.*?)" in the "(.*?)" table's "(.*?)" row$/) do |negate, row_text, table_name, row_name|
-  row = page.find(:css, 'table#' + table_name + '-table tbody:nth-child(n+1)', text: row_name)
+  row = page.find(:css, 'table#' + table_name + '-table tbody tr', text: row_name)
   expect(row).send(negate ? :to_not : :to, have_content(row_text))
 end
 
 Then(/^I should( not)? see a "(.*?)" row in the "(.*?)" table$/) do |negate, row_name, table_name|
   table = page.find(:css, 'table#' + table_name + '-table')
-  expect(table).send(negate ? :to_not : :to, have_selector('tbody:nth-child(n+1)', text: row_name))
+  expect(table).send(negate ? :to_not : :to, have_selector('tbody tr', text: row_name))
 end
 
 Then(/^I should( not)? see the following actions in the "(.*?)" table's "(.*?)" row: "(.*?)"$/) do |negate, table_name, row_name, actions|
-  row = page.find(:css, 'table#' + table_name + '-table tbody:nth-child(n+1)', text: row_name)
+  row = page.find(:css, 'table#' + table_name + '-table tbody tr', text: row_name)
   actions.split(/, | and /).each do |action|
     expect(row).send(negate ? :to_not : :to, have_selector(:link_or_button, action))
   end

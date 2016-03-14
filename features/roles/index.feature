@@ -13,10 +13,10 @@ Feature: Roles Index
   Scenario Outline: An admin views a role in the role index
     Given I have signed in as "admin1@admin.com"
     When I navigate to the "roles" page
-    Then I should see a row for "<role>" in the "roles" table
-    And I should see "<users>" in the "<role>" row
-    And I should not see "<missing>" in the "<role>" row
-    And I should see the following actions in the "<role>" row: "Show, Edit, Delete"
+    Then I should see a "<role>" row in the "roles" table
+    And I should see "<users>" in the "roles" table's "<role>" row
+    And I should not see "<missing>" in the "roles" table's "<role>" row
+    And I should see the following actions in the "roles" table's "<role>" row: "Show, Edit, Delete"
 
     Examples:
     | role  | users                              | missing                            |
@@ -48,7 +48,7 @@ Feature: Roles Index
   Scenario Outline: An admin clicks an action for a role in the role index
     Given I have signed in as "admin1@admin.com"
     When I navigate to the "roles" page
-    And I click on the "<action>" button in the "<role>" row
+    And I click on the "<action>" button in the "roles" table's "<role>" row
     Then I should see the <page>
 
     Examples:

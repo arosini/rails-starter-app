@@ -212,8 +212,8 @@ Feature: Users Index
   Scenario Outline: A user/admin sees specific actions for each user
     Given I have signed in as "<user>"
     When I navigate to the "Users" page
-    Then I should see the following actions in the "<row>" row: "<actions>"
-    And I should not see the following actions in the "<row>" row: "<missing>"
+    Then I should see the following actions in the "users" table's "<row>" row: "<actions>"
+    And I should not see the following actions in the "users" table's "<row>" row: "<missing>"
 
     Examples:
      | user             | row              | actions            | missing                  |
@@ -226,7 +226,7 @@ Feature: Users Index
   Scenario Outline: An user/admin clicks the My Profile button
     Given I have signed in as "<user>"
     And I have navigated to the "Users" page
-    When I click on the "My Profile" button in the "<user>" row
+    When I click on the "My Profile" button in the "users" table's "<user>" row
     Then I should see the "My Profile" page
     And I should see the profile page for "<user>"
 
@@ -238,7 +238,7 @@ Feature: Users Index
   Scenario Outline: A user/admin clicks the Show button for a user/admin
     Given I have signed in as "<user>"
     And I have navigated to the "Users" page
-    When I click on the "Show" button in the "<profile>" row
+    When I click on the "Show" button in the "users" table's "<profile>" row
     Then I should see the profile page for "<profile>"
 
     Examples:
@@ -250,7 +250,7 @@ Feature: Users Index
   Scenario Outline: An admin clicks the Edit button for a user/admin
     Given I have signed in as "admin1@admin.com"
     And I have navigated to the "Users" page
-    When I click on the "Edit" button in the "<user>" row
+    When I click on the "Edit" button in the "users" table's "<user>" row
     Then I should see the edit user page for "<user>"
 
     Examples:
@@ -261,7 +261,7 @@ Feature: Users Index
   Scenario Outline: An admin clicks the Delete button for a user/admin
     Given I have signed in as "admin1@admin.com"
     And I have navigated to the "Users" page
-    When I click on the "Delete" button in the "<user>" row
+    When I click on the "Delete" button in the "users" table's "<user>" row
     And I accept the popup alert
     Then I should see an alert message saying "Successfully deleted user."
     And I should see links to the profile pages for only "<remaining>"

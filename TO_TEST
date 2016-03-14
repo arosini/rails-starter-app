@@ -21,6 +21,12 @@ Manual tests for every page on Desktop/Android Phone/iPhone/Android Tablet/iPad 
 Cucumber tests to write:
 - Roles CRUD
 - Tag Scenarios
+  - @Search
+  - @CRUD
+  - @Slow
+  - @Examples
+  - @ManyExamples
+  - @Unauthenticated
 - Back button
 - Remember me test (sign_in.feature)
 - Add tags to scenarios (ie: @long)
@@ -55,3 +61,4 @@ Cucumber tests to write:
   - Pagination
     - Reloads search
   - Search state (advanced or normal) is kept on page reload and navigation. Fields are cleared.
+  
