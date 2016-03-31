@@ -19,8 +19,8 @@ Manual tests for every page on Desktop/Android Phone/iPhone/Android Tablet/iPad 
     - Forms have back-end validation (disable front-end in browser)
 
 Cucumber tests to write:
-- Back / Home button
 - Remember me test (sign_in.feature)
+- Lables
 - Users Index
   - Table values
     - id
@@ -52,3 +52,18 @@ Cucumber tests to write:
   - Pagination
     - Reloads search
   - Search state (advanced or normal) is kept on page reload and navigation. Fields are cleared.
+
+
+  Failing Scenarios:
+cucumber features/unauthenticated/forgot_your_password.feature:5 # Scenario: A visitor successfully changes their password through the Forgot Your Password form and signs in
+cucumber features/users/edit.feature:28 # Scenario Outline: A user/admin changes their email, Examples (#1)
+cucumber features/users/edit.feature:29 # Scenario Outline: A user/admin changes their email, Examples (#2)
+cucumber features/users/edit.feature:72 # Scenario Outline: A user changes their password, Examples (#1)
+cucumber features/users/edit.feature:73 # Scenario Outline: A user changes their password, Examples (#2)
+cucumber features/users/new.feature:15 # Scenario: An admin creates a new user
+cucumber features/users/profile.feature:60 # Scenario Outline: A user clicks the Delete button in their profile, Examples (#1)
+cucumber features/users/profile.feature:61 # Scenario Outline: A user clicks the Delete button in their profile, Examples (#2)
+cucumber features/users/profile.feature:74 # Scenario Outline: A user accidentally clicks the Delete button in their profile, Examples (#1)
+cucumber features/users/profile.feature:75 # Scenario Outline: A user accidentally clicks the Delete button in their profile, Examples (#2)
+cucumber features/users/profile.feature:90 # Scenario Outline: An admin clicks the Delete button in a user's profile, Examples (#1)
+cucumber features/users/profile.feature:91 # Scenario Outline: An admin clicks the Delete button in a user's profile, Examples (#2)

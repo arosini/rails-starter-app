@@ -1,6 +1,5 @@
 TO DO:
-- TO_TEST
-- Set up 406 page
+- Finish TO_TEST
 - Obfuscate sign in errors (hackers)
 - Move code for form fields into helpers (so parsely validators don't need to be repeated)
 - Alphabetize roles list in user profile/index
@@ -11,6 +10,7 @@ TO DO:
 - Remember Me? Checkbox test (sign_in.feature)
 - Audit locales for usage (no unused), repition (minimize this) and structure (be consistent!)
 - Audit step definitions (use general steps where possible!)
+- Create CI script
 - KNOWN ISSUES
 - Documentation
 - Squash to V1.0
@@ -34,7 +34,7 @@ POSSIBLE FUTURE FEATURES:
   - Javascript code analyzer (maybe convert to coffescript?)
   - Metrics on routes, sign ups, etc... find some gems and make a dashboard
   - Voice activated UI
-  - Translate to another language
+  - Translate to another language (spanish, french)
   - Messaging (users can send messages)
 
 DOCUMENTATION TO DO:

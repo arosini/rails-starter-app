@@ -91,6 +91,11 @@ The following [tags](https://github.com/cucumber/cucumber/wiki/Tags) are availab
   - @failure
   - @email
 
+To run all the tests except the slowest tests, use the following command:
+```bash
+cucumber --tags ~@slow
+```
+
 ## Reports
 ```
 $ rubocop

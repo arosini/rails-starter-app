@@ -13,10 +13,6 @@ Given(/^I have filled out the "(.*?)" form with the following values:$/) do |for
   end
 end
 
-Given(/^I have (un)?checked the "(.*?)" checkbox$/) do |un, checkbox|
-  page.send(un ? :uncheck : :check, checkbox.downcase.tr(' ', '_'))
-end
-
 # WHEN
 When(/^I enter "(.*?)" in the "(.*?)" field$/) do |value, field|
   step "I have entered \"#{value}\" in the \"#{field}\" field"
@@ -35,22 +31,6 @@ When(/^I enter "(.*?)" in the "(.*?)" (contains|equals|less than or equals|great
          end
   search_field_id = field.downcase.tr(' ', '-') + '-' + type + '-search-field'
   fill_in search_field_id, with: value
-end
-
-When(/^I select "(.*?)" in the "(.*?)" dropdown$/) do |options, label|
-  options_to_select = options.split(/, | and /)
-  dropdown = page.find(:css, '.input-group', text: label)
-  dropdown.find(:css, '.dropdown-toggle').click
-  dropdown.all(:css, 'li').each do |option|
-    selected = option[:class].include?('active')
-    should_select = options_to_select.include?(option.text)
-    option.find('label').click if (!selected && should_select) || (selected && !should_select)
-  end
-  dropdown.find(:css, '.dropdown-toggle').click
-end
-
-When(/^I (un)?check the "(.*?)" checkbox$/) do |un, checkbox|
-  step "I have #{un}checked the \"#{checkbox}\" checkbox"
 end
 
 # THEN

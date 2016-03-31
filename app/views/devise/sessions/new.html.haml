@@ -15,8 +15,8 @@
         = f.password_field :password, autocomplete: "off", id: "password-field", class: "form-control"
       - if devise_mapping.rememberable?
         %br
-        = f.check_box :remember_me, id: "remember-me-check-box", class: "checkbox-lg"
-        = f.label :remember_me, t('users.fields.remember_me'), id: "remember-me-label", for: "remember-me-check-box"
+        = f.check_box :remember_me, id: "remember-me-checkbox", class: "checkbox-lg"
+        = f.label :remember_me, t('users.fields.remember_me'), id: "remember-me-label", for: "remember-me-checkbox"
       %br
       = f.submit t('.page_title'), id: "sign-in-button", class: "submit-button"
   = render "devise/shared/links"

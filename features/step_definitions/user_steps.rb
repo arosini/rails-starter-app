@@ -2,27 +2,33 @@
 
 # GIVEN
 Given(/^I have signed in as "(.*?)"$/) do |email|
-  step 'I have navigated to the "Sign In" page'
-  step "I have entered the sign in information for \"#{email}\""
+  step 'I have navigated to the "Sign In" page' if current_path != sign_in_path
+  step "I have entered \"#{email}\" in the \"Email\" field"
+  step 'I have entered "asdqwe" in the "Password" field'
   step 'I have clicked on the "Sign In" button'
-  @current_user = User.find_by(email: email)
+  @current_user = User.find_by(email: email) if current_path != sign_in_path
+end
+
+Given(/^I have signed in as "(.*?)" and told the application to remember me$/) do |email|
+  step 'I have navigated to the "Sign In" page' if current_path != sign_in_path
+  step 'I have checked the "Remember Me" checkbox'
+  step "I have entered \"#{email}\" in the \"Email\" field"
+  step 'I have entered "asdqwe" in the "Password" field'
+  step 'I have clicked on the "Sign In" button'
+  @current_user = User.find_by(email: email) if current_path != sign_in_path
 end
 
 Given(/^I have signed in as "(.*?)" using "(.*?)" as the password$/) do |email, password|
-  step 'I have navigated to the "Sign In" page'
+  step 'I have navigated to the "Sign In" page' if current_path != sign_in_path
   step "I have entered \"#{email}\" in the \"Email\" field"
   step "I have entered \"#{password}\" in the \"Password\" field"
   step 'I have clicked on the "Sign In" button'
-  @current_user = User.find_by(email: email)
+  @current_user = User.find_by(email: email) if current_path != sign_in_path
 end
 
 Given(/^I have not signed in$/) do
   visit('/sign_out')
-end
-
-Given(/^I have entered the sign in information for "(.*?)"$/) do |email|
-  step "I have entered \"#{email}\" in the \"Email\" field"
-  step 'I have entered "asdqwe" in the "Password" field'
+  @current_user = nil
 end
 
 Given(/^I have navigated to the edit user page for "(.*?)"$/) do |email|
@@ -40,9 +46,19 @@ When(/^I sign in as "(.*?)"$/) do |email|
   step "I have signed in as \"#{email}\""
 end
 
-When(/^I enter the sign in information for "(.*?)"$/) do |email|
-  step "I have entered the sign in information for \"#{email}\""
+When(/^I (try to )?sign in as "(.*?)" using "(.*?)" as the password$/) do |_try, email, password|
+  step "I have signed in as \"#{email}\" using \"#{password}\" as the password"
 end
+
+When(/^I sign up with email "(.*?)", password "(.*?)" and password confirmation "(.*?)"$/) do |email, password, confirmation|
+  step 'I have navigated to the "Sign Up" page' if current_path != sign_up_path
+  step "I have entered \"#{email}\" in the \"Email\" field"
+  step "I have entered \"#{password}\" in the \"Password\" field"
+  step "I have entered \"#{confirmation}\" in the \"Confirm\" field"
+  step 'I have clicked on the "Sign Up" button'
+  @current_user = User.find_by(email: email) if current_path != sign_up_path
+end
+
 
 When(/^I navigate to the profile page for "(.*?)"$/) do |email|
   step "I have navigated to the profile page for \"#{email}\""
@@ -56,36 +72,42 @@ When(/^I sign out$/) do
   step 'I have not signed in'
 end
 
-# When(/^I close and reopen the browser$/) do
-#   page.driver.browser.close
-#   page.driver.browser.open
-# end
+When(/^I change the password for "(.*?)"$/) do |email|
+    step 'I navigate to the "Forgot Your Password" page'
+    step "I enter \"user1@user.com\" in the \"Email\" field"
+    step 'I click on the "Submit" button'
+    step 'I should be redirected to the "Sign In" page'
+    And I should see a success alert message that says "You will receive an email with instructions on how to change your password in a few minutes."
+    And an email with a password change link should be sent to "user1@user.com"
+    When I click on the link in the email
+    And I fill out the "Change Your Password" form with the following values:
+     | field    | value  |
+     | Password | asdqwe |
+     | Confirm  | asdqwe |
+    And I click on the "Submit" button
+end
 
 # THEN
 Then(/^I should( not)? be automatically signed in$/) do |negate|
   step "I should#{negate} see the \"home\" page"
+  expect(@current_user).send(negate ? :to : :to_not, be_nil)
 end
 
 Then(/^I should( not)? be automatically signed out$/) do |negate|
   step "I should#{negate} see the \"landing\" page"
+  expect(@current_user).send(negate ? :to_not : :to, be_nil)
 end
 
 Then(/^I should( not)? be able to sign in as "(.*?)"$/) do |negate, email|
   step 'I have not signed in'
   step "I have signed in as \"#{email}\""
-  if negate
-    @current_user = nil
-    step 'I should see an error message that says "Could not find a user with that email address."'
-  end
+  step 'I should#{negate} see an error message that says "Could not find a user with that email address."'
 end
 
 Then(/^I should( not)? be able to sign in as "(.*?)" using "(.*?)" as the password$/) do |negate, email, password|
   step 'I have not signed in'
   step "I have signed in as \"#{email}\" using \"#{password}\" as the password"
-  if negate
-    @current_user = nil
-    step 'I should see an error message that says "Incorrect password."'
-  end
+  step 'I should#{negate} see an error message that says "Could not find a user with that email address."'
 end
 
 Then(/^I should( not)? see the profile page for "(.*?)"$/) do |negate, email|

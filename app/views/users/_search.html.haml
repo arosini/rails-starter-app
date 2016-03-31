@@ -8,8 +8,8 @@
         #email-cont-search
           = f.text_field :email_cont, id: "email-cont-search-field", class: "form-control typeahead input-timer"
       .col-xs-2.checkbox-label
-        = check_box_tag :email_exact_match, "true"
-        = label_tag :email_exact_match, t('search.exact_match')
+        = check_box_tag :email_exact_match, "1", true, id: 'email-exact-match-checkbox'
+        = label_tag :email_exact_match, t('search.exact_match'), for: 'email-exact-match-checkbox'
   %br
   #advanced-search
     .input-group.col-xs-12
@@ -24,8 +24,8 @@
         #id-single-search.col-xs-2.number-search.hide
           = f.search_field :id_eq, id: "id-eq-search-field", class: "form-control number-timer", type: "tel", min: "0", step: "1"
         .col-xs-2.checkbox-label
-          = check_box_tag :id_toggle_range, "true", true
-          = label_tag :id_toggle_range, t('search.use_range')
+          = check_box_tag :id_toggle_range, "1", true, id: 'id-toggle-range-checkbox'
+          = label_tag :id_toggle_range, t('search.use_range'), for: 'id-toggle-range-checkbox'
     %br
     .input-group.col-xs-12
       = f.label :role, id: "role-search-label", class:"input-group-addon", for: "role-search-field"
@@ -36,8 +36,8 @@
           #role-cont-search
             = f.text_field :roles_name_cont, id: "role-cont-search-field", class: "form-control typeahead input-timer"
         .col-xs-2.checkbox-label
-          = check_box_tag :role_exact_match, "true"
-          = label_tag :role_exact_match, t('search.exact_match')
+          = check_box_tag :role_exact_match, "1", true, id: 'role-exact-match-checkbox'
+          = label_tag :role_exact_match, t('search.exact_match'), for: 'role-exact-match-checkbox'
     %br
     .input-group.col-xs-12
       = f.label :sign_in_count, id: "sign-in-count-search-label", class:"input-group-addon", for: "sign-in-count-search-field"
@@ -50,8 +50,8 @@
       #sign-in-count-single-search.col-xs-2.number-search.hide
         = f.search_field :sign_in_count_eq, id: "sign-in-count-eq-search-field", type: "tel", class: "form-control number-timer", min: "0", step: "1"
       .col-xs-2.checkbox-label
-        = check_box_tag :sign_in_count_toggle_range, "true", true
-        = label_tag :sign_in_count_toggle_range, t('search.use_range')
+        = check_box_tag :sign_in_count_toggle_range, "1", true, id: 'sign-in-count-toggle-range-checkbox'
+        = label_tag :signin_count_toggle_range, t('search.use_range'), for: 'sign-in-count-toggle-range-checkbox'
   %br
   .actions.hide= f.submit t('search.submit'), id: "submit-search"
 
@@ -126,7 +126,7 @@
 
   // Displays range (gteq and lteq) or equal filter
   function setUpToggleRange(id) {
-    $("#" + id.replace(/-/g , "_") + "_toggle_range").change(function() {
+    $("#" + id.replace(/-/g , "-") + "-toggle-range-checkbox").change(function() {
       // Current state is before change
       if($(this).is(":checked")) {
         $("#" + id + "-single-search").addClass('hide');
@@ -147,7 +147,7 @@
 
   // Displays contains or equal filter
   function setUpToggleExactMatch(id) {
-    $("#" + id.replace(/-/g , "_") + "_exact_match").change(function() {
+    $("#" + id.replace(/-/g , "-") + "-exact-match-checkbox").change(function() {
       if(!$(this).is(":checked")) {
         $("#" + id + "-cont-search-field").val( $("#" + id + "-eq-search-field").val() );
         $("#" + id + "-eq-search-field").val("");

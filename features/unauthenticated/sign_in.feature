@@ -16,26 +16,26 @@ Feature: Sign In
   @authentication @failure
   Scenario Outline: A visitor cannot sign in with invalid information
     Given I have not signed in
-    And I have navigated to the "Sign In" page
-    When I enter the sign in information for "user1@user.com"
-    And I enter "<value>" in the "<field>" field
-    And I click on the "Sign In" button
-    Then I should see an error message that says "<message>"
+    When I try to sign in as "<email>" using "<password>" as the password
+    Then I should see the "Sign In" page
+    And I should see an error message that says "<message>"
 
     Examples:
-      | field    | value          | message                                        |
-      | Email    | wrong@user.com | Could not find a user with that email address. |
-      | Password | wrong          | Incorrect password.                            |
+      | email          | password | message                                        |
+      | wrong@user.com | asdqwe   | Could not find a user with that email address. |
+      | user1@user.com | wrong    | Incorrect password.                            |
 
-  # Scenario: A visitor checks the Remember Me checkbox on the Sign In form
-  #   Given I have not signed in
-  #   And I have navigated to the "Sign In" page
-  #   When I enter the sign in information for "user1@user.com"
-  #   And I check the "Remember me" checkbox
-  #   And I click on the "Sign In" button
-  #   And I close and reopen the browser
-  #   And I navigate to the "Sign In" page
-  #   Then I should be automatically signed in
+  @authentication
+  Scenario: A visitor checks the Remember Me checkbox on the Sign In form
+    Given I have signed in as "user1@user.com" and told the application to remember me
+    When I close and re-open the browser
+    Then I should be able to view the profile page for "user1@user.com"
+
+  @authentication
+  Scenario: A visitor does not check the Remember Me checkbox on the Sign In form
+    Given I have signed in as "user1@user.com"
+    When I close and re-open the browser
+    Then I should not be able to view the profile page for "user1@user.com"
 
   @navigation
   Scenario Outline: A visitor clicks a link on the Sign In page
