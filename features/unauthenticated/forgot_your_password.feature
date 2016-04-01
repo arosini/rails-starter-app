@@ -4,49 +4,16 @@ Feature: Forgot Your Password
   @email
   Scenario: A visitor successfully changes their password through the Forgot Your Password form and signs in
     Given I have not signed in
-    When I navigate to the "Forgot Your Password" page
-    And I enter "user1@user.com" in the "Email" field
-    And I click on the "Submit" button
-    Then I should be redirected to the "Sign In" page
-    And I should see a success alert message that says "You will receive an email with instructions on how to change your password in a few minutes."
-    And an email with a password change link should be sent to "user1@user.com"
-    When I click on the link in the email
-    And I fill out the "Change Your Password" form with the following values:
-     | field    | value  |
-     | Password | asdqwe |
-     | Confirm  | asdqwe |
-    And I click on the "Submit" button
+    When I change "user1@user.com"'s password to "newpassword" using password confirmation "newpassword"
     Then I should be automatically signed in
     And I should see a success alert message that says "Your password was changed successfully. You are now signed in."
 
-  @failure
-  Scenario Outline: A visitor submits the Forgot Your Password form with an invalid email
-    Given I have not signed in
-    When I navigate to the "Forgot Your Password" page
-    And I enter "<email>" in the "Email" field
-    And I click on the "Submit" button
-    Then I should see an error message that says "<message>" near the "Email" field
-
-    Examples:
-     | email               | message                                        |
-     | idontexist@user.com | Could not find a user with that email address. |
-     | bad-email           | This value should be a valid email.            |
-
   @email @failure
-  Scenario Outline: A visitor tries to changes their password to an invalid password
-    When I navigate to the "forgot your password" page
-    And I enter "user1@user.com" in the "Email" field
-    And I click on the "Submit" button
-    Then I should be redirected to the "Sign In" page
-    And I should see a success alert message that says "You will receive an email with instructions on how to change your password in a few minutes."
-    And an email with a password change link should be sent to "user1@user.com"
-    When I click on the link in the email
-    And I fill out the "Change Your Password" form with the following values:
-     | field    | value      |
-     | Password | <password> |
-     | Confirm  | <confirm>  |
-    And I click on the "Submit" button
+  Scenario Outline: A visitor submit invalid information to the change your password form
+    Given I have not signed in
+    When I try to change "user1@user.com"'s password to "<password>" using password confirmation "<confirm>"
     Then I should see an error message that says "<message>" near the "<field>" field
+    And I should not be automatically signed in
 
     Examples:
       | password | confirm | field    | message                        |
@@ -54,6 +21,18 @@ Feature: Forgot Your Password
       |          |         | Password | Can't be blank.                |
       | asdqwe   | asdqwee | Confirm  | Must match password.           |
       |          |         | Confirm  | Can't be blank.                |
+
+  @failure
+  Scenario Outline: A visitor submits the Forgot Your Password form with an invalid email
+    Given I have not signed in
+    When I submit the Forgot Your Password form using email "<email>"
+    Then I should not be redirected to the "Sign In" page
+    And I should see an error message that says "<message>" near the "Email" field
+
+    Examples:
+     | email               | message                                        |
+     | idontexist@user.com | Could not find a user with that email address. |
+     | bad-email           | This value should be a valid email.            |
 
   @navigation
   Scenario Outline: A visitor clicks a link on the Forgot Your Password page

@@ -55,7 +55,7 @@ Feature: Edit User
       | admin2@admin.com |
 
   @edit
-  Scenario Outline: A user changes their password
+  Scenario Outline: A user/admin changes their password
     Given I have signed in as "<user>"
     And I have navigated to the edit user page for "<user>"
     When I click on the "Change Password" button

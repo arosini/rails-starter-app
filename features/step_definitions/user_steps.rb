@@ -10,20 +10,20 @@ Given(/^I have signed in as "(.*?)"$/) do |email|
 end
 
 Given(/^I have signed in as "(.*?)" and told the application to remember me$/) do |email|
-  step 'I have navigated to the "Sign In" page' if current_path != sign_in_path
+  step 'I have navigated to the "Sign In" page'
   step 'I have checked the "Remember Me" checkbox'
   step "I have entered \"#{email}\" in the \"Email\" field"
   step 'I have entered "asdqwe" in the "Password" field'
   step 'I have clicked on the "Sign In" button'
-  @current_user = User.find_by(email: email) if current_path != sign_in_path
+  @current_user = User.find_by(email: email)unless current_path == sign_in_path
 end
 
 Given(/^I have signed in as "(.*?)" using "(.*?)" as the password$/) do |email, password|
-  step 'I have navigated to the "Sign In" page' if current_path != sign_in_path
+  step 'I have navigated to the "Sign In" page'
   step "I have entered \"#{email}\" in the \"Email\" field"
   step "I have entered \"#{password}\" in the \"Password\" field"
   step 'I have clicked on the "Sign In" button'
-  @current_user = User.find_by(email: email) if current_path != sign_in_path
+  @current_user = User.find_by(email: email) unless current_path == sign_in_path
 end
 
 Given(/^I have not signed in$/) do
@@ -51,12 +51,12 @@ When(/^I (try to )?sign in as "(.*?)" using "(.*?)" as the password$/) do |_try,
 end
 
 When(/^I sign up with email "(.*?)", password "(.*?)" and password confirmation "(.*?)"$/) do |email, password, confirmation|
-  step 'I have navigated to the "Sign Up" page' if current_path != sign_up_path
+  step 'I have navigated to the "Sign Up" page'
   step "I have entered \"#{email}\" in the \"Email\" field"
   step "I have entered \"#{password}\" in the \"Password\" field"
   step "I have entered \"#{confirmation}\" in the \"Confirm\" field"
   step 'I have clicked on the "Sign Up" button'
-  @current_user = User.find_by(email: email) if current_path != sign_up_path
+  @current_user = User.find_by(email: email) unless current_path == sign_up_path
 end
 
 
@@ -72,19 +72,22 @@ When(/^I sign out$/) do
   step 'I have not signed in'
 end
 
-When(/^I change the password for "(.*?)"$/) do |email|
-    step 'I navigate to the "Forgot Your Password" page'
-    step "I enter \"user1@user.com\" in the \"Email\" field"
-    step 'I click on the "Submit" button'
-    step 'I should be redirected to the "Sign In" page'
-    And I should see a success alert message that says "You will receive an email with instructions on how to change your password in a few minutes."
-    And an email with a password change link should be sent to "user1@user.com"
-    When I click on the link in the email
-    And I fill out the "Change Your Password" form with the following values:
-     | field    | value  |
-     | Password | asdqwe |
-     | Confirm  | asdqwe |
-    And I click on the "Submit" button
+When(/^I (try to )?change "(.*?)"'s password to "(.*?)" using password confirmation "(.*?)"$/) do |_try, email, password, confirmation|
+  step "I submit the Forgot Your Password form using email \"#{email}\""
+  step 'I should be redirected to the "Sign In" page'
+  step 'I should see a success alert message that says "You will receive an email with instructions on how to change your password in a few minutes."'
+  step "an email with a password change link should be sent to \"#{email}\""
+  step 'I click on the link in the email'
+  step "I enter \"#{password}\" in the \"Password\" field"
+  step "I enter \"#{confirmation}\" in the \"Confirm\" field"
+  step 'I click on the "Submit" button'
+  @current_user = User.find_by(email: email) unless current_path ==  edit_user_password_path
+end
+
+When(/^I submit the Forgot Your Password form using email "(.*?)"$/) do |email|
+ step 'I navigate to the "Forgot Your Password" page'
+ step "I enter \"#{email}\" in the \"Email\" field"
+ step 'I click on the "Submit" button'
 end
 
 # THEN
@@ -101,13 +104,13 @@ end
 Then(/^I should( not)? be able to sign in as "(.*?)"$/) do |negate, email|
   step 'I have not signed in'
   step "I have signed in as \"#{email}\""
-  step 'I should#{negate} see an error message that says "Could not find a user with that email address."'
+  step "I should#{negate} see a success alert message that says \"Signed in successfully.\""
 end
 
 Then(/^I should( not)? be able to sign in as "(.*?)" using "(.*?)" as the password$/) do |negate, email, password|
   step 'I have not signed in'
   step "I have signed in as \"#{email}\" using \"#{password}\" as the password"
-  step 'I should#{negate} see an error message that says "Could not find a user with that email address."'
+  step "I should#{negate} see a success alert message that says \"Signed in successfully.\""
 end
 
 Then(/^I should( not)? see the profile page for "(.*?)"$/) do |negate, email|

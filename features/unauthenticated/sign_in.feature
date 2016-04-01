@@ -6,7 +6,7 @@ Feature: Sign In
     Given I have not signed in
     When I sign in as "<user>"
     Then I should see the "Home" page
-    And I should see the page title as "Users Index"
+    And I should see a success alert message that says "Signed in successfully."
     
     Examples:
       | user             |
