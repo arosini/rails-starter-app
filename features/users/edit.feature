@@ -64,8 +64,8 @@ Feature: Edit User
     And I enter "asdqwe1" in the "Confirm" field
     And I click on the "Submit Password Change" button
     Then I should see a success alert message that says "Successfully updated password!"
-    And I should not be able to sign in as "<user>" using "asdwqe" as the password
-    And I should be able to sign in as "<user>" using "asdwqe1" as the password
+    And I should not be able to sign in as "<user>" using "asdqwe" as the password
+    And I should be able to sign in as "<user>" using "asdqwe1" as the password
 
     Examples:
       | user             |

@@ -11,11 +11,11 @@ end
 
 Given(/^I have signed in as "(.*?)" and told the application to remember me$/) do |email|
   step 'I have navigated to the "Sign In" page'
-  step 'I have checked the "Remember Me" checkbox'
   step "I have entered \"#{email}\" in the \"Email\" field"
   step 'I have entered "asdqwe" in the "Password" field'
+  step 'I have checked the "Remember Me" checkbox'
   step 'I have clicked on the "Sign In" button'
-  @current_user = User.find_by(email: email)unless current_path == sign_in_path
+  @current_user = User.find_by(email: email) unless current_path == sign_in_path
 end
 
 Given(/^I have signed in as "(.*?)" using "(.*?)" as the password$/) do |email, password|
@@ -31,14 +31,14 @@ Given(/^I have not signed in$/) do
   @current_user = nil
 end
 
-Given(/^I have navigated to the edit user page for "(.*?)"$/) do |email|
-  user_id = User.find_by(email: email).id
-  visit(edit_user_path(user_id))
-end
-
 Given(/^I have navigated to the profile page for "(.*?)"$/) do |email|
   user_id = User.find_by(email: email).id
   visit(user_path(user_id))
+end
+
+Given(/^I have navigated to the edit user page for "(.*?)"$/) do |email|
+  user_id = User.find_by(email: email).id
+  visit(edit_user_path(user_id))
 end
 
 # WHEN
@@ -58,7 +58,6 @@ When(/^I sign up with email "(.*?)", password "(.*?)" and password confirmation 
   step 'I have clicked on the "Sign Up" button'
   @current_user = User.find_by(email: email) unless current_path == sign_up_path
 end
-
 
 When(/^I navigate to the profile page for "(.*?)"$/) do |email|
   step "I have navigated to the profile page for \"#{email}\""
@@ -81,13 +80,27 @@ When(/^I (try to )?change "(.*?)"'s password to "(.*?)" using password confirmat
   step "I enter \"#{password}\" in the \"Password\" field"
   step "I enter \"#{confirmation}\" in the \"Confirm\" field"
   step 'I click on the "Submit" button'
-  @current_user = User.find_by(email: email) unless current_path ==  edit_user_password_path
+  @current_user = User.find_by(email: email) unless current_path == edit_user_password_path
 end
 
 When(/^I submit the Forgot Your Password form using email "(.*?)"$/) do |email|
- step 'I navigate to the "Forgot Your Password" page'
- step "I enter \"#{email}\" in the \"Email\" field"
- step 'I click on the "Submit" button'
+  step 'I navigate to the "Forgot Your Password" page'
+  step "I enter \"#{email}\" in the \"Email\" field"
+  step 'I click on the "Submit" button'
+end
+
+When(/^I delete my account$/) do
+  step 'I have navigated to the "My Profile" page'
+  step 'I click on the "Delete" button'
+  step 'I accept the popup alert'
+  @current_user = nil
+end
+
+When(/^I delete "(.*?)"'s account$/) do |email|
+  step "I have navigated to the profile page for \"#{email}\""
+  step 'I click on the "Delete" button'
+  step 'I accept the popup alert'
+  @current_user = nil if @current_user.email == email
 end
 
 # THEN

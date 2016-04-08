@@ -47,11 +47,9 @@ Feature: User Profile
       | admin1@admin.com | admin2@admin.com |
 
   @delete
-  Scenario Outline: A user clicks the Delete button in their profile
+  Scenario Outline: A user deletes their account
     Given I have signed in as "<user>"
-    And I have navigated to the "My Profile" page
-    When I click on the "Delete" button
-    And I accept the popup alert
+    When I delete my account
     Then I should be automatically signed out
     And I should not be able to sign in as "<user>"
 
@@ -61,7 +59,7 @@ Feature: User Profile
       | admin1@admin.com |
 
   @delete @failure
-  Scenario Outline: A user accidentally clicks the Delete button in their profile
+  Scenario Outline: A user almost accidentally deletes their account
     Given I have signed in as "<user>"
     And I have navigated to the "My Profile" page
     When I click on the "Delete" button
@@ -75,12 +73,10 @@ Feature: User Profile
       | admin1@admin.com |
 
   @delete
-  Scenario Outline: An admin clicks the Delete button in a user's profile
+  Scenario Outline: An admin clicks deletes a user's account through their profile
     Given I have signed in as "admin1@admin.com"
-    And I have navigated to the profile page for "<user>"
-    When I click on the "Delete" button
-    And I accept the popup alert
-    Then I should be redirected to the "home" page
+    When I delete "<user>"'s account
+    Then I should be redirected to the "Users" page
     And I should see a success alert message that says "Successfully deleted user."
     And I should see links to the profile pages for only "<remaining>"
     And I should not be able to sign in as "<user>"

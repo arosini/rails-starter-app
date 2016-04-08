@@ -21,9 +21,9 @@ When(/^I close and re-open the browser$/) do
   page.driver.switch_to_window(page.driver.current_window_handle)
 
   # Go to our domain and add our cookies back in
-  visit('/') 
-  remember_me_cookie.nil? ? @current_user = nil : page.driver.browser.manage.add_cookie(remember_me_cookie) 
+  visit('/')
+  remember_me_cookie.nil? ? @current_user = nil : page.driver.browser.manage.add_cookie(remember_me_cookie)
 
   # Refresh the domain to activate the cookies
-  visit('/') 
+  visit('/')
 end
